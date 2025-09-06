@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Chart Viewer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet"/>
+    <style>
+        body { background-color: #fbfbfb; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <i class="fas fa-chart-line me-2"></i>
+          Stock Chart Viewer
+        </a>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+
+        <section class="text-center">
+            <h4 class="mb-4">Search for a Stock Ticker</h4>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                    <div class="form-outline" data-mdb-input-init>
+                      <input type="text" id="tickerInput" class="form-control" />
+                      <label class="form-label" for="tickerInput">e.g., AAPL, GOOGL, MSFT</label>
+                    </div>
+                    <button type="button" id="getChartBtn" class="btn btn-primary mt-3" data-mdb-ripple-init>Get Chart</button>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div id="timeframe-group" class="btn-group shadow-0" role="group">
+                  <button type="button" class="btn btn-outline-primary active" data-mdb-ripple-init data-timeframe="1M">1M</button>
+                  <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init data-timeframe="3M">3M</button>
+                  <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init data-timeframe="6M">6M</button>
+                  <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init data-timeframe="1Y">1Y</button>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-5" />
+
+        <section id="chartSection" class="text-center" style="display: none;">
+            <h3 id="chart-ticker-symbol">TICKER</h3>
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="stockChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+         <section id="messageSection" class="text-center">
+             <p class="text-muted">Please enter a stock ticker to display a chart.</p>
+         </section>
+
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>
