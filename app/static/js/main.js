@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartTickerSymbol = document.getElementById('chart-ticker-symbol');
 
     let stockChart = null; // Variable to hold the chart instance
-    let activeTimeframe = '1M'; // Default timeframe
+    let activeTimeframe = '3M'; // Default timeframe
 
     // Handle clicks on timeframe buttons
     timeframeGroup.addEventListener('click', (e) => {

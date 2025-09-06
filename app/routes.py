@@ -44,7 +44,7 @@ def get_stock_data():
     ticker = request.args.get('ticker')
     # Map front-end timeframe labels to the number of days
     timeframe_map = {'1M': 30, '3M': 90, '6M': 182, '1Y': 365}
-    timeframe_str = request.args.get('timeframe', '1M') # Default to 1M if not provided
+    timeframe_str = request.args.get('timeframe', '3M') # Default to 3M if not provided
     timeframe_days = timeframe_map.get(timeframe_str, 30)
 
     if not ticker:
