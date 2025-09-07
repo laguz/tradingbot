@@ -144,8 +144,8 @@ def get_historical_data(ticker, timeframe):
 
         # Format data for Chart.js (labels array and data array)
         chart_data = {
-            'labels': [day['date'] for day in day_entries],
-            'data': [day['close'] for day in day_entries]
+            'labels': [d['date'].split('-')[-1] for d in day_entries],
+            'data': [d['close'] for d in day_entries]
         }
         return chart_data
 
