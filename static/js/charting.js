@@ -4,10 +4,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get references to our HTML elements
     const tickerInput = document.getElementById('tickerInput');
     const timeframeControls = document.getElementById('timeframe-controls');
+    const chartContainer = document.getElementById('chart-container');
+    const chartError = document.getElementById('chart-error');
     const ctx = document.getElementById('stockChart').getContext('2d');
 
     // This variable will hold our chart instance, so we can destroy it before creating a new one
     let stockChart;
+
+    /**
+     * Hides the chart and displays an error message.
+     * @param {string} message The error message to display.
+     */
+    function showError(message) {
+        chartContainer.classList.add('d-none'); // Hide chart
+        chartError.classList.remove('d-none'); // Show error
+        chartError.textContent = message;
+        if (stockChart) {
+            stockChart.destroy(); // Ensure old chart is gone
+        }
+    }
+
+    /**
+     * Hides the error message and shows the chart.
+     */
+    function showChart() {
+        chartError.classList.add('d-none'); // Hide error
+        chartContainer.classList.remove('d-none'); // Show chart
+    }
 
     /**
      * Main function to fetch data and update the chart
@@ -24,10 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
             // Fetch data from our Flask API
             const response = await fetch(apiUrl);
             if (!response.ok) {
-                // Handle errors like a 404 for an invalid ticker
-                throw new Error('Stock data not found. Please check the ticker.');
+                const errorData = await response.json().catch(() => ({ error: 'Stock data not found. Please check the ticker.' }));
+                throw new Error(errorData.error || 'An unknown error occurred.');
             }
             const chartData = await response.json();
+
+            // If the backend returns its own error message, throw it
+            if (chartData.error) {
+                throw new Error(chartData.error);
+            }
+
+            // Success: show the chart container
+            showChart();
 
             // If a chart instance already exists, destroy it
             if (stockChart) {
@@ -71,10 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Error updating chart:', error);
-            // Optionally, display an error message to the user on the page
-            if (stockChart) {
-                stockChart.destroy(); // Clear the old chart on error
-            }
+            showError(error.message);
         }
     }
 
