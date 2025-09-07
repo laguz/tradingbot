@@ -65,20 +65,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 stockChart.destroy();
             }
 
+            const datasets = [{
+                label: `${ticker} Closing Price`,
+                data: chartData.data, // Prices for the Y-axis
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                fill: true,
+                tension: 0.1,
+                pointRadius: 1,
+            }];
+
+            // Add support line if available
+            if (chartData.support > 0) {
+                datasets.push({
+                    label: 'Support',
+                    data: Array(chartData.labels.length).fill(chartData.support),
+                    borderColor: 'rgba(40, 167, 69, 0.8)', // Green
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    fill: false,
+                    tension: 0,
+                });
+            }
+
+            // Add resistance line if available
+            if (chartData.resistance > 0) {
+                datasets.push({
+                    label: 'Resistance',
+                    data: Array(chartData.labels.length).fill(chartData.resistance),
+                    borderColor: 'rgba(220, 53, 69, 0.8)', // Red
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    pointRadius: 0,
+                    fill: false,
+                    tension: 0,
+                });
+            }
+
             // Create a new chart using the data we fetched
             stockChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: chartData.labels, // Dates for the X-axis
-                    datasets: [{
-                        label: `${ticker} Closing Price`,
-                        data: chartData.data, // Prices for the Y-axis
-                        borderColor: 'rgb(75, 192, 192)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
-                        fill: true,
-                        tension: 0.1,
-                        pointRadius: 1,
-                    }]
+                    datasets: datasets
                 },
                 options: {
                     responsive: true,
