@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+
+{% block title %}Stock Charts{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Interactive Stock Charts</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div data-mdb-input-init class="form-outline">
+                <input type="text" id="tickerInput" class="form-control" value="GOOGL" />
+                <label class="form-label" for="tickerInput">Stock Ticker</label>
+            </div>
+        </div>
+        <div class="col-md-8 d-flex align-items-center">
+            <div id="timeframe-controls" class="btn-group" role="group" aria-label="Timeframe selection">
+                <input type="radio" class="btn-check" name="timeframe" id="1m" value="1m" autocomplete="off" />
+                <label class="btn btn-primary" for="1m">1M</label>
+
+                <input type="radio" class="btn-check" name="timeframe" id="3m" value="3m" autocomplete="off" checked />
+                <label class="btn btn-primary" for="3m">3M</label>
+
+                <input type="radio" class="btn-check" name="timeframe" id="6m" value="6m" autocomplete="off" />
+                <label class="btn btn-primary" for="6m">6M</label>
+
+                <input type="radio" class="btn-check" name="timeframe" id="1y" value="1y" autocomplete="off" />
+                <label class="btn btn-primary" for="1y">1Y</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <canvas id="stockChart"></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }} <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script src="{{ url_for('static', filename='js/charting.js') }}" defer></script>
+{% endblock %}
