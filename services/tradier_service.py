@@ -1,5 +1,7 @@
 import os
 import requests
+import pandas as pd
+import numpy as np
 from dotenv import load_dotenv
 from datetime import date, timedelta
 
@@ -100,6 +102,37 @@ def get_open_positions():
         print(f"ERROR: Could not fetch open positions. {e}")
         return None
 
+def find_support_resistance(data, window=5):
+    all_support, all_resistance = [], []
+    if data.empty: return [], []
+    for i in range(window, len(data) - window):
+        window_slice = data['Close'].iloc[i-window:i+window+1]
+        current_price = data['Close'].iloc[i]
+        price = current_price.item() if isinstance(current_price, (pd.Series, pd.DataFrame)) else current_price
+        if np.isclose(price, window_slice.min()): all_support.append(price)
+        if np.isclose(price, window_slice.max()): all_resistance.append(price)
+    unique_supports = sorted(list(set(all_support)))
+    unique_resistances = sorted(list(set(all_resistance)))
+    plotted_support = []
+    if unique_supports:
+        last_support = unique_supports[0]
+        plotted_support.append(last_support)
+        for level in unique_supports:
+            required_diff = 1 if last_support < 100 else 2
+            if abs(level - last_support) >= required_diff:
+                plotted_support.append(level)
+                last_support = level
+    plotted_resistance = []
+    if unique_resistances:
+        last_resistance = unique_resistances[0]
+        plotted_resistance.append(last_resistance)
+        for level in unique_resistances:
+            required_diff = 1 if last_resistance < 100 else 2
+            if abs(level - last_resistance) >= required_diff:
+                plotted_resistance.append(level)
+                last_resistance = level
+    return plotted_support, plotted_resistance
+
 # --- NEW FUNCTION FOR CHART.JS ---
 def get_historical_data(ticker, timeframe):
     """
@@ -142,18 +175,19 @@ def get_historical_data(ticker, timeframe):
         if not day_entries:
             return None
 
-        # Calculate support and resistance levels from the historical data
-        low_prices = [d['low'] for d in day_entries]
-        high_prices = [d['high'] for d in day_entries]
-        support_level = min(low_prices) if low_prices else 0
-        resistance_level = max(high_prices) if high_prices else 0
+        # Convert to DataFrame for analysis
+        df = pd.DataFrame(day_entries)
+        df.rename(columns={'close': 'Close'}, inplace=True)
+
+        # Calculate support and resistance levels
+        support_levels, resistance_levels = find_support_resistance(df)
 
         # Format data for Chart.js
         chart_data = {
             'labels': [d['date'].split('-')[-1] for d in day_entries],
             'data': [d['close'] for d in day_entries],
-            'support': support_level,
-            'resistance': resistance_level,
+            'support': support_levels,
+            'resistance': resistance_levels,
         }
         return chart_data
 

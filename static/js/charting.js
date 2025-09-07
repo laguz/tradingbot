@@ -75,31 +75,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 pointRadius: 1,
             }];
 
-            // Add support line if available
-            if (chartData.support > 0) {
-                datasets.push({
-                    label: 'Support',
-                    data: Array(chartData.labels.length).fill(chartData.support),
-                    borderColor: 'rgba(40, 167, 69, 0.8)', // Green
-                    borderWidth: 2,
-                    borderDash: [5, 5],
-                    pointRadius: 0,
-                    fill: false,
-                    tension: 0,
+            // Add support lines if available
+            if (chartData.support && chartData.support.length > 0) {
+                chartData.support.forEach(level => {
+                    datasets.push({
+                        label: 'Support',
+                        data: Array(chartData.labels.length).fill(level),
+                        borderColor: 'rgba(40, 167, 69, 0.8)', // Green
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        fill: false,
+                        tension: 0,
+                    });
                 });
             }
 
-            // Add resistance line if available
-            if (chartData.resistance > 0) {
-                datasets.push({
-                    label: 'Resistance',
-                    data: Array(chartData.labels.length).fill(chartData.resistance),
-                    borderColor: 'rgba(220, 53, 69, 0.8)', // Red
-                    borderWidth: 2,
-                    borderDash: [5, 5],
-                    pointRadius: 0,
-                    fill: false,
-                    tension: 0,
+            // Add resistance lines if available
+            if (chartData.resistance && chartData.resistance.length > 0) {
+                chartData.resistance.forEach(level => {
+                    datasets.push({
+                        label: 'Resistance',
+                        data: Array(chartData.labels.length).fill(level),
+                        borderColor: 'rgba(220, 53, 69, 0.8)', // Red
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        fill: false,
+                        tension: 0,
+                    });
                 });
             }
 
