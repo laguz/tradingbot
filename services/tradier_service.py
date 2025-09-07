@@ -142,10 +142,18 @@ def get_historical_data(ticker, timeframe):
         if not day_entries:
             return None
 
-        # Format data for Chart.js (labels array and data array)
+        # Calculate support and resistance levels from the historical data
+        low_prices = [d['low'] for d in day_entries]
+        high_prices = [d['high'] for d in day_entries]
+        support_level = min(low_prices) if low_prices else 0
+        resistance_level = max(high_prices) if high_prices else 0
+
+        # Format data for Chart.js
         chart_data = {
             'labels': [d['date'].split('-')[-1] for d in day_entries],
-            'data': [d['close'] for d in day_entries]
+            'data': [d['close'] for d in day_entries],
+            'support': support_level,
+            'resistance': resistance_level,
         }
         return chart_data
 
