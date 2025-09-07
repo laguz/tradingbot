@@ -31,7 +31,12 @@
 
     <div class="card">
         <div class="card-body">
-            <canvas id="stockChart"></canvas>
+            <div id="chart-container" style="height: 400px;">
+                <canvas id="stockChart"></canvas>
+            </div>
+            <div id="chart-error" class="alert alert-danger d-none" role="alert">
+                <!-- Error messages will be inserted here by JavaScript -->
+            </div>
         </div>
     </div>
 {% endblock %}
