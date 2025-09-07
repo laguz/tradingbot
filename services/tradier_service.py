@@ -127,15 +127,24 @@ def get_historical_data(ticker, timeframe):
         response.raise_for_status()
         data = response.json()
 
-        if data.get('history') is None:
+        # If the 'history' key is missing, null, or contains no day data, return None
+        history_data = data.get('history')
+        if not history_data or history_data == 'null' or 'day' not in history_data:
             return None
 
-        history = data['history']['day']
-        
+        # The API returns a single object if one day is found, and a list for multiple days.
+        # We ensure it's always a list to handle it consistently.
+        day_entries = history_data['day']
+        if not isinstance(day_entries, list):
+            day_entries = [day_entries]
+
+        if not day_entries:
+            return None
+
         # Format data for Chart.js (labels array and data array)
         chart_data = {
-            'labels': [day['date'] for day in history],
-            'data': [day['close'] for day in history]
+            'labels': [day['date'] for day in day_entries],
+            'data': [day['close'] for day in day_entries]
         }
         return chart_data
 
