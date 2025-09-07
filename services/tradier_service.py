@@ -107,7 +107,8 @@ def get_historical_data(ticker, timeframe):
     Formats the data for Chart.js.
     """
     if not TRADIER_API_KEY:
-        return {'error': 'Tradier API key not set in .env file'}
+        print("ERROR: Tradier API key not set in .env file")
+        return None
 
     # Calculate start date based on timeframe
     end_date = date.today()
