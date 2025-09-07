@@ -42,7 +42,7 @@
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }} <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{ super() }} <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
     
     <script src="{{ url_for('static', filename='js/charting.js') }}" defer></script>
 {% endblock %}
