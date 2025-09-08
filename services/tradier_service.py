@@ -186,7 +186,7 @@ def get_historical_data(ticker, timeframe):
         support_levels, resistance_levels = find_support_resistance(df)
 
         chart_data = {
-            'labels': [d['date'].split('-')[-1] for d in day_entries], # <-- CHANGE IS HERE
+            'labels': [d['date'].split('-')[-1] for d in day_entries],
             'data': [d['close'] for d in day_entries],
             'support': support_levels,
             'resistance': resistance_levels,

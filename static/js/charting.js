@@ -119,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (chartData.support && chartData.support.length > 0) {
                 chartData.support.forEach(level => {
                     datasets.push({
-                        label: 'Support',
                         data: Array(chartData.labels.length).fill(level),
                         borderColor: 'rgba(40, 167, 69, 0.8)',
                         borderWidth: 2,
@@ -134,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (chartData.resistance && chartData.resistance.length > 0) {
                 chartData.resistance.forEach(level => {
                     datasets.push({
-                        label: 'Resistance',
                         data: Array(chartData.labels.length).fill(level),
                         borderColor: 'rgba(220, 53, 69, 0.8)',
                         borderWidth: 2,
@@ -155,6 +153,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    // ---------------------------------------------
                     scales: {
                         x: { title: { display: true, text: 'Date' } },
                         y: { title: { display: true, text: 'Price (USD)' } }
