@@ -1,20 +1,15 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, IntegerField, SubmitField
-from wtforms.validators import DataRequired, InputRequired, ValidationError
-from datetime import datetime
+from wtforms.validators import DataRequired, InputRequired
 
-def is_future_date(form, field):
-    """Validator to ensure the expiration date is in the future."""
-    try:
-        exp_date = datetime.strptime(field.data, '%Y-%m-%d').date()
-        if exp_date <= datetime.now().date():
-            raise ValidationError('Expiration date must be in the future.')
-    except ValueError:
-        raise ValidationError('Invalid date format. Please use YYYY-MM-DD.')
+# The custom date validator is no longer needed here as the dates will be pre-validated from the API
+# and the user can only select from a list.
 
 class VerticalSpreadForm(FlaskForm):
-    symbol = StringField('Stock Ticker', validators=[DataRequired()])
-    expiration = StringField('Expiration (YYYY-MM-DD)', validators=[DataRequired(), is_future_date])
+    symbol = StringField('Stock Ticker', validators=[DataRequired()], default='GOOGL')
+    
+    # CHANGED: This is now a SelectField. Choices will be added via JavaScript.
+    expiration = SelectField('Expiration', validators=[DataRequired()], choices=[])
     
     spread_type = SelectField('Spread Type', choices=[('debit', 'Debit'), ('credit', 'Credit')], validators=[DataRequired()])
     option_type = SelectField('Option Type', choices=[('call', 'Call'), ('put', 'Put')], validators=[DataRequired()])

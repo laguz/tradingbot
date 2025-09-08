@@ -1,15 +1,12 @@
 from flask import Flask, render_template, jsonify, request
-from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data
-# Import the new blueprint
+# UPDATED: Added get_option_expirations to the import list
+from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data, get_option_expirations
 from spread_routes import spreads
-import os # Import os for the secret key
+import os
 
-# Initialize the Flask application
 app = Flask(__name__)
-# A secret key is required for CSRF protection with Flask-WTF
 app.config['SECRET_KEY'] = os.urandom(24)
 
-# Register the blueprint
 app.register_blueprint(spreads)
 
 # --- Main Page Routes ---
@@ -31,7 +28,7 @@ def dashboard():
 @app.route('/charts')
 def charts():
     """
-    Renders the empty chart page. The data will be loaded via a separate API call.
+    Renders the chart page and populates initial analysis.
     """
     ticker = request.args.get('ticker', 'GOOGL').upper()
     timeframe = request.args.get('timeframe', '3m')
@@ -44,20 +41,29 @@ def charts():
                            timeframe=timeframe,
                            levels=levels)
 
-# --- API Endpoint for Chart Data ---
+# --- API Endpoints ---
 
 @app.route('/api/history/<string:ticker>/<string:timeframe>')
 def api_history(ticker, timeframe):
     """
-    API endpoint to fetch historical stock data.
-    Called by the JavaScript on the charts page.
+    API endpoint to fetch historical stock data for charts.
     """
     data = get_historical_data(ticker, timeframe)
     if data:
         return jsonify(data)
     else:
-        # Return an error response if no data is found
         return jsonify({'error': 'Could not retrieve data for the given ticker.'}), 404
+
+@app.route('/api/expirations/<string:symbol>')
+def api_expirations(symbol):
+    """
+    API endpoint to fetch option expiration dates for a given symbol.
+    """
+    expirations = get_option_expirations(symbol)
+    if 'error' in expirations:
+        return jsonify(expirations), 404
+    return jsonify(expirations)
+
 
 # --- Main execution block ---
 

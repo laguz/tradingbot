@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
-from datetime import date, timedelta, datetime # Add datetime
+from datetime import date, timedelta, datetime
 
 # --- API Configuration ---
 load_dotenv() 
@@ -199,18 +199,47 @@ def get_historical_data(ticker, timeframe):
         print(f"ERROR: Could not fetch historical data for {ticker}. {e}")
         return None
 
-# --- NEW FUNCTIONS FOR ORDER PLACEMENT ---
+def get_option_expirations(symbol):
+    """
+    Fetches option expiration dates for a given stock symbol.
+    """
+    if not TRADIER_API_KEY:
+        return {'error': 'API Key not set.'}
+
+    params = {'symbol': symbol.upper()}
+    endpoint = "markets/options/expirations"
+    
+    try:
+        response = requests.get(BASE_URL + endpoint, params=params, headers=HEADERS)
+        response.raise_for_status()
+        data = response.json()
+        
+        expirations = data.get('expirations', {}).get('date', [])
+        return expirations
+
+    except requests.exceptions.RequestException as e:
+        error_details = e.response.json() if e.response else str(e)
+        print(f"ERROR: Could not fetch expirations for {symbol}. {error_details}")
+        return {'error': f"Failed to fetch expirations: {error_details}"}
+    except Exception as e:
+        print(f"An unexpected error occurred while fetching expirations: {e}")
+        return {'error': f"An unexpected error occurred: {str(e)}"}
 
 def _generate_occ_symbol(symbol, expiration, option_type, strike):
     """
-    Generates a 21-character OCC option symbol.
-    Example: SPY251219C00520000
+    Generates an OCC option symbol.
+    Example: GOOGL250919C00180000
     """
     exp_date = datetime.strptime(expiration, '%Y-%m-%d').strftime('%y%m%d')
     opt_type = 'C' if option_type.lower() == 'call' else 'P'
     strike_price = str(int(float(strike) * 1000)).zfill(8)
-    padded_symbol = symbol.upper().ljust(6)
-    return f"{padded_symbol}{exp_date}{opt_type}{strike_price}"
+    
+    # --- CORRECTED LOGIC ---
+    # Removed the space padding, which was likely invalidating the symbol.
+    formatted_symbol = symbol.upper()
+    # --- END OF CORRECTION ---
+    
+    return f"{formatted_symbol}{exp_date}{opt_type}{strike_price}"
 
 def place_vertical_spread_order(form_data):
     """
@@ -228,25 +257,18 @@ def place_vertical_spread_order(form_data):
             form_data['symbol'], form_data['expiration'],
             form_data['option_type'], form_data['short_strike']
         )
-
-        if form_data['spread_type'] == 'debit':
-            long_side = 'buy_to_open'
-            short_side = 'sell_to_open'
-        else: # credit
-            long_side = 'sell_to_open'
-            short_side = 'buy_to_open'
             
         order_payload = {
             'class': 'multileg',
             'symbol': form_data['symbol'].upper(),
             'type': 'market',
             'duration': 'day',
-            'leg[0].option_symbol': long_occ,
-            'leg[0].side': long_side,
-            'leg[0].quantity': form_data['quantity'],
-            'leg[1].option_symbol': short_occ,
-            'leg[1].side': short_side,
-            'leg[1].quantity': form_data['quantity'],
+            'option_symbol[0]': long_occ,
+            'side[0]': 'buy_to_open',
+            'quantity[0]': form_data['quantity'],
+            'option_symbol[1]': short_occ,
+            'side[1]': 'sell_to_open',
+            'quantity[1]': form_data['quantity'],
         }
 
         endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
@@ -256,9 +278,21 @@ def place_vertical_spread_order(form_data):
         return response.json()
 
     except requests.exceptions.RequestException as e:
-        error_details = e.response.json() if e.response else str(e)
-        print(f"ERROR: Could not place order. {error_details}")
-        return {'error': f"Failed to place order: {error_details}"}
+        error_message = str(e)
+        if e.response is not None:
+            try:
+                error_details = e.response.json()
+                if 'errors' in error_details and 'error' in error_details['errors']:
+                    error_message = ". ".join(error_details['errors']['error'])
+                elif 'fault' in error_details and 'faultstring' in error_details['fault']:
+                    error_message = error_details['fault']['faultstring']
+                else:
+                    error_message = str(error_details)
+            except ValueError:
+                error_message = e.response.text
+
+        print(f"ERROR: Could not place order. {error_message}")
+        return {'error': f"Failed to place order: {error_message}"}
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return {'error': f"An unexpected error occurred: {str(e)}"}

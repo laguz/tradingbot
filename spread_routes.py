@@ -1,12 +1,19 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
 from forms import VerticalSpreadForm
-from services.tradier_service import place_vertical_spread_order
+from services.tradier_service import place_vertical_spread_order, get_option_expirations
 
 spreads = Blueprint('spreads', __name__)
 
 @spreads.route('/spreads/vertical', methods=['GET', 'POST'])
 def submit_vertical_spread():
     form = VerticalSpreadForm()
+
+    if form.is_submitted():
+        symbol = form.symbol.data.upper()
+        if symbol:
+            expirations = get_option_expirations(symbol)
+            form.expiration.choices = [(d, d) for d in expirations]
+
     if form.validate_on_submit():
         form_data = {
             'symbol': form.symbol.data,
@@ -24,7 +31,11 @@ def submit_vertical_spread():
             flash(f"Successfully submitted market order for {form.symbol.data.upper()}. Order ID: {result.get('order', {}).get('id')}", 'success')
             return redirect(url_for('spreads.submit_vertical_spread'))
         else:
-            error_message = result.get('error', 'An unknown error occurred.')
+            if result:
+                error_message = result.get('error', 'An unknown error occurred.')
+            else:
+                error_message = "Order service returned an empty response. Please check the logs."
+            
             flash(f"Order submission failed: {error_message}", 'danger')
 
     return render_template('vertical_spread.html', form=form)
