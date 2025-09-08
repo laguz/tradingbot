@@ -1,50 +1,84 @@
-// Wait for the entire HTML document to be loaded and parsed
+// laguz/tradingbot/tradingbot-bc1f680a95b47c592f111a193bf8d1c99a0bd96d/static/js/charting.js
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Get references to our HTML elements
+    // --- HTML Element References ---
     const tickerInput = document.getElementById('tickerInput');
     const timeframeControls = document.getElementById('timeframe-controls');
     const chartContainer = document.getElementById('chart-container');
     const chartError = document.getElementById('chart-error');
     const ctx = document.getElementById('stockChart').getContext('2d');
+    
+    // New references for the analysis card
+    const analysisCard = document.getElementById('analysis-card');
+    const analysisTicker = document.getElementById('analysis-ticker');
+    const supportContainer = document.getElementById('support-levels-container');
+    const resistanceContainer = document.getElementById('resistance-levels-container');
 
-    // This variable will hold our chart instance, so we can destroy it before creating a new one
     let stockChart;
 
     /**
-     * Hides the chart and displays an error message.
+     * Hides the chart and analysis, and displays an error message.
      * @param {string} message The error message to display.
      */
     function showError(message) {
-        chartContainer.classList.add('d-none'); // Hide chart
-        chartError.classList.remove('d-none'); // Show error
+        chartContainer.classList.add('d-none');
+        analysisCard.classList.add('d-none');
+        chartError.classList.remove('d-none');
         chartError.textContent = message;
         if (stockChart) {
-            stockChart.destroy(); // Ensure old chart is gone
+            stockChart.destroy();
         }
     }
 
     /**
-     * Hides the error message and shows the chart.
+     * Hides the error message and shows the chart and analysis card.
      */
-    function showChart() {
-        chartError.classList.add('d-none'); // Hide error
-        chartContainer.classList.remove('d-none'); // Show chart
+    function showChartAndAnalysis() {
+        chartError.classList.add('d-none');
+        chartContainer.classList.remove('d-none');
+        analysisCard.classList.remove('d-none');
     }
 
     /**
-     * Main function to fetch data and update the chart
+     * Updates the support or resistance list in the DOM.
+     * @param {HTMLElement} container - The container element for the list.
+     * @param {Array<number>} levels - The array of support/resistance levels.
+     * @param {boolean} isSupport - True for support, false for resistance.
+     */
+    function updateLevelsList(container, levels, isSupport) {
+        container.innerHTML = ''; // Clear previous content
+
+        if (levels && levels.length > 0) {
+            const ul = document.createElement('ul');
+            ul.className = 'list-group list-group-light';
+            
+            const iconClass = isSupport ? 'fa-arrow-trend-up text-success' : 'fa-arrow-trend-down text-danger';
+
+            levels.forEach(level => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.innerHTML = `<div><i class="fas ${iconClass} me-2"></i>$${level}</div>`;
+                ul.appendChild(li);
+            });
+            container.appendChild(ul);
+        } else {
+            const p = document.createElement('p');
+            p.className = 'text-muted';
+            p.textContent = `No significant ${isSupport ? 'support' : 'resistance'} levels found.`;
+            container.appendChild(p);
+        }
+    }
+
+
+    /**
+     * Main function to fetch data and update the chart and analysis
      */
     async function updateChart() {
-        // Get the current values from the user controls
         const ticker = tickerInput.value.toUpperCase();
         const selectedTimeframe = document.querySelector('input[name="timeframe"]:checked').value;
-
-        // Construct the API URL
         const apiUrl = `/api/history/${ticker}/${selectedTimeframe}`;
 
         try {
-            // Fetch data from our Flask API
             const response = await fetch(apiUrl);
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({ error: 'Stock data not found. Please check the ticker.' }));
@@ -52,22 +86,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const chartData = await response.json();
 
-            // If the backend returns its own error message, throw it
             if (chartData.error) {
                 throw new Error(chartData.error);
             }
 
-            // Success: show the chart container
-            showChart();
+            // --- Success ---
+            showChartAndAnalysis();
+            
+            // 1. Update Analysis Card Header
+            analysisTicker.textContent = ticker;
+            
+            // 2. Update Support and Resistance Lists
+            updateLevelsList(supportContainer, chartData.levels.support, true);
+            updateLevelsList(resistanceContainer, chartData.levels.resistance, false);
 
-            // If a chart instance already exists, destroy it
+
+            // 3. Update Chart
             if (stockChart) {
                 stockChart.destroy();
             }
 
             const datasets = [{
                 label: `${ticker} Closing Price`,
-                data: chartData.data, // Prices for the Y-axis
+                data: chartData.data,
                 borderColor: 'rgb(75, 192, 192)',
                 backgroundColor: 'rgba(75, 192, 192, 0.1)',
                 fill: true,
@@ -75,13 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 pointRadius: 1,
             }];
 
-            // Add support lines if available
             if (chartData.support && chartData.support.length > 0) {
                 chartData.support.forEach(level => {
                     datasets.push({
                         label: 'Support',
                         data: Array(chartData.labels.length).fill(level),
-                        borderColor: 'rgba(40, 167, 69, 0.8)', // Green
+                        borderColor: 'rgba(40, 167, 69, 0.8)',
                         borderWidth: 2,
                         borderDash: [5, 5],
                         pointRadius: 0,
@@ -91,13 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Add resistance lines if available
             if (chartData.resistance && chartData.resistance.length > 0) {
                 chartData.resistance.forEach(level => {
                     datasets.push({
                         label: 'Resistance',
                         data: Array(chartData.labels.length).fill(level),
-                        borderColor: 'rgba(220, 53, 69, 0.8)', // Red
+                        borderColor: 'rgba(220, 53, 69, 0.8)',
                         borderWidth: 2,
                         borderDash: [5, 5],
                         pointRadius: 0,
@@ -107,29 +146,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Create a new chart using the data we fetched
             stockChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: chartData.labels, // Dates for the X-axis
+                    labels: chartData.labels,
                     datasets: datasets
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Date'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Price (USD)'
-                            }
-                        }
+                        x: { title: { display: true, text: 'Date' } },
+                        y: { title: { display: true, text: 'Price (USD)' } }
                     }
                 }
             });
@@ -141,15 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Listeners ---
-
-    // Update chart when the ticker input changes (e.g., user types and hits Enter or clicks away)
     tickerInput.addEventListener('change', updateChart);
-
-    // Update chart when a different timeframe button is selected
     timeframeControls.addEventListener('change', updateChart);
 
     // --- Initial Chart Load ---
-
-    // Load the default chart (GOOGL, 3M) when the page first loads
     updateChart();
 });

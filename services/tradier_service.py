@@ -1,3 +1,4 @@
+# laguz/tradingbot/tradingbot-bc1f680a95b47c592f111a193bf8d1c99a0bd96d/services/tradier_service.py
 import os
 import requests
 import pandas as pd
@@ -6,7 +7,7 @@ from dotenv import load_dotenv
 from datetime import date, timedelta
 
 # --- API Configuration ---
-load_dotenv() 
+load_dotenv()
 
 TRADIER_API_KEY = os.getenv('TRADIER_API_KEY')
 TRADIER_ACCOUNT_ID = os.getenv('TRADIER_ACCOUNT_ID')
@@ -17,6 +18,13 @@ HEADERS = {
     'Authorization': f'Bearer {TRADIER_API_KEY}',
     'Accept': 'application/json'
 }
+
+# --- Helper Function ---
+def custom_round(price):
+    if price < 100:
+        return round(price)
+    else:
+        return round(price / 5) * 5
 
 # --- Service Functions ---
 
@@ -31,10 +39,10 @@ def get_account_summary():
     try:
         endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/balances"
         response = requests.get(BASE_URL + endpoint, headers=HEADERS)
-        response.raise_for_status() 
-        
+        response.raise_for_status()
+
         balances = response.json().get('balances', {})
-        
+
         summary = {
             'account_balance': balances.get('total_equity'),
             'option_buying_power': balances.get('option_buying_power'),
@@ -63,11 +71,11 @@ def get_open_positions():
         positions_endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/positions"
         response = requests.get(BASE_URL + positions_endpoint, headers=HEADERS)
         response.raise_for_status()
-        
+
         positions_data = response.json().get('positions')
         if positions_data is None or 'position' not in positions_data:
-            return [] 
-            
+            return []
+
         positions = positions_data['position']
         if not isinstance(positions, list):
             positions = [positions]
@@ -81,7 +89,7 @@ def get_open_positions():
         quotes_response = requests.get(BASE_URL + quotes_endpoint, headers=HEADERS, params=params)
         quotes_response.raise_for_status()
         quotes = quotes_response.json()['quotes']['quote']
-        
+
         price_map = {quote['symbol']: quote['last'] for quote in quotes}
 
         enriched_positions = []
@@ -90,14 +98,14 @@ def get_open_positions():
             cost_basis_per_share = pos['cost_basis'] / pos['quantity']
             pl_dollars = (current_price - cost_basis_per_share) * pos['quantity']
             pl_percent = (pl_dollars / pos['cost_basis']) * 100 if pos['cost_basis'] != 0 else 0
-            
+
             enriched_positions.append({
                 'symbol': pos['symbol'], 'quantity': pos['quantity'], 'entry_price': cost_basis_per_share,
                 'current_price': current_price, 'pl_dollars': pl_dollars, 'pl_percent': pl_percent
             })
-            
+
         return enriched_positions
-        
+
     except requests.exceptions.RequestException as e:
         print(f"ERROR: Could not fetch open positions. {e}")
         return None
@@ -133,17 +141,15 @@ def find_support_resistance(data, window=5):
                 last_resistance = level
     return plotted_support, plotted_resistance
 
-# --- NEW FUNCTION FOR CHART.JS ---
 def get_historical_data(ticker, timeframe):
     """
     Fetches historical daily closing prices for a given ticker and timeframe.
-    Formats the data for Chart.js.
+    Formats the data for Chart.js and includes support/resistance levels.
     """
     if not TRADIER_API_KEY:
         print("ERROR: Tradier API key not set in .env file")
         return None
 
-    # Calculate start date based on timeframe
     end_date = date.today()
     time_deltas = {'1m': 30, '3m': 90, '6m': 180, '1y': 365}
     start_date = end_date - timedelta(days=time_deltas.get(timeframe.lower(), 90))
@@ -155,19 +161,16 @@ def get_historical_data(ticker, timeframe):
         'start': start_date.strftime('%Y-%m-%d'),
         'end': end_date.strftime('%Y-%m-%d')
     }
-    
+
     try:
         response = requests.get(BASE_URL + endpoint, headers=HEADERS, params=params)
         response.raise_for_status()
         data = response.json()
 
-        # If the 'history' key is missing, null, or contains no day data, return None
         history_data = data.get('history')
         if not history_data or history_data == 'null' or 'day' not in history_data:
             return None
 
-        # The API returns a single object if one day is found, and a list for multiple days.
-        # We ensure it's always a list to handle it consistently.
         day_entries = history_data['day']
         if not isinstance(day_entries, list):
             day_entries = [day_entries]
@@ -175,19 +178,22 @@ def get_historical_data(ticker, timeframe):
         if not day_entries:
             return None
 
-        # Convert to DataFrame for analysis
         df = pd.DataFrame(day_entries)
-        df.rename(columns={'close': 'Close'}, inplace=True)
+        df.rename(columns={'close': 'Close', 'date': 'Date'}, inplace=True)
+        df['Close'] = pd.to_numeric(df['Close'])
 
-        # Calculate support and resistance levels
+
         support_levels, resistance_levels = find_support_resistance(df)
 
-        # Format data for Chart.js
         chart_data = {
-            'labels': [d['date'].split('-')[-1] for d in day_entries],
+            'labels': [d['date'].split('-')[-1] for d in day_entries], # <-- CHANGE IS HERE
             'data': [d['close'] for d in day_entries],
             'support': support_levels,
             'resistance': resistance_levels,
+            'levels': {
+                'support': list(dict.fromkeys([custom_round(s) for s in support_levels])),
+                'resistance': list(dict.fromkeys([custom_round(r) for r in resistance_levels]))
+            }
         }
         return chart_data
 

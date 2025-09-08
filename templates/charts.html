@@ -8,22 +8,22 @@
     <div class="row mb-4">
         <div class="col-md-4">
             <div data-mdb-input-init class="form-outline">
-                <input type="text" id="tickerInput" class="form-control" value="GOOGL" />
+                <input type="text" id="tickerInput" class="form-control" value="{{ ticker | default('GOOGL', true) }}" />
                 <label class="form-label" for="tickerInput">Stock Ticker</label>
             </div>
         </div>
         <div class="col-md-8 d-flex align-items-center">
             <div id="timeframe-controls" class="btn-group" role="group" aria-label="Timeframe selection">
-                <input type="radio" class="btn-check" name="timeframe" id="1m" value="1m" autocomplete="off" />
+                <input type="radio" class="btn-check" name="timeframe" id="1m" value="1m" autocomplete="off" {% if timeframe == '1m' %}checked{% endif %}/>
                 <label class="btn btn-primary" for="1m">1M</label>
 
-                <input type="radio" class="btn-check" name="timeframe" id="3m" value="3m" autocomplete="off" checked />
+                <input type="radio" class="btn-check" name="timeframe" id="3m" value="3m" autocomplete="off" {% if timeframe == '3m' or not timeframe %}checked{% endif %}/>
                 <label class="btn btn-primary" for="3m">3M</label>
 
-                <input type="radio" class="btn-check" name="timeframe" id="6m" value="6m" autocomplete="off" />
+                <input type="radio" class="btn-check" name="timeframe" id="6m" value="6m" autocomplete="off" {% if timeframe == '6m' %}checked{% endif %}/>
                 <label class="btn btn-primary" for="6m">6M</label>
 
-                <input type="radio" class="btn-check" name="timeframe" id="1y" value="1y" autocomplete="off" />
+                <input type="radio" class="btn-check" name="timeframe" id="1y" value="1y" autocomplete="off" {% if timeframe == '1y' %}checked{% endif %}/>
                 <label class="btn btn-primary" for="1y">1Y</label>
             </div>
         </div>
@@ -35,14 +35,55 @@
                 <canvas id="stockChart"></canvas>
             </div>
             <div id="chart-error" class="alert alert-danger d-none" role="alert">
-                <!-- Error messages will be inserted here by JavaScript -->
+                </div>
+        </div>
+    </div>
+    
+    <div id="analysis-card" class="card mt-4 {% if not levels %}d-none{% endif %}">
+        <div class="card-header text-center">
+            Analysis Results for <strong id="analysis-ticker">{{ ticker | default('GOOGL', true) }}</strong>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-success">Support Levels</h5>
+                    <div id="support-levels-container">
+                        {% if levels and levels.support %}
+                            <ul id="support-list" class="list-group list-group-light">
+                                {% for level in levels.support %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div><i class="fas fa-arrow-trend-up me-2 text-success"></i>${{ level }}</div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted">No significant support levels found.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-danger">Resistance Levels</h5>
+                    <div id="resistance-levels-container">
+                        {% if levels and levels.resistance %}
+                            <ul id="resistance-list" class="list-group list-group-light">
+                                {% for level in levels.resistance %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div><i class="fas fa-arrow-trend-down me-2 text-danger"></i>${{ level }}</div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted">No significant resistance levels found.</p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }} <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
-    
+    {{ super() }} 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="{{ url_for('static', filename='js/charting.js') }}" defer></script>
 {% endblock %}
