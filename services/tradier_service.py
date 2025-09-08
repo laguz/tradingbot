@@ -1,13 +1,12 @@
-# laguz/tradingbot/tradingbot-bc1f680a95b47c592f111a193bf8d1c99a0bd96d/services/tradier_service.py
 import os
 import requests
 import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime # Add datetime
 
 # --- API Configuration ---
-load_dotenv()
+load_dotenv() 
 
 TRADIER_API_KEY = os.getenv('TRADIER_API_KEY')
 TRADIER_ACCOUNT_ID = os.getenv('TRADIER_ACCOUNT_ID')
@@ -39,10 +38,10 @@ def get_account_summary():
     try:
         endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/balances"
         response = requests.get(BASE_URL + endpoint, headers=HEADERS)
-        response.raise_for_status()
-
+        response.raise_for_status() 
+        
         balances = response.json().get('balances', {})
-
+        
         summary = {
             'account_balance': balances.get('total_equity'),
             'option_buying_power': balances.get('option_buying_power'),
@@ -71,11 +70,11 @@ def get_open_positions():
         positions_endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/positions"
         response = requests.get(BASE_URL + positions_endpoint, headers=HEADERS)
         response.raise_for_status()
-
+        
         positions_data = response.json().get('positions')
         if positions_data is None or 'position' not in positions_data:
-            return []
-
+            return [] 
+            
         positions = positions_data['position']
         if not isinstance(positions, list):
             positions = [positions]
@@ -89,7 +88,7 @@ def get_open_positions():
         quotes_response = requests.get(BASE_URL + quotes_endpoint, headers=HEADERS, params=params)
         quotes_response.raise_for_status()
         quotes = quotes_response.json()['quotes']['quote']
-
+        
         price_map = {quote['symbol']: quote['last'] for quote in quotes}
 
         enriched_positions = []
@@ -98,19 +97,19 @@ def get_open_positions():
             cost_basis_per_share = pos['cost_basis'] / pos['quantity']
             pl_dollars = (current_price - cost_basis_per_share) * pos['quantity']
             pl_percent = (pl_dollars / pos['cost_basis']) * 100 if pos['cost_basis'] != 0 else 0
-
+            
             enriched_positions.append({
                 'symbol': pos['symbol'], 'quantity': pos['quantity'], 'entry_price': cost_basis_per_share,
                 'current_price': current_price, 'pl_dollars': pl_dollars, 'pl_percent': pl_percent
             })
-
+            
         return enriched_positions
-
+        
     except requests.exceptions.RequestException as e:
         print(f"ERROR: Could not fetch open positions. {e}")
         return None
 
-def find_support_resistance(data, window=5):
+def find_support_resistance(data, window=10):
     all_support, all_resistance = [], []
     if data.empty: return [], []
     for i in range(window, len(data) - window):
@@ -144,7 +143,7 @@ def find_support_resistance(data, window=5):
 def get_historical_data(ticker, timeframe):
     """
     Fetches historical daily closing prices for a given ticker and timeframe.
-    Formats the data for Chart.js and includes support/resistance levels.
+    Formats the data for Chart.js.
     """
     if not TRADIER_API_KEY:
         print("ERROR: Tradier API key not set in .env file")
@@ -161,7 +160,7 @@ def get_historical_data(ticker, timeframe):
         'start': start_date.strftime('%Y-%m-%d'),
         'end': end_date.strftime('%Y-%m-%d')
     }
-
+    
     try:
         response = requests.get(BASE_URL + endpoint, headers=HEADERS, params=params)
         response.raise_for_status()
@@ -182,7 +181,6 @@ def get_historical_data(ticker, timeframe):
         df.rename(columns={'close': 'Close', 'date': 'Date'}, inplace=True)
         df['Close'] = pd.to_numeric(df['Close'])
 
-
         support_levels, resistance_levels = find_support_resistance(df)
 
         chart_data = {
@@ -200,3 +198,67 @@ def get_historical_data(ticker, timeframe):
     except requests.exceptions.RequestException as e:
         print(f"ERROR: Could not fetch historical data for {ticker}. {e}")
         return None
+
+# --- NEW FUNCTIONS FOR ORDER PLACEMENT ---
+
+def _generate_occ_symbol(symbol, expiration, option_type, strike):
+    """
+    Generates a 21-character OCC option symbol.
+    Example: SPY251219C00520000
+    """
+    exp_date = datetime.strptime(expiration, '%Y-%m-%d').strftime('%y%m%d')
+    opt_type = 'C' if option_type.lower() == 'call' else 'P'
+    strike_price = str(int(float(strike) * 1000)).zfill(8)
+    padded_symbol = symbol.upper().ljust(6)
+    return f"{padded_symbol}{exp_date}{opt_type}{strike_price}"
+
+def place_vertical_spread_order(form_data):
+    """
+    Constructs and places a multi-leg vertical spread order.
+    """
+    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
+        return {'error': 'API Key or Account ID not set.'}
+
+    try:
+        long_occ = _generate_occ_symbol(
+            form_data['symbol'], form_data['expiration'],
+            form_data['option_type'], form_data['long_strike']
+        )
+        short_occ = _generate_occ_symbol(
+            form_data['symbol'], form_data['expiration'],
+            form_data['option_type'], form_data['short_strike']
+        )
+
+        if form_data['spread_type'] == 'debit':
+            long_side = 'buy_to_open'
+            short_side = 'sell_to_open'
+        else: # credit
+            long_side = 'sell_to_open'
+            short_side = 'buy_to_open'
+            
+        order_payload = {
+            'class': 'multileg',
+            'symbol': form_data['symbol'].upper(),
+            'type': 'market',
+            'duration': 'day',
+            'leg[0].option_symbol': long_occ,
+            'leg[0].side': long_side,
+            'leg[0].quantity': form_data['quantity'],
+            'leg[1].option_symbol': short_occ,
+            'leg[1].side': short_side,
+            'leg[1].quantity': form_data['quantity'],
+        }
+
+        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
+        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
+        response.raise_for_status()
+
+        return response.json()
+
+    except requests.exceptions.RequestException as e:
+        error_details = e.response.json() if e.response else str(e)
+        print(f"ERROR: Could not place order. {error_details}")
+        return {'error': f"Failed to place order: {error_details}"}
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return {'error': f"An unexpected error occurred: {str(e)}"}

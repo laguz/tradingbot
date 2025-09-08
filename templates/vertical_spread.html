@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+
+{% block title %}Vertical Spreads{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Place a Vertical Spread Order</h4>
+        <p class="card-text">
+            Build a two-leg vertical spread. Ensure your strikes and spread type are correct before submitting.
+        </p>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mt-3" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('spreads.submit_vertical_spread') }}" class="mt-4">
+            {{ form.hidden_tag() }}
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                        {{ form.symbol(class="form-control") }}
+                        {{ form.symbol.label(class="form-label") }}
+                    </div>
+                    {% for error in form.symbol.errors %}
+                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                        {{ form.expiration(class="form-control") }}
+                        {{ form.expiration.label(class="form-label") }}
+                    </div>
+                     {% for error in form.expiration.errors %}
+                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    {{ form.spread_type.label(class="form-label") }}
+                    {{ form.spread_type(class="form-select") }}
+                </div>
+                <div class="col-md-6 mb-4">
+                    {{ form.option_type.label(class="form-label") }}
+                    {{ form.option_type(class="form-select") }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                        {{ form.long_strike(class="form-control") }}
+                        {{ form.long_strike.label(class="form-label") }}
+                    </div>
+                     {% for error in form.long_strike.errors %}
+                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4 mb-4">
+                     <div data-mdb-input-init class="form-outline">
+                        {{ form.short_strike(class="form-control") }}
+                        {{ form.short_strike.label(class="form-label") }}
+                    </div>
+                    {% for error in form.short_strike.errors %}
+                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                 <div class="col-md-4 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                        {{ form.quantity(class="form-control") }}
+                        {{ form.quantity.label(class="form-label") }}
+                    </div>
+                    {% for error in form.quantity.errors %}
+                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {{ form.submit(class="btn btn-primary btn-block") }}
+        </form>
+    </div>
+</div>
+{% endblock %}
