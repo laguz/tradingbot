@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}Vertical Spreads{% endblock %}
+{% block title %}Trading{% endblock %}
 
 {% block content %}
 <div class="card">
@@ -9,7 +9,7 @@
         <p class="card-text">
             Build a two-leg vertical spread. Enter a ticker to load available expiration dates.
         </p>
-        
+
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
@@ -21,22 +21,22 @@
         {% endwith %}
 
         <form method="POST" action="{{ url_for('spreads.submit_vertical_spread') }}" class="mt-4">
-            {{ form.hidden_tag() }}
+            {{ spread_form.hidden_tag() }}
 
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <div data-mdb-input-init class="form-outline">
-                        {{ form.symbol(class="form-control") }}
-                        {{ form.symbol.label(class="form-label") }}
+                        {{ spread_form.symbol(class="form-control") }}
+                        {{ spread_form.symbol.label(class="form-label") }}
                     </div>
-                    {% for error in form.symbol.errors %}
+                    {% for error in spread_form.symbol.errors %}
                         <div class="text-danger small ms-1 mt-1">{{ error }}</div>
                     {% endfor %}
                 </div>
                 <div class="col-md-6 mb-4">
-                    {{ form.expiration.label(class="form-label") }}
-                    {{ form.expiration(class="form-select") }}
-                     {% for error in form.expiration.errors %}
+                    {{ spread_form.expiration.label(class="form-label") }}
+                    {{ spread_form.expiration(class="form-select") }}
+                     {% for error in spread_form.expiration.errors %}
                         <div class="text-danger small ms-1 mt-1">{{ error }}</div>
                     {% endfor %}
                 </div>
@@ -44,52 +44,96 @@
 
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    {{ form.spread_type.label(class="form-label") }}
-                    {{ form.spread_type(class="form-select") }}
+                    {{ spread_form.spread_type.label(class="form-label") }}
+                    {{ spread_form.spread_type(class="form-select") }}
                 </div>
                 <div class="col-md-6 mb-4">
-                    {{ form.option_type.label(class="form-label") }}
-                    {{ form.option_type(class="form-select") }}
+                    {{ spread_form.option_type.label(class="form-label") }}
+                    {{ spread_form.option_type(class="form-select") }}
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <div data-mdb-input-init class="form-outline">
-                        {{ form.long_strike(class="form-control") }}
-                        {{ form.long_strike.label(class="form-label") }}
+                        {{ spread_form.long_strike(class="form-control") }}
+                        {{ spread_form.long_strike.label(class="form-label") }}
                     </div>
-                     {% for error in form.long_strike.errors %}
+                     {% for error in spread_form.long_strike.errors %}
                         <div class="text-danger small ms-1 mt-1">{{ error }}</div>
                     {% endfor %}
                 </div>
                 <div class="col-md-4 mb-4">
                      <div data-mdb-input-init class="form-outline">
-                        {{ form.short_strike(class="form-control") }}
-                        {{ form.short_strike.label(class="form-label") }}
+                        {{ spread_form.short_strike(class="form-control") }}
+                        {{ spread_form.short_strike.label(class="form-label") }}
                     </div>
-                    {% for error in form.short_strike.errors %}
+                    {% for error in spread_form.short_strike.errors %}
                         <div class="text-danger small ms-1 mt-1">{{ error }}</div>
                     {% endfor %}
                 </div>
                  <div class="col-md-4 mb-4">
                     <div data-mdb-input-init class="form-outline">
-                        {{ form.quantity(class="form-control") }}
-                        {{ form.quantity.label(class="form-label") }}
+                        {{ spread_form.quantity(class="form-control") }}
+                        {{ spread_form.quantity.label(class="form-label") }}
                     </div>
-                    {% for error in form.quantity.errors %}
+                    {% for error in spread_form.quantity.errors %}
                         <div class="text-danger small ms-1 mt-1">{{ error }}</div>
                     {% endfor %}
                 </div>
             </div>
 
-            {{ form.submit(class="btn btn-primary btn-block") }}
+            {{ spread_form.submit(class="btn btn-primary btn-block") }}
+        </form>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h4 class="card-title">Place a Stock Order</h4>
+        <p class="card-text">
+            Enter a ticker and quantity to buy or sell a stock.
+        </p>
+
+        <form method="POST" action="{{ url_for('spreads.submit_vertical_spread') }}" class="mt-4">
+            {{ stock_form.hidden_tag() }}
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                        {{ stock_form.symbol(class="form-control") }}
+                        {{ stock_form.symbol.label(class="form-label") }}
+                    </div>
+                    {% for error in stock_form.symbol.errors %}
+                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4 mb-4">
+                    {{ stock_form.order_type.label(class="form-label") }}
+                    {{ stock_form.order_type(class="form-select") }}
+                    {% for error in stock_form.order_type.errors %}
+                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div data-mdb-input-init class="form-outline">
+                        {{ stock_form.quantity(class="form-control") }}
+                        {{ stock_form.quantity.label(class="form-label") }}
+                    </div>
+                    {% for error in stock_form.quantity.errors %}
+                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {{ stock_form.submit_stock(class="btn btn-primary btn-block") }}
         </form>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
+
 {{ super() }}
 <script>
 document.addEventListener('DOMContentLoaded', () => {

@@ -19,4 +19,10 @@ class VerticalSpreadForm(FlaskForm):
     
     quantity = IntegerField('Quantity', validators=[InputRequired()], default=1)
     
-    submit = SubmitField('Preview Spread Order')
+    submit = SubmitField('Submit Vertical Spread Order')
+
+class StockOrderForm(FlaskForm):
+    symbol = StringField('Stock Ticker', validators=[DataRequired()], default='TSLA')
+    order_type = SelectField('Order Type', choices=[('buy', 'Buy'), ('sell', 'Sell')], validators=[DataRequired()])
+    quantity = IntegerField('Quantity', validators=[InputRequired()], default=1)
+    submit_stock = SubmitField('Submit Stock Order')

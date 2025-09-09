@@ -296,3 +296,50 @@ def place_vertical_spread_order(form_data):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return {'error': f"An unexpected error occurred: {str(e)}"}
+    
+#---Stock logic---
+def place_stock_order(symbol, quantity, side):
+    """
+    Places a market order to buy or sell a stock.
+    :param symbol: The stock ticker.
+    :param quantity: The number of shares.
+    :param side: 'buy' or 'sell'.
+    """
+    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
+        return {'error': 'API Key or Account ID not set.'}
+
+    try:
+        order_payload = {
+            'class': 'equity',
+            'symbol': symbol.upper(),
+            'side': side,
+            'quantity': str(quantity),
+            'type': 'market',
+            'duration': 'day',
+        }
+
+        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
+        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
+        response.raise_for_status()
+
+        return response.json()
+
+    except requests.exceptions.RequestException as e:
+        error_message = str(e)
+        if e.response is not None:
+            try:
+                error_details = e.response.json()
+                if 'errors' in error_details and 'error' in error_details['errors']:
+                    error_message = ". ".join(error_details['errors']['error'])
+                elif 'fault' in error_details and 'faultstring' in error_details['fault']:
+                    error_message = error_details['fault']['faultstring']
+                else:
+                    error_message = str(error_details)
+            except ValueError:
+                error_message = e.response.text
+
+        print(f"ERROR: Could not place order. {error_message}")
+        return {'error': f"Failed to place order: {error_message}"}
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return {'error': f"An unexpected error occurred: {str(e)}"}
