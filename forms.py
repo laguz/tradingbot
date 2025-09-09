@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, InputRequired
 # and the user can only select from a list.
 
 class VerticalSpreadForm(FlaskForm):
-    symbol = StringField('Stock Ticker', validators=[DataRequired()], default='GOOGL')
+    symbol = StringField('Stock Ticker', validators=[DataRequired()], default='TSLA')
     
     # CHANGED: This is now a SelectField. Choices will be added via JavaScript.
     expiration = SelectField('Expiration', validators=[DataRequired()], choices=[])
