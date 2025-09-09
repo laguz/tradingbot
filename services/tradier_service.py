@@ -241,6 +241,98 @@ def _generate_occ_symbol(symbol, expiration, option_type, strike):
     
     return f"{formatted_symbol}{exp_date}{opt_type}{strike_price}"
 
+def place_stock_order(form_data):
+    """
+    Places a market or limit order to buy or sell a stock.
+    """
+    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
+        return {'error': 'API Key or Account ID not set.'}
+
+    try:
+        order_payload = {
+            'class': 'equity',
+            'symbol': form_data['symbol'].upper(),
+            'side': form_data['side'],
+            'quantity': str(form_data['quantity']),
+            'type': form_data['order_type'],
+            'duration': 'day',
+        }
+        if form_data['order_type'] == 'limit':
+            order_payload['price'] = form_data['price']
+
+        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
+        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
+        response.raise_for_status()
+        return response.json()
+
+    except requests.exceptions.RequestException as e:
+        error_message = str(e)
+        if e.response is not None:
+            try:
+                error_details = e.response.json()
+                if 'errors' in error_details and 'error' in error_details['errors']:
+                    error_message = ". ".join(error_details['errors']['error'])
+                else:
+                    error_message = str(error_details)
+            except ValueError:
+                error_message = e.response.text
+        print(f"ERROR: Could not place stock order. {error_message}")
+        return {'error': f"Failed to place order: {error_message}"}
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return {'error': f"An unexpected error occurred: {str(e)}"}
+
+
+def place_single_option_order(form_data):
+    """
+    Constructs and places a single-leg option order (market or limit).
+    """
+    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
+        return {'error': 'API Key or Account ID not set.'}
+
+    try:
+        occ_symbol = _generate_occ_symbol(
+            form_data['symbol'],
+            form_data['expiration'],
+            form_data['option_type'],
+            form_data['strike']
+        )
+
+        order_payload = {
+            'class': 'option',
+            'symbol': form_data['symbol'].upper(),
+            'option_symbol': occ_symbol,
+            'side': form_data['side'],
+            'quantity': form_data['quantity'],
+            'type': form_data['order_type'],
+            'duration': 'day',
+        }
+        if form_data['order_type'] == 'limit':
+            order_payload['price'] = form_data['price']
+
+        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
+        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
+        response.raise_for_status()
+        return response.json()
+
+    except requests.exceptions.RequestException as e:
+        error_message = str(e)
+        if e.response is not None:
+            try:
+                error_details = e.response.json()
+                if 'errors' in error_details and 'error' in error_details['errors']:
+                    error_message = ". ".join(error_details['errors']['error'])
+                else:
+                    error_message = str(error_details)
+            except ValueError:
+                error_message = e.response.text
+        print(f"ERROR: Could not place single option order. {error_message}")
+        return {'error': f"Failed to place order: {error_message}"}
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return {'error': f"An unexpected error occurred: {str(e)}"}
+
+
 def place_vertical_spread_order(form_data):
     """
     Constructs and places a multi-leg vertical spread order.
@@ -261,7 +353,8 @@ def place_vertical_spread_order(form_data):
         order_payload = {
             'class': 'multileg',
             'symbol': form_data['symbol'].upper(),
-            'type': 'market',
+            'type': form_data['spread_type'],
+            'price': form_data['price'],
             'duration': 'day',
             'option_symbol[0]': long_occ,
             'side[0]': 'buy_to_open',
@@ -284,8 +377,6 @@ def place_vertical_spread_order(form_data):
                 error_details = e.response.json()
                 if 'errors' in error_details and 'error' in error_details['errors']:
                     error_message = ". ".join(error_details['errors']['error'])
-                elif 'fault' in error_details and 'faultstring' in error_details['fault']:
-                    error_message = error_details['fault']['faultstring']
                 else:
                     error_message = str(error_details)
             except ValueError:
@@ -296,32 +387,45 @@ def place_vertical_spread_order(form_data):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return {'error': f"An unexpected error occurred: {str(e)}"}
-    
-#---Stock logic---
-def place_stock_order(symbol, quantity, side):
+
+
+def place_iron_condor_order(form_data):
     """
-    Places a market order to buy or sell a stock.
-    :param symbol: The stock ticker.
-    :param quantity: The number of shares.
-    :param side: 'buy' or 'sell'.
+    Constructs and places a 4-leg iron condor order.
     """
     if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
         return {'error': 'API Key or Account ID not set.'}
 
     try:
+        spread_type = form_data['spread_type']
+
+        if spread_type == 'credit':
+            put_buy_side, put_sell_side = 'buy_to_open', 'sell_to_open'
+            call_sell_side, call_buy_side = 'sell_to_open', 'buy_to_open'
+        else:
+            put_buy_side, put_sell_side = 'sell_to_open', 'buy_to_open'
+            call_sell_side, call_buy_side = 'buy_to_open', 'sell_to_open'
+
+        long_put_occ = _generate_occ_symbol(form_data['symbol'], form_data['expiration'], 'put', form_data['long_put_strike'])
+        short_put_occ = _generate_occ_symbol(form_data['symbol'], form_data['expiration'], 'put', form_data['short_put_strike'])
+        short_call_occ = _generate_occ_symbol(form_data['symbol'], form_data['expiration'], 'call', form_data['short_call_strike'])
+        long_call_occ = _generate_occ_symbol(form_data['symbol'], form_data['expiration'], 'call', form_data['long_call_strike'])
+
         order_payload = {
-            'class': 'equity',
-            'symbol': symbol.upper(),
-            'side': side,
-            'quantity': str(quantity),
-            'type': 'market',
+            'class': 'multileg',
+            'symbol': form_data['symbol'].upper(),
+            'type': form_data['spread_type'],
+            'price': form_data['price'],
             'duration': 'day',
+            'option_symbol[0]': long_put_occ, 'side[0]': put_buy_side, 'quantity[0]': form_data['quantity'],
+            'option_symbol[1]': short_put_occ, 'side[1]': put_sell_side, 'quantity[1]': form_data['quantity'],
+            'option_symbol[2]': short_call_occ, 'side[2]': call_sell_side, 'quantity[2]': form_data['quantity'],
+            'option_symbol[3]': long_call_occ, 'side[3]': call_buy_side, 'quantity[3]': form_data['quantity'],
         }
 
         endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
         response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
         response.raise_for_status()
-
         return response.json()
 
     except requests.exceptions.RequestException as e:
@@ -331,14 +435,11 @@ def place_stock_order(symbol, quantity, side):
                 error_details = e.response.json()
                 if 'errors' in error_details and 'error' in error_details['errors']:
                     error_message = ". ".join(error_details['errors']['error'])
-                elif 'fault' in error_details and 'faultstring' in error_details['fault']:
-                    error_message = error_details['fault']['faultstring']
                 else:
                     error_message = str(error_details)
             except ValueError:
                 error_message = e.response.text
-
-        print(f"ERROR: Could not place order. {error_message}")
+        print(f"ERROR: Could not place iron condor order. {error_message}")
         return {'error': f"Failed to place order: {error_message}"}
     except Exception as e:
         print(f"An unexpected error occurred: {e}")

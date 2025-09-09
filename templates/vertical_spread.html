@@ -1,197 +1,251 @@
 {% extends 'layout.html' %}
 
-{% block title %}Trading{% endblock %}
+{% block title %}Advanced Trading{% endblock %}
 
 {% block content %}
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title">Place a Vertical Spread Order</h4>
-        <p class="card-text">
-            Build a two-leg vertical spread. Enter a ticker to load available expiration dates.
-        </p>
+    <h1 class="mb-4">Advanced Trading Orders</h1>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} mt-3" role="alert">
-                        {{ message }}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mt-3" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Place a Single Option Order</h4>
+            <p class="card-text">Buy or sell a single call or put option.</p>
+            <form method="POST" action="{{ url_for('spreads.submit_vertical_spread') }}" class="mt-4">
+                {{ single_option_form.hidden_tag() }}
+                <div class="row">
+                    <div class="col-md-3 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ single_option_form.symbol(class="form-control", id="symbol_single") }}
+                            {{ single_option_form.symbol.label(class="form-label") }}
+                        </div>
                     </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
-        <form method="POST" action="{{ url_for('spreads.submit_vertical_spread') }}" class="mt-4">
-            {{ spread_form.hidden_tag() }}
-
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                        {{ spread_form.symbol(class="form-control") }}
-                        {{ spread_form.symbol.label(class="form-label") }}
+                    <div class="col-md-3 mb-4">
+                        {{ single_option_form.expiration.label(class="form-label") }}
+                        {{ single_option_form.expiration(class="form-select", id="expiration_single") }}
                     </div>
-                    {% for error in spread_form.symbol.errors %}
-                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                <div class="col-md-6 mb-4">
-                    {{ spread_form.expiration.label(class="form-label") }}
-                    {{ spread_form.expiration(class="form-select") }}
-                     {% for error in spread_form.expiration.errors %}
-                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    {{ spread_form.spread_type.label(class="form-label") }}
-                    {{ spread_form.spread_type(class="form-select") }}
-                </div>
-                <div class="col-md-6 mb-4">
-                    {{ spread_form.option_type.label(class="form-label") }}
-                    {{ spread_form.option_type(class="form-select") }}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                        {{ spread_form.long_strike(class="form-control") }}
-                        {{ spread_form.long_strike.label(class="form-label") }}
+                    <div class="col-md-3 mb-4">
+                        {{ single_option_form.side.label(class="form-label") }}
+                        {{ single_option_form.side(class="form-select") }}
                     </div>
-                     {% for error in spread_form.long_strike.errors %}
-                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                <div class="col-md-4 mb-4">
-                     <div data-mdb-input-init class="form-outline">
-                        {{ spread_form.short_strike(class="form-control") }}
-                        {{ spread_form.short_strike.label(class="form-label") }}
+                    <div class="col-md-3 mb-4">
+                        {{ single_option_form.option_type.label(class="form-label") }}
+                        {{ single_option_form.option_type(class="form-select") }}
                     </div>
-                    {% for error in spread_form.short_strike.errors %}
-                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
-                    {% endfor %}
                 </div>
-                 <div class="col-md-4 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                        {{ spread_form.quantity(class="form-control") }}
-                        {{ spread_form.quantity.label(class="form-label") }}
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ single_option_form.strike(class="form-control") }}
+                            {{ single_option_form.strike.label(class="form-label") }}
+                        </div>
                     </div>
-                    {% for error in spread_form.quantity.errors %}
-                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
-                    {% endfor %}
+                    <div class="col-md-4 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ single_option_form.quantity(class="form-control") }}
+                            {{ single_option_form.quantity.label(class="form-label") }}
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        {{ single_option_form.order_type.label(class="form-label") }}
+                        {{ single_option_form.order_type(class="form-select", id="single_option_order_type") }}
+                    </div>
                 </div>
-            </div>
-
-            {{ spread_form.submit(class="btn btn-primary btn-block") }}
-        </form>
+                <div class="row" id="single_option_price_field" style="display: none;">
+                    <div class="col-12 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ single_option_form.price(class="form-control") }}
+                            {{ single_option_form.price.label(class="form-label") }}
+                        </div>
+                    </div>
+                </div>
+                {{ single_option_form.submit_single(class="btn btn-primary btn-block") }}
+            </form>
+        </div>
     </div>
-</div>
-
-<div class="card mt-4">
-    <div class="card-body">
-        <h4 class="card-title">Place a Stock Order</h4>
-        <p class="card-text">
-            Enter a ticker and quantity to buy or sell a stock.
-        </p>
-
-        <form method="POST" action="{{ url_for('spreads.submit_vertical_spread') }}" class="mt-4">
-            {{ stock_form.hidden_tag() }}
-
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                        {{ stock_form.symbol(class="form-control") }}
-                        {{ stock_form.symbol.label(class="form-label") }}
+    
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4 class="card-title">Place an Iron Condor Order</h4>
+            <p class="card-text">A four-leg, non-directional, defined-risk strategy.</p>
+            <form method="POST" action="{{ url_for('spreads.submit_vertical_spread') }}" class="mt-4">
+                {{ iron_condor_form.hidden_tag() }}
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                             {{ iron_condor_form.symbol(class="form-control", id="symbol_condor") }}
+                             {{ iron_condor_form.symbol.label(class="form-label") }}
+                        </div>
                     </div>
-                    {% for error in stock_form.symbol.errors %}
-                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                <div class="col-md-4 mb-4">
-                    {{ stock_form.order_type.label(class="form-label") }}
-                    {{ stock_form.order_type(class="form-select") }}
-                    {% for error in stock_form.order_type.errors %}
-                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
-                    {% endfor %}
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div data-mdb-input-init class="form-outline">
-                        {{ stock_form.quantity(class="form-control") }}
-                        {{ stock_form.quantity.label(class="form-label") }}
+                    <div class="col-md-4 mb-4">
+                        {{ iron_condor_form.expiration.label(class="form-label") }}
+                        {{ iron_condor_form.expiration(class="form-select", id="expiration_condor") }}
                     </div>
-                    {% for error in stock_form.quantity.errors %}
-                        <div class="text-danger small ms-1 mt-1">{{ error }}</div>
-                    {% endfor %}
+                    <div class="col-md-4 mb-4">
+                        {{ iron_condor_form.spread_type.label(class="form-label") }}
+                        {{ iron_condor_form.spread_type(class="form-select") }}
+                    </div>
                 </div>
-            </div>
-
-            {{ stock_form.submit_stock(class="btn btn-primary btn-block") }}
-        </form>
+                <div class="row">
+                    <div class="col-md-6">
+                        <fieldset class="border p-2 mb-4">
+                            <legend class="w-auto float-none small px-2">Call Spread</legend>
+                             <div data-mdb-input-init class="form-outline mb-4">
+                                {{ iron_condor_form.long_call_strike(class="form-control") }}
+                                {{ iron_condor_form.long_call_strike.label(class="form-label") }}
+                            </div>
+                             <div data-mdb-input-init class="form-outline">
+                                {{ iron_condor_form.short_call_strike(class="form-control") }}
+                                {{ iron_condor_form.short_call_strike.label(class="form-label") }}
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset class="border p-2 mb-4">
+                            <legend class="w-auto float-none small px-2">Put Spread</legend>
+                             <div data-mdb-input-init class="form-outline mb-4">
+                                {{ iron_condor_form.short_put_strike(class="form-control") }}
+                                {{ iron_condor_form.short_put_strike.label(class="form-label") }}
+                            </div>
+                             <div data-mdb-input-init class="form-outline">
+                                {{ iron_condor_form.long_put_strike(class="form-control") }}
+                                {{ iron_condor_form.long_put_strike.label(class="form-label") }}
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                         <div data-mdb-input-init class="form-outline">
+                            {{ iron_condor_form.quantity(class="form-control") }}
+                            {{ iron_condor_form.quantity.label(class="form-label") }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                           {{ iron_condor_form.price(class="form-control") }}
+                           {{ iron_condor_form.price.label(class="form-label") }}
+                       </div>
+                   </div>
+                </div>
+                {{ iron_condor_form.submit_condor(class="btn btn-primary btn-block") }}
+            </form>
+        </div>
     </div>
-</div>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4 class="card-title">Place a Vertical Spread Order</h4>
+            <p class="card-text">A two-leg, directional, defined-risk spread.</p>
+            <form method="POST" action="{{ url_for('spreads.submit_vertical_spread') }}" class="mt-4">
+                {{ spread_form.hidden_tag() }}
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ spread_form.symbol(class="form-control", id="symbol") }}
+                            {{ spread_form.symbol.label(class="form-label") }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        {{ spread_form.expiration.label(class="form-label") }}
+                        {{ spread_form.expiration(class="form-select", id="expiration") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        {{ spread_form.spread_type.label(class="form-label") }}
+                        {{ spread_form.spread_type(class="form-select") }}
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        {{ spread_form.option_type.label(class="form-label") }}
+                        {{ spread_form.option_type(class="form-select") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ spread_form.long_strike(class="form-control") }}
+                            {{ spread_form.long_strike.label(class="form-label") }}
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                         <div data-mdb-input-init class="form-outline">
+                            {{ spread_form.short_strike(class="form-control") }}
+                            {{ spread_form.short_strike.label(class="form-label") }}
+                        </div>
+                    </div>
+                     <div class="col-md-4 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ spread_form.quantity(class="form-control") }}
+                            {{ spread_form.quantity.label(class="form-label") }}
+                        </div>
+                    </div>
+                </div>
+                 <div class="row">
+                    <div class="col-12 mb-4">
+                         <div data-mdb-input-init class="form-outline">
+                            {{ spread_form.price(class="form-control") }}
+                            {{ spread_form.price.label(class="form-label") }}
+                        </div>
+                    </div>
+                </div>
+                {{ spread_form.submit(class="btn btn-primary btn-block") }}
+            </form>
+        </div>
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4 class="card-title">Place a Stock Order</h4>
+            <p class="card-text">
+                Enter a ticker and quantity to buy or sell a stock.
+            </p>
+            <form method="POST" action="{{ url_for('spreads.submit_vertical_spread') }}" class="mt-4">
+                {{ stock_form.hidden_tag() }}
+                <div class="row">
+                    <div class="col-md-3 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ stock_form.symbol(class="form-control") }}
+                            {{ stock_form.symbol.label(class="form-label") }}
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        {{ stock_form.side.label(class="form-label") }}
+                        {{ stock_form.side(class="form-select") }}
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ stock_form.quantity(class="form-control") }}
+                            {{ stock_form.quantity.label(class="form-label") }}
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        {{ stock_form.order_type.label(class="form-label") }}
+                        {{ stock_form.order_type(class="form-select", id="stock_order_type") }}
+                    </div>
+                </div>
+                <div class="row" id="stock_price_field" style="display: none;">
+                    <div class="col-12 mb-4">
+                        <div data-mdb-input-init class="form-outline">
+                            {{ stock_form.price(class="form-control") }}
+                            {{ stock_form.price.label(class="form-label") }}
+                        </div>
+                    </div>
+                </div>
+                {{ stock_form.submit_stock(class="btn btn-primary btn-block") }}
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
-
 {{ super() }}
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const symbolInput = document.getElementById('symbol');
-    const expirationSelect = document.getElementById('expiration');
-
-    async function fetchExpirations(symbol) {
-        if (!symbol) {
-            expirationSelect.innerHTML = '<option value="">Enter a symbol first</option>';
-            return;
-        }
-        
-        // Add a loading indicator
-        expirationSelect.innerHTML = '<option value="">Loading...</option>';
-
-        try {
-            const response = await fetch(`/api/expirations/${symbol.toUpperCase()}`);
-            
-            // --- UPDATED ERROR HANDLING ---
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => null); // Try to parse error
-                const errorMessage = errorData ? errorData.error : 'Invalid Ticker or API Error';
-                expirationSelect.innerHTML = `<option value="">Error: ${errorMessage}</option>`;
-                throw new Error(errorMessage);
-            }
-            // --- END OF UPDATE ---
-
-            const dates = await response.json();
-            
-            expirationSelect.innerHTML = ''; // Clear existing options
-
-            if (dates && dates.length > 0) {
-                dates.forEach(date => {
-                    const option = new Option(date, date);
-                    expirationSelect.add(option);
-                });
-
-                // Set the default to the third expiration date, if available
-                if (dates.length >= 3) {
-                    expirationSelect.selectedIndex = 2; // 0-indexed, so 2 is the third item
-                }
-            } else {
-                expirationSelect.innerHTML = '<option value="">No expirations found</option>';
-            }
-        } catch (error) {
-            console.error('Error fetching expiration dates:', error);
-        }
-    }
-
-    // Add event listener to fetch expirations when the user changes the ticker
-    symbolInput.addEventListener('change', () => {
-        fetchExpirations(symbolInput.value);
-    });
-
-    // Fetch expirations for the default ticker on page load
-    if (symbolInput.value) {
-        fetchExpirations(symbolInput.value);
-    }
-});
-</script>
 {% endblock %}
