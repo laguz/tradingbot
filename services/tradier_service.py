@@ -109,7 +109,7 @@ def get_open_positions():
         print(f"ERROR: Could not fetch open positions. {e}")
         return None
 
-def find_support_resistance(data, window=10):
+def find_support_resistance(data, window=20):
     all_support, all_resistance = [], []
     if data.empty: return [], []
     for i in range(window, len(data) - window):
@@ -488,24 +488,41 @@ def calculate_smart_strikes(symbol, expiration, spread_type, option_type, width)
 
     # 2. Determine Target Price based on Strategy
     target_price = None
+    trigger_level = None # The level (support/resistance) used for decision
     
     if spread_type == 'credit' and option_type == 'put':
         # Bullish: Sell Put AT or BELOW Support
         # Find the closest support level below current price
         valid_supports = [s for s in support_levels if s < current_price]
+        
+        # Safety Buffer: Ensure we are at least 1% OTM
+        safety_threshold = current_price * 0.99
+        
         if valid_supports:
-            target_price = valid_supports[-1] # Closest support below price
+            closest_support = valid_supports[-1]
+            # Use the lower of the two (further OTM) to ensure safety
+            target_price = min(closest_support, safety_threshold)
+            trigger_level = closest_support
         else:
             target_price = current_price * 0.95 # Fallback: 5% OTM
+            trigger_level = "Fallback (5% OTM)"
             
     elif spread_type == 'credit' and option_type == 'call':
         # Bearish: Sell Call AT or ABOVE Resistance
         # Find the closest resistance level above current price
         valid_resistances = [r for r in resistance_levels if r > current_price]
+        
+        # Safety Buffer: Ensure we are at least 1% OTM
+        safety_threshold = current_price * 1.01
+        
         if valid_resistances:
-            target_price = valid_resistances[0] # Closest resistance above price
+            closest_resistance = valid_resistances[0]
+            # Use the higher of the two (further OTM) to ensure safety
+            target_price = max(closest_resistance, safety_threshold)
+            trigger_level = closest_resistance
         else:
             target_price = current_price * 1.05 # Fallback: 5% OTM
+            trigger_level = "Fallback (5% OTM)"
     else:
         raise ValueError("Auto-selection currently only supports Credit Spreads (Put/Call).")
 
@@ -547,4 +564,4 @@ def calculate_smart_strikes(symbol, expiration, spread_type, option_type, width)
          higher_strikes = [s for s in strikes if s > short_strike]
          if higher_strikes: long_strike = higher_strikes[0] # Lowest of the higher strikes
 
-    return short_strike, long_strike
+    return short_strike, long_strike, trigger_level

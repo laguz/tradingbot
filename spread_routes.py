@@ -35,7 +35,7 @@ def submit_vertical_spread():
         # --- Auto-Submission Logic ---
         if form_data.get('auto_strikes'):
             try:
-                short_strike, long_strike = calculate_smart_strikes(
+                short_strike, long_strike, trigger_level = calculate_smart_strikes(
                     form_data['symbol'],
                     form_data['expiration'],
                     form_data['spread_type'],
@@ -44,7 +44,7 @@ def submit_vertical_spread():
                 )
                 form_data['short_strike'] = str(short_strike)
                 form_data['long_strike'] = str(long_strike)
-                flash(f"Auto-Selected Strikes: Short {short_strike}, Long {long_strike}", 'info')
+                flash(f"Auto-Selected Strikes: Short {short_strike}, Long {long_strike} (Based on Level: {trigger_level})", 'info')
             except Exception as e:
                 flash(f"Auto-selection failed: {str(e)}", 'danger')
                 return redirect(url_for('spreads.submit_vertical_spread'))
