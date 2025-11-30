@@ -444,3 +444,107 @@ def place_iron_condor_order(form_data):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return {'error': f"An unexpected error occurred: {str(e)}"}
+
+def get_option_chain(symbol, expiration):
+    """
+    Fetches the option chain for a specific expiration.
+    """
+    if not TRADIER_API_KEY:
+        return []
+
+    params = {'symbol': symbol.upper(), 'expiration': expiration, 'greeks': 'false'}
+    endpoint = "markets/options/chains"
+    
+    try:
+        response = requests.get(BASE_URL + endpoint, params=params, headers=HEADERS)
+        response.raise_for_status()
+        data = response.json()
+        
+        options = data.get('options', {}).get('option', [])
+        if not isinstance(options, list):
+            options = [options]
+            
+        return options
+
+    except requests.exceptions.RequestException as e:
+        print(f"ERROR: Could not fetch option chain for {symbol}. {e}")
+        return []
+
+def calculate_smart_strikes(symbol, expiration, spread_type, option_type, width):
+    """
+    Calculates optimal strikes based on Support (Put Credit) or Resistance (Call Credit).
+    """
+    # 1. Get Historical Data for Support/Resistance
+    chart_data = get_historical_data(symbol, '6m') # Use 6 months for reliable levels
+    if not chart_data:
+        raise ValueError("Could not fetch historical data for analysis.")
+        
+    support_levels = chart_data.get('support', [])
+    resistance_levels = chart_data.get('resistance', [])
+    current_price = chart_data['data'][-1]
+    
+    if not support_levels and not resistance_levels:
+         raise ValueError("No support or resistance levels found.")
+
+    # 2. Determine Target Price based on Strategy
+    target_price = None
+    
+    if spread_type == 'credit' and option_type == 'put':
+        # Bullish: Sell Put AT or BELOW Support
+        # Find the closest support level below current price
+        valid_supports = [s for s in support_levels if s < current_price]
+        if valid_supports:
+            target_price = valid_supports[-1] # Closest support below price
+        else:
+            target_price = current_price * 0.95 # Fallback: 5% OTM
+            
+    elif spread_type == 'credit' and option_type == 'call':
+        # Bearish: Sell Call AT or ABOVE Resistance
+        # Find the closest resistance level above current price
+        valid_resistances = [r for r in resistance_levels if r > current_price]
+        if valid_resistances:
+            target_price = valid_resistances[0] # Closest resistance above price
+        else:
+            target_price = current_price * 1.05 # Fallback: 5% OTM
+    else:
+        raise ValueError("Auto-selection currently only supports Credit Spreads (Put/Call).")
+
+    # 3. Get Option Chain to find real strikes
+    chain = get_option_chain(symbol, expiration)
+    if not chain:
+        raise ValueError("Could not fetch option chain.")
+        
+    # Filter chain for correct type
+    chain = [opt for opt in chain if opt['option_type'] == option_type]
+    strikes = sorted(list(set([opt['strike'] for opt in chain])))
+    
+    if not strikes:
+        raise ValueError("No strikes found for this expiration.")
+
+    # 4. Select Short Strike (Closest to Target Price)
+    # We want to sell the option closest to our target level
+    short_strike = min(strikes, key=lambda x: abs(x - target_price))
+    
+    # 5. Calculate Long Strike
+    if option_type == 'put':
+        # Put Credit Spread: Long Strike is LOWER than Short Strike
+        long_strike_target = short_strike - width
+    else:
+        # Call Credit Spread: Long Strike is HIGHER than Short Strike
+        long_strike_target = short_strike + width
+        
+    # Find closest real strike to the calculated long target
+    long_strike = min(strikes, key=lambda x: abs(x - long_strike_target))
+    
+    # Validation: Ensure spread width is maintained roughly (don't collapse the spread)
+    if option_type == 'put' and long_strike >= short_strike:
+         # Try to find a lower strike
+         lower_strikes = [s for s in strikes if s < short_strike]
+         if lower_strikes: long_strike = lower_strikes[-1] # Highest of the lower strikes
+         
+    if option_type == 'call' and long_strike <= short_strike:
+         # Try to find a higher strike
+         higher_strikes = [s for s in strikes if s > short_strike]
+         if higher_strikes: long_strike = higher_strikes[0] # Lowest of the higher strikes
+
+    return short_strike, long_strike

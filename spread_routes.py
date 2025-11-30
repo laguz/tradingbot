@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for
 from forms import VerticalSpreadForm, StockOrderForm, SingleOptionForm, IronCondorForm
 from services.tradier_service import (
     place_vertical_spread_order, get_option_expirations, place_stock_order,
-    place_single_option_order, place_iron_condor_order
+    place_single_option_order, place_iron_condor_order, calculate_smart_strikes
 )
 
 spreads = Blueprint('spreads', __name__)
@@ -31,6 +31,24 @@ def submit_vertical_spread():
     # --- Form Processing ---
     if spread_form.validate_on_submit() and spread_form.submit.data:
         form_data = {**spread_form.data}
+        
+        # --- Auto-Submission Logic ---
+        if form_data.get('auto_strikes'):
+            try:
+                short_strike, long_strike = calculate_smart_strikes(
+                    form_data['symbol'],
+                    form_data['expiration'],
+                    form_data['spread_type'],
+                    form_data['option_type'],
+                    float(form_data['spread_width'])
+                )
+                form_data['short_strike'] = str(short_strike)
+                form_data['long_strike'] = str(long_strike)
+                flash(f"Auto-Selected Strikes: Short {short_strike}, Long {long_strike}", 'info')
+            except Exception as e:
+                flash(f"Auto-selection failed: {str(e)}", 'danger')
+                return redirect(url_for('spreads.submit_vertical_spread'))
+
         result = place_vertical_spread_order(form_data)
         if result and 'error' not in result:
             flash(f"Successfully submitted vertical spread for {form_data['symbol'].upper()}. Order ID: {result.get('order', {}).get('id')}", 'success')

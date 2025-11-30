@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, IntegerField, SubmitField
+from wtforms import StringField, SelectField, IntegerField, SubmitField, BooleanField, FloatField
 from wtforms.validators import DataRequired, InputRequired, Optional
 
 # The custom date validator is no longer needed here as the dates will be pre-validated from the API
@@ -10,8 +10,13 @@ class VerticalSpreadForm(FlaskForm):
     expiration = SelectField('Expiration', validators=[DataRequired()], choices=[])
     spread_type = SelectField('Spread Type', choices=[('debit', 'Debit'), ('credit', 'Credit')], validators=[DataRequired()])
     option_type = SelectField('Option Type', choices=[('call', 'Call'), ('put', 'Put')], validators=[DataRequired()])
-    long_strike = StringField('Buy Strike', validators=[DataRequired()])
-    short_strike = StringField('Sell Strike', validators=[DataRequired()])
+    
+    # Auto-Submission Fields
+    auto_strikes = BooleanField('Auto-Select Strikes (Support/Resistance)', default=False)
+    spread_width = FloatField('Spread Width ($)', validators=[Optional()], default=5.0)
+    
+    long_strike = StringField('Buy Strike', validators=[Optional()])
+    short_strike = StringField('Sell Strike', validators=[Optional()])
     quantity = IntegerField('Quantity', validators=[InputRequired()], default=1)
     price = StringField('Limit Price (Net Debit/Credit)', validators=[DataRequired()])
     submit = SubmitField('Place Vertical Spread Order')
