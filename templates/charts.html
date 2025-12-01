@@ -19,11 +19,11 @@
             <label class="btn btn-primary" for="1m">1M</label>
 
             <input type="radio" class="btn-check" name="timeframe" id="3m" value="3m" autocomplete="off" {% if
-                timeframe=='3m' or not timeframe %}checked{% endif %} />
+                timeframe=='3m' %}checked{% endif %} />
             <label class="btn btn-primary" for="3m">3M</label>
 
             <input type="radio" class="btn-check" name="timeframe" id="6m" value="6m" autocomplete="off" {% if
-                timeframe=='6m' %}checked{% endif %} />
+                timeframe=='6m' or not timeframe %}checked{% endif %} />
             <label class="btn btn-primary" for="6m">6M</label>
 
             <input type="radio" class="btn-check" name="timeframe" id="1y" value="1y" autocomplete="off" {% if
