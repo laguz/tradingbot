@@ -1,0 +1,118 @@
+{% extends 'layout.html' %}
+
+{% block title %}Stock Prediction{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">AI Price Prediction</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mt-3" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="POST" class="row align-items-end">
+                <div class="col-md-4">
+                    <div data-mdb-input-init class="form-outline">
+                        <input type="text" id="ticker" name="ticker" class="form-control" value="{{ ticker }}" required />
+                        <label class="form-label" for="ticker">Stock Ticker</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-block">Predict</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if prediction %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">5-Day Forecast for {{ prediction.ticker }}</div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Predicted Close</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for price in prediction.predictions %}
+                            <tr>
+                                <td>+{{ loop.index }}</td>
+                                <td>${{ price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <p class="small text-muted mt-2">
+                        Last Close: ${{ prediction.last_close }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="predictionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {% if prediction %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('predictionChart').getContext('2d');
+            const predictions = {{ prediction.predictions | tojson }};
+            const lastClose = {{ prediction.last_close }};
+            
+            // Create labels (Day +1, Day +2...)
+            const labels = predictions.map((_, i) => `Day +${i+1}`);
+            
+            // Prepend "Today"
+            const chartLabels = ['Today', ...labels];
+            const chartData = [lastClose, ...predictions];
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Predicted Price',
+                        data: chartData,
+                        borderColor: 'rgb(153, 102, 255)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Forecast Trajectory'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    {% endif %}
+{% endblock %}
