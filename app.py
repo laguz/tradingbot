@@ -2,12 +2,14 @@ from flask import Flask, render_template, jsonify, request
 # UPDATED: Added get_option_expirations to the import list
 from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data, get_option_expirations
 from spread_routes import spreads
+from prediction_routes import predictions
 import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 
 app.register_blueprint(spreads)
+app.register_blueprint(predictions)
 
 # --- Main Page Routes ---
 
