@@ -3,124 +3,130 @@
 {% block title %}Dashboard Overview{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4">Dashboard Overview</h1>
+<h1 class="mb-4">Dashboard Overview</h1>
 
-    <div class="row">
-        <div class="col-md-6 col-lg-3 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title text-muted">Account Balance</h5>
-                    <p class="card-text fs-3 fw-bold">${{ "{:,.2f}".format(summary.account_balance | default(0, true)) }}</p>
-                    
-                    {% set day_pl = summary.day_pl | default(0, true) %}
-                    {% if day_pl >= 0 %}
-                        <p class="card-text text-success">
-                            <i class="fas fa-caret-up"></i>
-                            ${{ "{:,.2f}".format(day_pl) }} (Today)
-                        </p>
-                    {% else %}
-                        <p class="card-text text-danger">
-                            <i class="fas fa-caret-down"></i>
-                            -${{ "{:,.2f}".format(day_pl|abs) }} (Today)
-                        </p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title text-muted">Option Buying Power</h5>
-                    <p class="card-text fs-3 fw-bold">${{ "{:,.2f}".format(summary.option_buying_power | default(0, true)) }}</p>
-                    <p class="card-text text-muted">
-                       <i class="fas fa-info-circle"></i> Available for trading
-                    </p>
-                </div>
-            </div>
-        </div>
-         <div class="col-md-6 col-lg-3 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title text-muted">Day P/L</h5>
-                    {% if day_pl >= 0 %}
-                        <p class="card-text fs-3 fw-bold text-success">${{ "{:,.2f}".format(day_pl) }}</p>
-                    {% else %}
-                        <p class="card-text fs-3 fw-bold text-danger">-${{ "{:,.2f}".format(day_pl|abs) }}</p>
-                    {% endif %}
-                    
-                    {# Calculate Day P/L Percentage #}
-                    {% set starting_balance = summary.account_balance - day_pl %}
-                    {% if starting_balance > 0 %}
-                        {% set day_pl_percent = (day_pl / starting_balance) * 100 %}
-                        {% if day_pl_percent >= 0 %}
-                            <p class="card-text text-success"><i class="fas fa-arrow-trend-up"></i> +{{ day_pl_percent|round(2) }}%</p>
-                        {% else %}
-                             <p class="card-text text-danger"><i class="fas fa-arrow-trend-down"></i> {{ day_pl_percent|round(2) }}%</p>
-                        {% endif %}
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title text-muted">Yearly P/L</h5>
-                     {% set ytd_pl = yearly_pl.yearly_pl | default(0, true) %}
-                     {% if ytd_pl >= 0 %}
-                        <p class="card-text fs-3 fw-bold text-success">${{ "{:,.2f}".format(ytd_pl) }}</p>
-                        <p class="card-text text-success"><i class="fas fa-arrow-trend-up"></i> YTD Gain</p>
-                     {% else %}
-                        <p class="card-text fs-3 fw-bold text-danger">-${{ "{:,.2f}".format(ytd_pl|abs) }}</p>
-                        <p class="card-text text-danger"><i class="fas fa-arrow-trend-down"></i> YTD Loss</p>
-                     {% endif %}
-                </div>
+<div class="row">
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Account Balance</h5>
+                <p class="card-text fs-3 fw-bold">${{ "{:,.2f}".format(summary.account_balance | default(0, true)) }}
+                </p>
+
+                {% set day_pl = summary.day_pl | default(0, true) %}
+                {% if day_pl >= 0 %}
+                <p class="card-text text-success">
+                    <i class="fas fa-caret-up"></i>
+                    ${{ "{:,.2f}".format(day_pl) }} (Today)
+                </p>
+                {% else %}
+                <p class="card-text text-danger">
+                    <i class="fas fa-caret-down"></i>
+                    -${{ "{:,.2f}".format(day_pl|abs) }} (Today)
+                </p>
+                {% endif %}
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Open Trades</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table align-middle mb-0 bg-white">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th>Ticker</th>
-                                    <th>Quantity</th>
-                                    <th>Entry Price</th>
-                                    <th>Current Price</th>
-                                    <th>P/L ($)</th>
-                                    <th>P/L (%)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for pos in positions %}
-                                <tr>
-                                    <td>{{ pos.symbol }}</td>
-                                    <td>{{ pos.quantity|round(0) }}</td>
-                                    <td>${{ "{:,.2f}".format(pos.entry_price) }}</td>
-                                    <td>${{ "{:,.2f}".format(pos.current_price) }}</td>
-                                    {% if pos.pl_dollars >= 0 %}
-                                        <td class="text-success">${{ "{:,.2f}".format(pos.pl_dollars) }}</td>
-                                        <td class="text-success">+{{ pos.pl_percent|round(2) }}%</td>
-                                    {% else %}
-                                        <td class="text-danger">-${{ "{:,.2f}".format(pos.pl_dollars|abs) }}</td>
-                                        <td class="text-danger">{{ pos.pl_percent|round(2) }}%</td>
-                                    {% endif %}
-                                </tr>
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Option Buying Power</h5>
+                <p class="card-text fs-3 fw-bold">${{ "{:,.2f}".format(summary.option_buying_power | default(0, true))
+                    }}</p>
+                <p class="card-text text-muted">
+                    <i class="fas fa-info-circle"></i> Available for trading
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Day P/L</h5>
+                {% if day_pl >= 0 %}
+                <p class="card-text fs-3 fw-bold text-success">${{ "{:,.2f}".format(day_pl) }}</p>
+                {% else %}
+                <p class="card-text fs-3 fw-bold text-danger">-${{ "{:,.2f}".format(day_pl|abs) }}</p>
+                {% endif %}
+
+                {# Calculate Day P/L Percentage #}
+                {% if summary.account_balance is defined and summary.account_balance is not none %}
+                {% set starting_balance = summary.account_balance - day_pl %}
+                {% if starting_balance > 0 %}
+                {% set day_pl_percent = (day_pl / starting_balance) * 100 %}
+                {% if day_pl_percent >= 0 %}
+                <p class="card-text text-success"><i class="fas fa-arrow-trend-up"></i> +{{ day_pl_percent|round(2) }}%
+                </p>
+                {% else %}
+                <p class="card-text text-danger"><i class="fas fa-arrow-trend-down"></i> {{ day_pl_percent|round(2) }}%
+                </p>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Yearly P/L</h5>
+                {% set ytd_pl = yearly_pl.yearly_pl | default(0, true) %}
+                {% if ytd_pl >= 0 %}
+                <p class="card-text fs-3 fw-bold text-success">${{ "{:,.2f}".format(ytd_pl) }}</p>
+                <p class="card-text text-success"><i class="fas fa-arrow-trend-up"></i> YTD Gain</p>
+                {% else %}
+                <p class="card-text fs-3 fw-bold text-danger">-${{ "{:,.2f}".format(ytd_pl|abs) }}</p>
+                <p class="card-text text-danger"><i class="fas fa-arrow-trend-down"></i> YTD Loss</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Open Trades</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 bg-white">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Ticker</th>
+                                <th>Quantity</th>
+                                <th>Entry Price</th>
+                                <th>Current Price</th>
+                                <th>P/L ($)</th>
+                                <th>P/L (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pos in positions %}
+                            <tr>
+                                <td>{{ pos.symbol }}</td>
+                                <td>{{ pos.quantity|round(0) }}</td>
+                                <td>${{ "{:,.2f}".format(pos.entry_price) }}</td>
+                                <td>${{ "{:,.2f}".format(pos.current_price) }}</td>
+                                {% if pos.pl_dollars >= 0 %}
+                                <td class="text-success">${{ "{:,.2f}".format(pos.pl_dollars) }}</td>
+                                <td class="text-success">+{{ pos.pl_percent|round(2) }}%</td>
                                 {% else %}
-                                <tr>
-                                    <td colspan="6" class="text-center">No open positions found.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                                <td class="text-danger">-${{ "{:,.2f}".format(pos.pl_dollars|abs) }}</td>
+                                <td class="text-danger">{{ pos.pl_percent|round(2) }}%</td>
+                                {% endif %}
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">No open positions found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
