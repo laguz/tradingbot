@@ -6,10 +6,10 @@ predictions = Blueprint('predictions', __name__)
 @predictions.route('/prediction', methods=['GET', 'POST'])
 def show_prediction():
     prediction_data = None
-    ticker = 'SPY' # Default
+    ticker = 'TSLA' # Default
     
     if request.method == 'POST':
-        ticker = request.form.get('ticker', 'SPY').upper()
+        ticker = request.form.get('ticker', 'TSLA').upper()
         try:
             result = predict_next_days(ticker, days=5)
             if 'error' in result:
