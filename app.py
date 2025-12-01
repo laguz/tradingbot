@@ -33,7 +33,7 @@ def charts():
     Renders the chart page and populates initial analysis.
     """
     ticker = request.args.get('ticker', 'TSLA').upper()
-    timeframe = request.args.get('timeframe', '3m')
+    timeframe = request.args.get('timeframe', '6m')
     
     chart_data = get_historical_data(ticker, timeframe)
     levels = chart_data.get('levels') if chart_data else None
