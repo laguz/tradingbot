@@ -49,13 +49,15 @@
                     {% endif %}
                     
                     {# Calculate Day P/L Percentage #}
-                    {% set starting_balance = summary.account_balance - day_pl %}
-                    {% if starting_balance > 0 %}
-                        {% set day_pl_percent = (day_pl / starting_balance) * 100 %}
-                        {% if day_pl_percent >= 0 %}
-                            <p class="card-text text-success"><i class="fas fa-arrow-trend-up"></i> +{{ day_pl_percent|round(2) }}%</p>
-                        {% else %}
-                             <p class="card-text text-danger"><i class="fas fa-arrow-trend-down"></i> {{ day_pl_percent|round(2) }}%</p>
+                    {% if summary.account_balance is defined and summary.account_balance is not none %}
+                        {% set starting_balance = summary.account_balance - day_pl %}
+                        {% if starting_balance > 0 %}
+                            {% set day_pl_percent = (day_pl / starting_balance) * 100 %}
+                            {% if day_pl_percent >= 0 %}
+                                <p class="card-text text-success"><i class="fas fa-arrow-trend-up"></i> +{{ day_pl_percent|round(2) }}%</p>
+                            {% else %}
+                                <p class="card-text text-danger"><i class="fas fa-arrow-trend-down"></i> {{ day_pl_percent|round(2) }}%</p>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 </div>
