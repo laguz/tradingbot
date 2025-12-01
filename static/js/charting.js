@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartContainer = document.getElementById('chart-container');
     const chartError = document.getElementById('chart-error');
     const ctx = document.getElementById('stockChart').getContext('2d');
-    
+
     // New references for the analysis card
     const analysisCard = document.getElementById('analysis-card');
     const analysisTicker = document.getElementById('analysis-ticker');
@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (levels && levels.length > 0) {
             const ul = document.createElement('ul');
-            ul.className = 'list-group list-group-light';
-            
+            ul.className = 'list-group';
+
             const iconClass = isSupport ? 'fa-arrow-trend-up text-success' : 'fa-arrow-trend-down text-danger';
 
             levels.forEach(level => {
@@ -92,10 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // --- Success ---
             showChartAndAnalysis();
-            
+
             // 1. Update Analysis Card Header
             analysisTicker.textContent = ticker;
-            
+
             // 2. Update Support and Resistance Lists
             updateLevelsList(supportContainer, chartData.levels.support, true);
             updateLevelsList(resistanceContainer, chartData.levels.resistance, false);
@@ -160,8 +160,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     // ---------------------------------------------
                     scales: {
-                        x: { title: { display: true, text: 'Date' } },
-                        y: { title: { display: true, text: 'Price (USD)' } }
+                        x: {
+                            title: { display: true, text: 'Date', color: '#a0a0a0' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#a0a0a0' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Price (USD)', color: '#a0a0a0' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#a0a0a0' }
+                        }
                     }
                 }
             });

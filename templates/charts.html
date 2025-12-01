@@ -53,7 +53,7 @@
                 <h5 class="text-success">Support Levels</h5>
                 <div id="support-levels-container">
                     {% if levels and levels.support %}
-                    <ul id="support-list" class="list-group list-group-light">
+                    <ul id="support-list" class="list-group">
                         {% for level in levels.support %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <div><i class="fas fa-arrow-trend-up me-2 text-success"></i>${{ level }}</div>
@@ -69,7 +69,7 @@
                 <h5 class="text-danger">Resistance Levels</h5>
                 <div id="resistance-levels-container">
                     {% if levels and levels.resistance %}
-                    <ul id="resistance-list" class="list-group list-group-light">
+                    <ul id="resistance-list" class="list-group">
                         {% for level in levels.resistance %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <div><i class="fas fa-arrow-trend-down me-2 text-danger"></i>${{ level }}</div>
