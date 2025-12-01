@@ -6,7 +6,7 @@ from prediction_routes import predictions
 import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.urandom(24)
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', os.urandom(24))
 
 app.register_blueprint(spreads)
 app.register_blueprint(predictions)
