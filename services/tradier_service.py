@@ -109,36 +109,63 @@ def get_open_positions():
         print(f"ERROR: Could not fetch open positions. {e}")
         return None
 
-def find_support_resistance(data, window=20):
-    all_support, all_resistance = [], []
+def find_support_resistance(data, window=5, tolerance=0.015):
+    """
+    Identifies support and resistance levels using volume-weighted clustering.
+    """
     if data.empty: return [], []
+    
+    supports = []
+    resistances = []
+    
+    # 1. Identify Pivot Points
     for i in range(window, len(data) - window):
-        window_slice = data['Close'].iloc[i-window:i+window+1]
-        current_price = data['Close'].iloc[i]
-        price = current_price.item() if isinstance(current_price, (pd.Series, pd.DataFrame)) else current_price
-        if np.isclose(price, window_slice.min()): all_support.append(price)
-        if np.isclose(price, window_slice.max()): all_resistance.append(price)
-    unique_supports = sorted(list(set(all_support)))
-    unique_resistances = sorted(list(set(all_resistance)))
-    plotted_support = []
-    if unique_supports:
-        last_support = unique_supports[0]
-        plotted_support.append(last_support)
-        for level in unique_supports:
-            required_diff = 1 if last_support < 100 else 2
-            if abs(level - last_support) >= required_diff:
-                plotted_support.append(level)
-                last_support = level
-    plotted_resistance = []
-    if unique_resistances:
-        last_resistance = unique_resistances[0]
-        plotted_resistance.append(last_resistance)
-        for level in unique_resistances:
-            required_diff = 1 if last_resistance < 100 else 2
-            if abs(level - last_resistance) >= required_diff:
-                plotted_resistance.append(level)
-                last_resistance = level
-    return plotted_support, plotted_resistance
+        # Support Pivot (Local Low)
+        if data['Low'].iloc[i] == data['Low'].iloc[i-window:i+window+1].min():
+            supports.append({'price': data['Low'].iloc[i], 'volume': data['Volume'].iloc[i]})
+            
+        # Resistance Pivot (Local High)
+        if data['High'].iloc[i] == data['High'].iloc[i-window:i+window+1].max():
+            resistances.append({'price': data['High'].iloc[i], 'volume': data['Volume'].iloc[i]})
+
+    def cluster_levels(levels):
+        if not levels: return []
+        
+        levels.sort(key=lambda x: x['price'])
+        clusters = []
+        current_cluster = [levels[0]]
+        
+        for i in range(1, len(levels)):
+            price = levels[i]['price']
+            prev_price = current_cluster[-1]['price']
+            
+            # Check if within tolerance
+            if price <= prev_price * (1 + tolerance):
+                current_cluster.append(levels[i])
+            else:
+                clusters.append(current_cluster)
+                current_cluster = [levels[i]]
+        clusters.append(current_cluster)
+        
+        # Score Clusters
+        scored_clusters = []
+        for cluster in clusters:
+            avg_price = sum(l['price'] for l in cluster) / len(cluster)
+            total_volume = sum(l['volume'] for l in cluster)
+            touch_count = len(cluster)
+            
+            # Score = Volume * Touches (Simple heuristic)
+            score = total_volume * touch_count
+            scored_clusters.append({'price': avg_price, 'score': score})
+            
+        # Sort by score and take top 5 significant levels
+        scored_clusters.sort(key=lambda x: x['score'], reverse=True)
+        return sorted([c['price'] for c in scored_clusters[:5]])
+
+    final_supports = cluster_levels(supports)
+    final_resistances = cluster_levels(resistances)
+    
+    return final_supports, final_resistances
 
 def get_historical_data(ticker, timeframe):
     """
@@ -178,8 +205,11 @@ def get_historical_data(ticker, timeframe):
             return None
 
         df = pd.DataFrame(day_entries)
-        df.rename(columns={'close': 'Close', 'date': 'Date'}, inplace=True)
+        df.rename(columns={'close': 'Close', 'date': 'Date', 'high': 'High', 'low': 'Low', 'volume': 'Volume'}, inplace=True)
         df['Close'] = pd.to_numeric(df['Close'])
+        df['High'] = pd.to_numeric(df['High'])
+        df['Low'] = pd.to_numeric(df['Low'])
+        df['Volume'] = pd.to_numeric(df['Volume'])
 
         support_levels, resistance_levels = find_support_resistance(df)
 
