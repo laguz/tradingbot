@@ -229,6 +229,61 @@ def get_historical_data(ticker, timeframe):
         print(f"ERROR: Could not fetch historical data for {ticker}. {e}")
         return None
 
+def get_raw_historical_data(ticker, timeframe):
+    """
+    Fetches raw historical daily data (OHLCV) for a given ticker.
+    Returns a Pandas DataFrame with datetime index and numeric columns.
+    """
+    if not TRADIER_API_KEY:
+        print("ERROR: Tradier API key not set in .env file")
+        return None
+
+    end_date = date.today()
+    time_deltas = {'1m': 30, '3m': 90, '6m': 180, '1y': 365, '2y': 730, '5y': 1825}
+    start_date = end_date - timedelta(days=time_deltas.get(timeframe.lower(), 365))
+
+    endpoint = "markets/history"
+    params = {
+        'symbol': ticker,
+        'interval': 'daily',
+        'start': start_date.strftime('%Y-%m-%d'),
+        'end': end_date.strftime('%Y-%m-%d')
+    }
+    
+    try:
+        response = requests.get(BASE_URL + endpoint, headers=HEADERS, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        history_data = data.get('history')
+        if not history_data or history_data == 'null' or 'day' not in history_data:
+            return pd.DataFrame() # Return empty DF instead of None for consistency
+
+        day_entries = history_data['day']
+        if not isinstance(day_entries, list):
+            day_entries = [day_entries]
+
+        if not day_entries:
+            return pd.DataFrame()
+
+        df = pd.DataFrame(day_entries)
+        df.rename(columns={'close': 'Close', 'date': 'Date', 'high': 'High', 'low': 'Low', 'open': 'Open', 'volume': 'Volume'}, inplace=True)
+        
+        # Convert types
+        df['Date'] = pd.to_datetime(df['Date'])
+        numeric_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
+        for col in numeric_cols:
+            df[col] = pd.to_numeric(df[col])
+            
+        df.set_index('Date', inplace=True)
+        df.sort_index(inplace=True)
+            
+        return df
+
+    except requests.exceptions.RequestException as e:
+        print(f"ERROR: Could not fetch raw historical data for {ticker}. {e}")
+        return pd.DataFrame()
+
 def get_option_expirations(symbol):
     """
     Fetches option expiration dates for a given stock symbol.
