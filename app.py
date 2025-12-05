@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 # UPDATED: Added get_option_expirations to the import list
-from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data, get_option_expirations
+from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data, get_option_expirations, get_current_price, check_and_close_positions
 from spread_routes import spreads
 from prediction_routes import predictions
 import os
@@ -65,6 +65,16 @@ def api_expirations(symbol):
     if 'error' in expirations:
         return jsonify(expirations), 404
     return jsonify(expirations)
+
+@app.route('/api/price/<string:symbol>')
+def api_price(symbol):
+    """
+    API endpoint to fetch current price for a symbol.
+    """
+    price = get_current_price(symbol)
+    if isinstance(price, dict) and 'error' in price:
+        return jsonify(price), 400
+    return jsonify({'symbol': symbol.upper(), 'price': price})
 
 
 # --- Main execution block ---

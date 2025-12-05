@@ -5,3 +5,5 @@ plotly
 python-dotenv
 scikit-learn
 numpy
+flask-wtf
+email_validator

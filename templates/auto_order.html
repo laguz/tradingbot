@@ -1,0 +1,296 @@
+{% extends "layout.html" %}
+
+{% block title %}Auto Credit Spread Order - Tradier Bot{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h1 class="text-white">Auto Credit Spread Order Generator</h1>
+        <button id="autoCloseBtn" class="btn btn-warning"><i class="fas fa-robot me-2"></i>Run Auto-Close Check</button>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <!-- Input Section -->
+    <div class="col-md-6 mb-4">
+        <div class="card bg-dark-glass">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-search me-2"></i>Select Ticker</h5>
+                <div class="input-group mb-3">
+                    <input type="text" id="tickerInput" class="form-control" value="TSLA"
+                        placeholder="Enter Symbol (e.g. SPY)" aria-label="Ticker">
+                    <button class="btn btn-primary" type="button" id="loadDataBtn">Load Data</button>
+                </div>
+                <div id="marketData" class="d-none">
+                    <p class="mb-1">Current Price: <span id="currentPrice" class="fw-bold text-warning">--</span></p>
+                    <p class="mb-0 text-muted small">Data loaded for <span id="loadedSymbol">--</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="strategiesSection" class="d-none">
+    <!-- Put Credit Spread Card -->
+    <div class="col-md-6 mb-4">
+        <div class="card bg-dark-glass h-100">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-arrow-trend-up me-2"></i>Put Credit Spread (Bullish)</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Sells a Put at the nearest <strong>Support</strong> level (6m timeframe).</p>
+                <hr class="bg-light">
+
+                <div id="putResult" class="d-none">
+                    <ul class="list-group list-group-flush bg-transparent">
+                        <li class="list-group-item bg-transparent text-white">Support Level: <span id="putSupport"
+                                class="fw-bold">--</span></li>
+                        <li class="list-group-item bg-transparent text-white">Short Strike: <span id="putShort"
+                                class="fw-bold text-success">--</span></li>
+                        <li class="list-group-item bg-transparent text-white">Long Strike: <span id="putLong"
+                                class="fw-bold text-danger">--</span></li>
+                        <li class="list-group-item bg-transparent text-white">Width: <span class="fw-bold">5.0</span>
+                        </li>
+                    </ul>
+                    <div class="mt-3">
+                        <label for="putQuantity" class="form-label">Quantity</label>
+                        <input type="number" id="putQuantity" class="form-control mb-2" value="1" min="1"
+                            style="width: 100px;">
+                        <button id="submitPutBtn" class="btn btn-success w-100">Submit Order</button>
+                    </div>
+                </div>
+
+                <div id="putLoading" class="text-center d-none">
+                    <div class="spinner-border text-success" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <div id="putInitial">
+                    <button id="generatePutBtn" class="btn btn-outline-success w-100">Generate Trade</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call Credit Spread Card -->
+    <div class="col-md-6 mb-4">
+        <div class="card bg-dark-glass h-100">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="fas fa-arrow-trend-down me-2"></i>Call Credit Spread (Bearish)</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Sells a Call at the nearest <strong>Resistance</strong> level (6m timeframe).</p>
+                <hr class="bg-light">
+
+                <div id="callResult" class="d-none">
+                    <ul class="list-group list-group-flush bg-transparent">
+                        <li class="list-group-item bg-transparent text-white">Resistance Level: <span
+                                id="callResistance" class="fw-bold">--</span></li>
+                        <li class="list-group-item bg-transparent text-white">Short Strike: <span id="callShort"
+                                class="fw-bold text-success">--</span></li>
+                        <li class="list-group-item bg-transparent text-white">Long Strike: <span id="callLong"
+                                class="fw-bold text-danger">--</span></li>
+                        <li class="list-group-item bg-transparent text-white">Width: <span class="fw-bold">5.0</span>
+                        </li>
+                    </ul>
+                    <div class="mt-3">
+                        <label for="callQuantity" class="form-label">Quantity</label>
+                        <input type="number" id="callQuantity" class="form-control mb-2" value="1" min="1"
+                            style="width: 100px;">
+                        <button id="submitCallBtn" class="btn btn-danger w-100">Submit Order</button>
+                    </div>
+                </div>
+
+                <div id="callLoading" class="text-center d-none">
+                    <div class="spinner-border text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <div id="callInitial">
+                    <button id="generateCallBtn" class="btn btn-outline-danger w-100">Generate Trade</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tickerInput = document.getElementById('tickerInput');
+        const loadDataBtn = document.getElementById('loadDataBtn');
+        const marketData = document.getElementById('marketData');
+        const strategiesSection = document.getElementById('strategiesSection');
+
+        // Put Elements
+        const generatePutBtn = document.getElementById('generatePutBtn');
+        const putLoading = document.getElementById('putLoading');
+        const putResult = document.getElementById('putResult');
+        const putInitial = document.getElementById('putInitial');
+        const submitPutBtn = document.getElementById('submitPutBtn');
+
+        // Call Elements
+        const generateCallBtn = document.getElementById('generateCallBtn');
+        const callLoading = document.getElementById('callLoading');
+        const callResult = document.getElementById('callResult');
+        const callInitial = document.getElementById('callInitial');
+        const submitCallBtn = document.getElementById('submitCallBtn');
+
+        let currentSymbol = '';
+        let putTradeData = null;
+        let callTradeData = null;
+
+        loadDataBtn.addEventListener('click', async () => {
+            const symbol = tickerInput.value.toUpperCase();
+            if (!symbol) return alert('Please enter a symbol');
+
+            currentSymbol = symbol;
+            document.getElementById('loadedSymbol').innerText = symbol;
+            marketData.classList.remove('d-none');
+            strategiesSection.classList.remove('d-none'); // Show strategies but they need generation
+
+            // Reset previous results
+            putResult.classList.add('d-none');
+            putInitial.classList.remove('d-none');
+            callResult.classList.add('d-none');
+            callInitial.classList.remove('d-none');
+
+            // Fetch Current Price
+            try {
+                document.getElementById('currentPrice').innerText = "Loading...";
+                const response = await fetch(`/api/price/${symbol}`);
+                const data = await response.json();
+
+                if (data.error) throw new Error(data.error);
+
+                document.getElementById('currentPrice').innerText = '$' + data.price;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('currentPrice').innerText = "Error";
+            }
+        });
+
+        async function generateTrade(type) {
+            if (!currentSymbol) return alert('Please load a symbol first');
+
+            const isPut = type === 'put';
+            const loadingEl = isPut ? putLoading : callLoading;
+            const resultEl = isPut ? putResult : callResult;
+            const initialEl = isPut ? putInitial : callInitial;
+
+            initialEl.classList.add('d-none');
+            loadingEl.classList.remove('d-none');
+            resultEl.classList.add('d-none');
+
+            try {
+                const response = await fetch(`/api/calculate_auto_order?symbol=${currentSymbol}&type=${type}`);
+                const data = await response.json();
+
+                if (data.error) throw new Error(data.error);
+
+                if (isPut) {
+                    document.getElementById('putSupport').innerText = data.trigger_level;
+                    document.getElementById('putShort').innerText = data.short_strike;
+                    document.getElementById('putLong').innerText = data.long_strike;
+                    putTradeData = data;
+                } else {
+                    document.getElementById('callResistance').innerText = data.trigger_level;
+                    document.getElementById('callShort').innerText = data.short_strike;
+                    document.getElementById('callLong').innerText = data.long_strike;
+                    callTradeData = data;
+                }
+
+                loadingEl.classList.add('d-none');
+                resultEl.classList.remove('d-none');
+
+            } catch (err) {
+                alert('Error generating trade: ' + err.message);
+                loadingEl.classList.add('d-none');
+                initialEl.classList.remove('d-none');
+            }
+        }
+
+        generatePutBtn.addEventListener('click', () => generateTrade('put'));
+        generateCallBtn.addEventListener('click', () => generateTrade('call'));
+
+        async function submitTrade(type) {
+            const data = type === 'put' ? putTradeData : callTradeData;
+            const quantity = document.getElementById(type === 'put' ? 'putQuantity' : 'callQuantity').value;
+
+            if (!data) return;
+
+            if (!confirm(`Are you sure you want to submit this ${type.toUpperCase()} Credit Spread?`)) return;
+
+            try {
+                const response = await fetch('/auto_order/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ...data,
+                        quantity: quantity,
+                        symbol: currentSymbol
+                    })
+                });
+
+                const result = await response.json();
+                if (result.error) throw new Error(result.error);
+
+                alert('Order Submitted Successfully! ID: ' + result.order_id);
+
+            } catch (err) {
+                alert('Order Submission Failed: ' + err.message);
+            }
+        }
+
+        submitPutBtn.addEventListener('click', () => submitTrade('put'));
+        submitCallBtn.addEventListener('click', () => submitTrade('call'));
+
+        // Auto-load if value exists (e.g. default TSLA)
+        if (tickerInput.value) {
+            loadDataBtn.click();
+        }
+
+        // Auto Close Logic
+        const autoCloseBtn = document.getElementById('autoCloseBtn');
+        autoCloseBtn.addEventListener('click', async () => {
+            if (!confirm('Run Auto-Close Check? This will close positions meeting profit criteria.')) return;
+
+            try {
+                autoCloseBtn.disabled = true;
+                autoCloseBtn.innerText = 'Checking...';
+
+                const response = await fetch('/api/auto_close', { method: 'POST' });
+                const result = await response.json();
+
+                if (result.error) throw new Error(result.error);
+
+                let msg = `Checked ${result.checked} positions.\n`;
+                if (result.closed.length > 0) {
+                    msg += `Closed ${result.closed.length} positions:\n`;
+                    result.closed.forEach(c => msg += `- ${c.symbol}: ${c.reason}\n`);
+                } else {
+                    msg += "No positions met the closing criteria.";
+                }
+
+                if (result.errors.length > 0) {
+                    msg += `\nErrors:\n`;
+                    result.errors.forEach(e => msg += `- ${e.symbol}: ${e.error}\n`);
+                }
+
+                alert(msg);
+
+            } catch (err) {
+                alert('Auto-Close Failed: ' + err.message);
+            } finally {
+                autoCloseBtn.disabled = false;
+                autoCloseBtn.innerHTML = '<i class="fas fa-robot me-2"></i>Run Auto-Close Check';
+            }
+        });
+    });
+</script>
+{% endblock %}
+```
