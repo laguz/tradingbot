@@ -97,10 +97,16 @@ def get_open_positions():
         
         for pos in positions:
             quote = quote_map.get(pos['symbol'], {})
-            current_price = quote.get('last', pos['cost_basis'])
-            ask_price = quote.get('ask', current_price) # Fallback to last/cost if ask missing
+            cost_basis_per_share = pos['cost_basis'] / pos['quantity'] if pos['quantity'] != 0 else 0
             
-            cost_basis_per_share = pos['cost_basis'] / pos['quantity']
+            current_price = quote.get('last')
+            if current_price is None:
+                current_price = cost_basis_per_share
+                
+            ask_price = quote.get('ask')
+            if ask_price is None:
+                ask_price = current_price
+
             pl_dollars = (current_price - cost_basis_per_share) * pos['quantity']
             pl_percent = (pl_dollars / pos['cost_basis']) * 100 if pos['cost_basis'] != 0 else 0
             
