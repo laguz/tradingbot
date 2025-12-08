@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for, session
+from flask import Flask, render_template, jsonify, request, redirect, url_for, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 # UPDATED: Added get_option_expirations to the import list
 from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data, get_option_expirations, get_current_price, check_and_close_positions
@@ -20,13 +20,62 @@ def load_user(user_id):
     return User.get(user_id)
 
 app.register_blueprint(spreads)
+from services.vault_service import vault_service
+
+@login_manager.request_loader
+def load_user_from_request(request):
+    return None
+
+@app.before_request
+def check_settings():
+    # Allow static resources, auth routes, and setup page
+    if request.endpoint and (
+        'static' in request.endpoint or 
+        request.endpoint in ['login', 'logout', 'setup_credentials', 'api_auth_challenge', 'api_auth_verify']
+    ):
+        return
+
+    # Check if user is authenticated but Vault is not configured
+    if current_user.is_authenticated and not vault_service.is_configured():
+        return redirect(url_for('setup_credentials'))
+
+    # If vault is configured but user is not logged in, login_required will handle it
+
+@app.route('/setup_credentials', methods=['GET', 'POST'])
+@login_required
+def setup_credentials():
+    if vault_service.is_configured():
+        return redirect(url_for('dashboard'))
+
+    if request.method == 'POST':
+        api_key = request.form.get('api_key')
+        account_id = request.form.get('account_id')
+        vault_token = request.form.get('vault_token')
+        
+        if vault_token:
+            vault_service.set_token(vault_token)
+        
+        if api_key and account_id:
+            success, error = vault_service.set_tradier_secrets(api_key, account_id)
+            if success:
+                flash('Credentials saved securely!', 'success')
+                return redirect(url_for('dashboard'))
+            else:
+                flash(f'Failed to save credentials: {error}', 'danger')
+        else:
+            flash('Please provide both API Key and Account ID.', 'danger')
+            
+    return render_template('setup_credentials.html')
+
 app.register_blueprint(predictions)
 
 # --- Auth Routes ---
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
+        if not vault_service.is_configured():
+            return redirect(url_for('setup_credentials'))
         return redirect(url_for('dashboard'))
     return render_template('login.html')
 

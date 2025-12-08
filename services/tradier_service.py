@@ -4,19 +4,34 @@ import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
 from datetime import date, timedelta, datetime
+from services.vault_service import vault_service
 
 # --- API Configuration ---
 load_dotenv() 
 
-TRADIER_API_KEY = os.getenv('TRADIER_API_KEY')
-TRADIER_ACCOUNT_ID = os.getenv('TRADIER_ACCOUNT_ID')
 BASE_URL = 'https://sandbox.tradier.com/v1/'
 
-# --- Standard Headers for API Requests ---
-HEADERS = {
-    'Authorization': f'Bearer {TRADIER_API_KEY}',
-    'Accept': 'application/json'
-}
+# --- Helper Function for Dynamic Headers ---
+def get_headers():
+    secrets = vault_service.get_tradier_secrets()
+    if not secrets:
+        # Fallback to env vars for backward compatibility or if Vault fails
+        api_key = os.getenv('TRADIER_API_KEY')
+        if not api_key:
+            return None
+    else:
+        api_key = secrets.get('api_key')
+
+    return {
+        'Authorization': f'Bearer {api_key}',
+        'Accept': 'application/json'
+    }
+
+def get_account_id():
+    secrets = vault_service.get_tradier_secrets()
+    if secrets:
+        return secrets.get('account_id')
+    return os.getenv('TRADIER_ACCOUNT_ID')
 
 # --- Helper Function ---
 def custom_round(price):
@@ -32,12 +47,12 @@ def get_account_summary():
     Fetches key account metrics like balance, P/L, and buying power.
     Returns a dictionary with the summary data, or None if an error occurs.
     """
-    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
-        return {'error': 'API Key or Account ID not set in .env file'}
+    if not get_account_id() or not get_headers():
+        return {'error': 'API Key or Account ID not set in Vault or .env'}
 
     try:
-        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/balances"
-        response = requests.get(BASE_URL + endpoint, headers=HEADERS)
+        endpoint = f"accounts/{get_account_id()}/balances"
+        response = requests.get(BASE_URL + endpoint, headers=get_headers())
         response.raise_for_status() 
         
         balances = response.json().get('balances', {})
@@ -63,12 +78,12 @@ def get_open_positions():
     Fetches all open positions and enriches them with current market prices.
     Returns a list of positions, or None if an error occurs.
     """
-    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
-        return {'error': 'API Key or Account ID not set in .env file'}
+    if not get_account_id() or not get_headers():
+        return {'error': 'API Key or Account ID not set in Vault or .env'}
 
     try:
-        positions_endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/positions"
-        response = requests.get(BASE_URL + positions_endpoint, headers=HEADERS)
+        positions_endpoint = f"accounts/{get_account_id()}/positions"
+        response = requests.get(BASE_URL + positions_endpoint, headers=get_headers())
         response.raise_for_status()
         
         positions_data = response.json().get('positions')
@@ -85,7 +100,7 @@ def get_open_positions():
 
         quotes_endpoint = "markets/quotes"
         params = {'symbols': ','.join(symbols)}
-        quotes_response = requests.get(BASE_URL + quotes_endpoint, headers=HEADERS, params=params)
+        quotes_response = requests.get(BASE_URL + quotes_endpoint, headers=get_headers(), params=params)
         quotes_response.raise_for_status()
         quotes = quotes_response.json()['quotes']['quote']
         
@@ -165,13 +180,13 @@ def get_current_price(symbol):
     """
     Fetches the current market price for a symbol.
     """
-    if not TRADIER_API_KEY:
+    if not get_headers():
         return {'error': 'API Key not set.'}
         
     try:
         endpoint = "markets/quotes"
         params = {'symbols': symbol.upper()}
-        response = requests.get(BASE_URL + endpoint, headers=HEADERS, params=params)
+        response = requests.get(BASE_URL + endpoint, headers=get_headers(), params=params)
         response.raise_for_status()
         
         quotes = response.json().get('quotes', {}).get('quote')
@@ -253,8 +268,8 @@ def get_historical_data(ticker, timeframe):
     Fetches historical daily closing prices for a given ticker and timeframe.
     Formats the data for Chart.js.
     """
-    if not TRADIER_API_KEY:
-        print("ERROR: Tradier API key not set in .env file")
+    if not get_headers():
+        print("ERROR: Tradier API key not set in Vault or .env")
         return None
 
     end_date = date.today()
@@ -270,7 +285,7 @@ def get_historical_data(ticker, timeframe):
     }
     
     try:
-        response = requests.get(BASE_URL + endpoint, headers=HEADERS, params=params)
+        response = requests.get(BASE_URL + endpoint, headers=get_headers(), params=params)
         response.raise_for_status()
         data = response.json()
 
@@ -315,8 +330,8 @@ def get_raw_historical_data(ticker, timeframe):
     Fetches raw historical daily data (OHLCV) for a given ticker.
     Returns a Pandas DataFrame with datetime index and numeric columns.
     """
-    if not TRADIER_API_KEY:
-        print("ERROR: Tradier API key not set in .env file")
+    if not get_headers():
+        print("ERROR: Tradier API key not set in Vault or .env")
         return None
 
     end_date = date.today()
@@ -332,7 +347,7 @@ def get_raw_historical_data(ticker, timeframe):
     }
     
     try:
-        response = requests.get(BASE_URL + endpoint, headers=HEADERS, params=params)
+        response = requests.get(BASE_URL + endpoint, headers=get_headers(), params=params)
         response.raise_for_status()
         data = response.json()
 
@@ -369,14 +384,14 @@ def get_option_expirations(symbol):
     """
     Fetches option expiration dates for a given stock symbol.
     """
-    if not TRADIER_API_KEY:
+    if not get_headers():
         return {'error': 'API Key not set.'}
 
     params = {'symbol': symbol.upper()}
     endpoint = "markets/options/expirations"
     
     try:
-        response = requests.get(BASE_URL + endpoint, params=params, headers=HEADERS)
+        response = requests.get(BASE_URL + endpoint, params=params, headers=get_headers())
         response.raise_for_status()
         data = response.json()
         
@@ -411,8 +426,8 @@ def place_stock_order(form_data):
     """
     Places a market or limit order to buy or sell a stock.
     """
-    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
-        return {'error': 'API Key or Account ID not set.'}
+    if not get_account_id() or not get_headers():
+        return {'error': 'API Key or Account ID not set in Vault or .env'}
 
     try:
         order_payload = {
@@ -426,8 +441,8 @@ def place_stock_order(form_data):
         if form_data['order_type'] == 'limit':
             order_payload['price'] = form_data['price']
 
-        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
-        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
+        endpoint = f"accounts/{get_account_id()}/orders"
+        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=get_headers())
         response.raise_for_status()
         return response.json()
 
@@ -453,8 +468,8 @@ def place_single_option_order(form_data):
     """
     Constructs and places a single-leg option order (market or limit).
     """
-    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
-        return {'error': 'API Key or Account ID not set.'}
+    if not get_account_id() or not get_headers():
+        return {'error': 'API Key or Account ID not set in Vault or .env'}
 
     try:
         occ_symbol = _generate_occ_symbol(
@@ -476,8 +491,8 @@ def place_single_option_order(form_data):
         if form_data['order_type'] == 'limit':
             order_payload['price'] = form_data['price']
 
-        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
-        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
+        endpoint = f"accounts/{get_account_id()}/orders"
+        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=get_headers())
         response.raise_for_status()
         return response.json()
 
@@ -503,8 +518,8 @@ def place_vertical_spread_order(form_data):
     """
     Constructs and places a multi-leg vertical spread order.
     """
-    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
-        return {'error': 'API Key or Account ID not set.'}
+    if not get_account_id() or not get_headers():
+        return {'error': 'API Key or Account ID not set in Vault or .env'}
 
     try:
         long_occ = _generate_occ_symbol(
@@ -533,8 +548,8 @@ def place_vertical_spread_order(form_data):
         if form_data.get('price'):
             order_payload['price'] = form_data['price']
 
-        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
-        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
+        endpoint = f"accounts/{get_account_id()}/orders"
+        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=get_headers())
         response.raise_for_status()
 
         return response.json()
@@ -562,8 +577,8 @@ def place_iron_condor_order(form_data):
     """
     Constructs and places a 4-leg iron condor order.
     """
-    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
-        return {'error': 'API Key or Account ID not set.'}
+    if not get_account_id() or not get_headers():
+        return {'error': 'API Key or Account ID not set in Vault or .env'}
 
     try:
         spread_type = form_data['spread_type']
@@ -592,8 +607,8 @@ def place_iron_condor_order(form_data):
             'option_symbol[3]': long_call_occ, 'side[3]': call_buy_side, 'quantity[3]': form_data['quantity'],
         }
 
-        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
-        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
+        endpoint = f"accounts/{get_account_id()}/orders"
+        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=get_headers())
         response.raise_for_status()
         return response.json()
 
@@ -618,14 +633,14 @@ def get_option_chain(symbol, expiration):
     """
     Fetches the option chain for a specific expiration.
     """
-    if not TRADIER_API_KEY:
+    if not get_headers():
         return []
 
     params = {'symbol': symbol.upper(), 'expiration': expiration, 'greeks': 'false'}
     endpoint = "markets/options/chains"
     
     try:
-        response = requests.get(BASE_URL + endpoint, params=params, headers=HEADERS)
+        response = requests.get(BASE_URL + endpoint, params=params, headers=get_headers())
         response.raise_for_status()
         data = response.json()
         
@@ -740,8 +755,8 @@ def close_position(position_id, symbol, quantity, limit_price=None):
     Closes a specific position (single leg).
     Optionally uses a limit price.
     """
-    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
-        return {'error': 'API Key or Account ID not set.'}
+    if not get_account_id() or not get_headers():
+        return {'error': 'API Key or Account ID not set in Vault or .env'}
 
     try:
         # Determine side: if quantity > 0 (long), we sell to close. If < 0 (short), we buy to close.
@@ -767,8 +782,8 @@ def close_position(position_id, symbol, quantity, limit_price=None):
             order_payload['type'] = 'limit'
             order_payload['price'] = str(limit_price)
 
-        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
-        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
+        endpoint = f"accounts/{get_account_id()}/orders"
+        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=get_headers())
         response.raise_for_status()
         return response.json()
 
