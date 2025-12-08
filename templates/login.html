@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradingBot - Pubky Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Using noble-ed25519 for client-side signing -->
+    <!-- Script tag removed, using ESM module below -->
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(22, 27, 34, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(48, 54, 61, 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body class="h-screen flex items-center justify-center relative overflow-hidden">
+
+    <!-- Background Decoration -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="glass-panel p-8 rounded-2xl w-full max-w-md text-center">
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                Pubky Auth</h1>
+            <p class="text-gray-400 mt-2">Sign in with your Identity</p>
+        </div>
+
+        <div id="login-form" class="space-y-4">
+            <div class="text-left">
+                <label class="block text-sm font-medium text-gray-400 mb-1">Private Key (Hex)</label>
+                <input type="password" id="private-key"
+                    class="w-full bg-[#0d1117] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 transition-colors"
+                    placeholder="Enter your 32-byte hex key">
+            </div>
+
+            <button onclick="handleLogin()"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02]">
+                Sign In
+            </button>
+
+            <div class="relative py-2">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-700"></div>
+                </div>
+                <div class="relative flex justify-center"><span
+                        class="bg-[#161b22] px-2 text-sm text-gray-500">or</span></div>
+            </div>
+
+            <button onclick="generateIdentity()"
+                class="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                Generate New Identity
+            </button>
+        </div>
+
+        <div id="status-msg" class="mt-4 text-sm hidden"></div>
+    </div>
+
+    <script type="module">
+        import * as ed from 'https://esm.sh/@noble/ed25519@1.7.1';
+
+        async function getChallenge() {
+            const res = await fetch('/api/auth/challenge');
+            const data = await res.json();
+            return data.challenge;
+        }
+
+        async function verifyAuth(publicKey, signature) {
+            const res = await fetch('/api/auth/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ public_key: publicKey, signature: signature })
+            });
+            return res.json();
+        }
+
+        window.generateIdentity = async function () {
+            try {
+                // Generate a random private key
+                const privKey = ed.utils.randomPrivateKey();
+                const privKeyHex = ed.utils.bytesToHex(privKey);
+
+                document.getElementById('private-key').value = privKeyHex;
+                document.getElementById('private-key').type = 'text'; // Show it so user can copy
+                showStatus("New identity generated! Save this key.", "text-green-400");
+            } catch (e) {
+                console.error(e);
+                showStatus("Error generating key. check console.", "text-red-400");
+            }
+        }
+
+        window.handleLogin = async function () {
+            const privKeyHex = document.getElementById('private-key').value.trim();
+            if (!privKeyHex) {
+                showStatus("Please enter a private key.", "text-red-400");
+                return;
+            }
+
+            try {
+                showStatus("requesting challenge...", "text-blue-400");
+                const challengeHex = await getChallenge();
+
+                showStatus("Signing challenge...", "text-blue-400");
+
+                // Get Public Key
+                const pubKey = await ed.getPublicKey(privKeyHex);
+                const pubKeyHex = ed.utils.bytesToHex(pubKey);
+
+                // Sign Challenge (challenge is hex, convert to bytes first?)
+                // ed.sign expects Uint8Array.
+                // We need to convert challengeHex to Uint8Array.
+                // noble-ed25519 utils usually doesn't expose hexToBytes directly in older versions?
+                // Checking 1.7.1 docs (generally): utils.hexToBytes exists? 
+                // If not, we can use a simple helper or check if it accepts hex string (it usually does or we should be careful).
+                // 1.7.1 sign(message, privateKey) -> message can be hex string or Uint8Array.
+                // However, let's look at the docs implied behavior. 
+                // If it accepts hex, great. If not, we might need a converter.
+                // 1.6+ supports hex strings.
+
+                const signature = await ed.sign(challengeHex, privKeyHex);
+                const signatureHex = ed.utils.bytesToHex(signature);
+
+                showStatus("Verifying...", "text-blue-400");
+                const result = await verifyAuth(pubKeyHex, signatureHex);
+
+                if (result.success) {
+                    showStatus("Success! Redirecting...", "text-green-400");
+                    window.location.href = "/";
+                } else {
+                    showStatus("Login failed: " + result.error, "text-red-400");
+                }
+
+            } catch (e) {
+                console.error(e);
+                showStatus("Error: " + e.message, "text-red-400");
+            }
+        }
+
+        function showStatus(msg, colorClass) {
+            const el = document.getElementById('status-msg');
+            el.innerText = msg;
+            el.className = "mt-4 text-sm " + colorClass;
+            el.classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>
