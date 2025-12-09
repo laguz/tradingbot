@@ -1524,3 +1524,32 @@
 2025-12-09 13:30:11 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.21, 251.65, 245.11, 248.91, 265.94]
 2025-12-09 13:30:27 - tradingbot - INFO - ml_evaluation.py:247 - Found 0 predictions to backfill
 2025-12-09 13:30:27 - tradingbot - INFO - ml_evaluation.py:290 - Backfilled 0 predictions with actual prices
+2025-12-09 13:32:21 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 13:32:22 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 13:39:09 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:39:10 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:39:11 - tradingbot - INFO - database.py:78 - MongoDB indexes created successfully
+2025-12-09 13:39:11 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:39:11 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:39:11 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:39:22 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:39:22 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:39:23 - tradingbot - INFO - database.py:83 - MongoDB indexes created successfully
+2025-12-09 13:39:23 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:39:23 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:39:23 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:43:03 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:43:04 - tradingbot - INFO - database.py:83 - MongoDB indexes created successfully
+2025-12-09 13:43:04 - tradingbot - INFO - stock_data_service.py:189 - Starting full sync for AAPL (2y)
+2025-12-09 13:43:06 - tradingbot - DEBUG - mongodb_models.py:330 - Inserted 501 OHLCV records
+2025-12-09 13:43:06 - tradingbot - INFO - stock_data_service.py:46 - Saved 501 OHLCV records for AAPL
+2025-12-09 13:43:06 - tradingbot - INFO - stock_data_service.py:205 - Full sync complete for AAPL: 501 records saved
+2025-12-09 13:43:06 - tradingbot - INFO - stock_data_service.py:100 - Loaded 250 records for AAPL from database cache
+2025-12-09 13:43:06 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 13:43:06 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 13:43:06 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for AAPL from database cache
+2025-12-09 13:43:06 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for AAPL to database
+2025-12-09 13:43:06 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.65, 228.05, 230.98, 232.97, 235.95]
+2025-12-09 13:43:06 - tradingbot - INFO - stock_data_service.py:110 - Fetching MSFT data from Tradier API (1m)
+2025-12-09 13:43:07 - tradingbot - DEBUG - mongodb_models.py:330 - Inserted 21 OHLCV records
+2025-12-09 13:43:07 - tradingbot - INFO - stock_data_service.py:46 - Saved 21 OHLCV records for MSFT

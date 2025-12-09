@@ -10,7 +10,7 @@ from services.ml_evaluation import get_model_performance, backfill_actual_prices
 from services.ml_service import load_model, predict_next_days
 from services.ml_features import prepare_features
 from services.ml_optimization import tune_hyperparameters, predict_strike_probability, get_smart_predictions
-from services.tradier_service import get_raw_historical_data
+from services.stock_data_service import get_historical_data
 from models.mongodb_models import MLPredictionModel
 from datetime import datetime, timedelta
 from utils.logger import logger
@@ -108,7 +108,7 @@ def api_validate(ticker):
         logger.info(f"Starting walk-forward validation for {ticker}")
         
         # Fetch historical data
-        df = get_raw_historical_data(ticker, '2y')
+        df = get_historical_data(ticker, '2y', use_cache=True)
         if df.empty:
             return jsonify({'error': 'Could not fetch historical data'}), 404
         

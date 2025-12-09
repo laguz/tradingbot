@@ -10,7 +10,7 @@ Provides market-wide context features for ML models:
 
 import pandas as pd
 import numpy as np
-from services.tradier_service import get_raw_historical_data
+from services.stock_data_service import get_historical_data
 from utils.logger import logger
 
 
@@ -26,10 +26,10 @@ def fetch_vix_data(timeframe='2y'):
     """
     # Fetch VIX using Tradier (symbol: ^VIX or VIX)
     try:
-        vix_df = get_raw_historical_data('^VIX', timeframe)
+        vix_df = get_historical_data('^VIX', timeframe, use_cache=True)
         if vix_df.empty:
-            # Try alternate symbol
-            vix_df = get_raw_historical_data('VIX', timeframe)
+            # Try without caret
+            vix_df = get_historical_data('VIX', timeframe, use_cache=True)
         
         if not vix_df.empty:
             logger.info(f"Fetched VIX data: {len(vix_df)} records")
@@ -146,7 +146,7 @@ def add_market_context_features(df, ticker):
         data['VIX_Above_MA'] = 0
     
     # 2. SPY correlation (market benchmark)
-    spy_df = get_raw_historical_data('SPY', '2y')
+    spy_df = get_historical_data('SPY', '2y', use_cache=True)
     if not spy_df.empty:
         spy_aligned = spy_df['Close'].reindex(data.index, method='ffill')
         
@@ -169,7 +169,7 @@ def add_market_context_features(df, ticker):
         data['Beta_SPY'] = 1.0
     
     # 3. QQQ correlation (for tech exposure)
-    qqq_df = get_raw_historical_data('QQQ', '2y')
+    qqq_df = get_historical_data('QQQ', '2y', use_cache=True)
     if not qqq_df.empty:
         qqq_aligned = qqq_df['Close'].reindex(data.index, method='ffill')
         
@@ -202,7 +202,7 @@ def get_current_market_context():
         Dict with current market conditions
     """
     # Fetch SPY for market direction
-    spy_df = get_raw_historical_data('SPY', '3m')
+    spy_df = get_historical_data('SPY', '3m', use_cache=True)
     spy_current = float(spy_df['Close'].iloc[-1]) if not spy_df.empty else None
     
     # Fetch VIX for volatility

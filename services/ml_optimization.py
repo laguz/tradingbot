@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import GridSearchCV, TimeSeriesSplit
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
-from services.tradier_service import get_raw_historical_data
+from services.stock_data_service import get_historical_data
 from services.ml_features import prepare_features
 from utils.logger import logger
 from config import get_config
@@ -33,7 +33,7 @@ def tune_hyperparameters(ticker, cv_splits=3):
     logger.info(f"Starting hyperparameter tuning for {ticker}")
     
     # Fetch data
-    df = get_raw_historical_data(ticker, '2y')
+    df = get_historical_data(ticker, '2y', use_cache=True)
     if df.empty:
         return {'error': 'Could not fetch historical data'}
     
@@ -110,7 +110,7 @@ def predict_strike_probability(ticker, strike_price, days_to_expiration, model=N
     logger.info(f"Predicting strike probability for {ticker} @ ${strike_price} in {days_to_expiration} days")
     
     # Fetch historical data
-    df = get_raw_historical_data(ticker, '2y')
+    df = get_historical_data(ticker, '2y', use_cache=True)
     if df.empty:
         return {'error': 'Could not fetch historical data'}
     

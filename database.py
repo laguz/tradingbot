@@ -75,6 +75,11 @@ def _create_indexes():
         # PositionState indexes
         mongo_db.position_state.create_index([('symbol', 1)], unique=True)
         
+        # StockData indexes
+        mongo_db.stock_ohlcv_data.create_index([('symbol', 1), ('date', 1)], unique=True)
+        mongo_db.stock_ohlcv_data.create_index([('symbol', 1)])
+        mongo_db.stock_ohlcv_data.create_index([('last_updated', -1)])
+        
         logger.info("MongoDB indexes created successfully")
     except Exception as e:
         logger.warning(f"Could not create some MongoDB indexes: {e}")

@@ -13,7 +13,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from models.mongodb_models import MLPredictionModel
-from services.tradier_service import get_raw_historical_data
+from services.stock_data_service import get_historical_data
 from utils.logger import logger
 
 
@@ -260,7 +260,7 @@ def backfill_actual_prices():
         for symbol, predictions in by_symbol.items():
             try:
                 # Get historical data for this symbol
-                df = get_raw_historical_data(symbol, '3m')
+                df = get_historical_data(symbol, '3m', use_cache=True)
                 
                 if df.empty:
                     logger.warning(f"No historical data for {symbol}")

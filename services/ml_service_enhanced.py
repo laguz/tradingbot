@@ -7,7 +7,8 @@ Integrates all improvements:
 - Feature selection to reduce redundancy
 """
 
-from services.ml_service import get_raw_historical_data, save_model, load_model, get_model_path
+from services.stock_data_service import get_historical_data
+from services.ml_service import save_model, load_model, get_model_path
 from services.ml_features import prepare_features
 from services.ml_quantile import train_quantile_models, calculate_quantile_intervals, get_interval_width
 from services.ml_regime_adaptive import RegimeAdaptivePredictor, detect_regime
@@ -49,7 +50,7 @@ def predict_enhanced(ticker, days=5, use_quantiles=True, use_regime_adaptation=T
     logger.info(f"Options: quantiles={use_quantiles}, regime={use_regime_adaptation}, feature_selection={use_feature_selection}")
     
     # Fetch data
-    df = get_raw_historical_data(ticker, '2y')
+    df = get_historical_data(ticker, '2y', use_cache=True)
     if df.empty:
         return {'error': 'Could not fetch historical data'}
     

@@ -19,7 +19,7 @@ import pickle
 from datetime import datetime, timedelta
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, VotingRegressor
 from sklearn.multioutput import MultiOutputRegressor
-from services.tradier_service import get_raw_historical_data
+from services.stock_data_service import get_historical_data
 from services.ml_features import prepare_features, get_feature_count
 from services.ml_evaluation import save_prediction_to_db, get_feature_importance
 from config import get_config
@@ -259,8 +259,8 @@ def predict_next_days(ticker, days=5, force_retrain=False):
     if model is None:
         logger.info(f"Training new model for {ticker}")
         
-        # Fetch historical data
-        df = get_raw_historical_data(ticker, '2y')
+        # Fetch historical data (from database or API)
+        df = get_historical_data(ticker, '2y', use_cache=True)
         if df.empty:
             logger.error(f"Could not fetch historical data for {ticker}")
             return {'error': 'Could not fetch historical data.'}
@@ -298,7 +298,7 @@ def predict_next_days(ticker, days=5, force_retrain=False):
     
     else:
         # Model loaded from cache, still need raw data for current features
-        df = get_raw_historical_data(ticker, '2y')
+        df = get_historical_data(ticker, '2y', use_cache=True)
         if df.empty:
             return {'error': 'Could not fetch historical data.'}
     

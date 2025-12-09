@@ -292,3 +292,146 @@ class PositionStateModel:
         """Find position state for a symbol."""
         collection = PositionStateModel.get_collection()
         return collection.find_one({'symbol': symbol})
+
+
+class StockDataModel:
+    """Stock OHLCV historical data - MongoDB collection."""
+    
+    COLLECTION_NAME = 'stock_ohlcv_data'
+    
+    @staticmethod
+    def get_collection():
+        """Get the stock OHLCV data collection."""
+        db = get_mongo_db()
+        if db is None:
+            raise Exception("MongoDB not configured")
+        return db[StockDataModel.COLLECTION_NAME]
+    
+    @staticmethod
+    def insert_many(records: List[Dict]) -> List[str]:
+        """
+        Insert multiple OHLCV records.
+        
+        Args:
+            records: List of dicts with keys: symbol, date, open, high, low, close, volume
+            
+        Returns:
+            List of inserted document IDs
+        """
+        collection = StockDataModel.get_collection()
+        
+        # Add last_updated timestamp to all records
+        for record in records:
+            if 'last_updated' not in record:
+                record['last_updated'] = datetime.utcnow()
+        
+        try:
+            result = collection.insert_many(records, ordered=False)
+            logger.debug(f"Inserted {len(result.inserted_ids)} OHLCV records")
+            return [str(id) for id in result.inserted_ids]
+        except Exception as e:
+            # Handle duplicate key errors gracefully
+            if 'duplicate key error' in str(e).lower():
+                logger.debug(f"Some records already exist, skipping duplicates")
+                return []
+            raise
+    
+    @staticmethod
+    def find_by_symbol(symbol: str, start_date: datetime = None, 
+                       end_date: datetime = None, limit: int = None) -> List[Dict]:
+        """
+        Find OHLCV data for a symbol within date range.
+        
+        Args:
+            symbol: Stock ticker
+            start_date: Optional start date filter
+            end_date: Optional end date filter
+            limit: Optional limit on number of records
+            
+        Returns:
+            List of OHLCV records sorted by date ascending
+        """
+        collection = StockDataModel.get_collection()
+        
+        query = {'symbol': symbol}
+        if start_date or end_date:
+            query['date'] = {}
+            if start_date:
+                query['date']['$gte'] = start_date
+            if end_date:
+                query['date']['$lte'] = end_date
+        
+        cursor = collection.find(query).sort('date', 1)
+        
+        if limit:
+            cursor = cursor.limit(limit)
+        
+        return list(cursor)
+    
+    @staticmethod
+    def get_latest_date(symbol: str) -> Optional[datetime]:
+        """
+        Get the most recent date for which we have data for a symbol.
+        
+        Args:
+            symbol: Stock ticker
+            
+        Returns:
+            Latest date as datetime or None if no data exists
+        """
+        collection = StockDataModel.get_collection()
+        
+        result = collection.find_one(
+            {'symbol': symbol},
+            sort=[('date', -1)]
+        )
+        
+        return result['date'] if result else None
+    
+    @staticmethod
+    def upsert_daily(symbol: str, date: datetime, open_price: float,
+                     high: float, low: float, close: float, volume: float) -> bool:
+        """
+        Insert or update a single daily bar.
+        
+        Args:
+            symbol: Stock ticker
+            date: Trading date
+            open_price, high, low, close, volume: OHLCV values
+            
+        Returns:
+            True if inserted/updated successfully
+        """
+        collection = StockDataModel.get_collection()
+        
+        doc = {
+            'symbol': symbol,
+            'date': date,
+            'open': open_price,
+            'high': high,
+            'low': low,
+            'close': close,
+            'volume': volume,
+            'last_updated': datetime.utcnow()
+        }
+        
+        result = collection.update_one(
+            {'symbol': symbol, 'date': date},
+            {'$set': doc},
+            upsert=True
+        )
+        
+        return result.acknowledged
+    
+    @staticmethod
+    def count_records(symbol: str) -> int:
+        """Count total records for a symbol."""
+        collection = StockDataModel.get_collection()
+        return collection.count_documents({'symbol': symbol})
+    
+    @staticmethod
+    def delete_by_symbol(symbol: str) -> int:
+        """Delete all records for a symbol. Returns count deleted."""
+        collection = StockDataModel.get_collection()
+        result = collection.delete_many({'symbol': symbol})
+        return result.deleted_count

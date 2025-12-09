@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from models.mongodb_models import MLPredictionModel
-from services.tradier_service import get_raw_historical_data
+from services.stock_data_service import get_historical_data
 from services.ml_service_enhanced import predict_enhanced
 from utils.logger import logger
 
@@ -104,7 +104,7 @@ def backfill_actual_prices(ticker, days_back=30):
         logger.info(f"Backfilling {len(predictions)} predictions for {ticker}")
         
         # Fetch historical data
-        df = get_raw_historical_data(ticker, '3m')
+        df = get_historical_data(ticker, '3m', use_cache=True)
         if df.empty:
             logger.error(f"Could not fetch historical data for {ticker}")
             return 0
