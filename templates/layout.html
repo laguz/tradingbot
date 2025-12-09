@@ -58,7 +58,8 @@
         </ul>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-mdb-toggle="dropdown">
+            <a class="nav-link dropdown-toggle" href="{{ url_for('auth.profile') }}" id="userDropdown" role="button"
+              data-mdb-toggle="dropdown">
               <i class="fas fa-user-circle me-1"></i>
               {% if current_user.is_authenticated %}
               {{ current_user.get_display_name() }}

@@ -1632,3 +1632,21 @@
 2025-12-09 14:06:29 - tradingbot - INFO - app.py:26 - Database initialized successfully
 2025-12-09 14:06:29 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
 2025-12-09 14:06:29 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 14:10:56 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 14:10:57 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 14:10:57 - tradingbot - INFO - auth_routes.py:126 - User logged in: 8dab50cb...483e (8dab50cb...)
+2025-12-09 14:11:36 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 14:11:37 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:11:38 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:11:38 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 14:11:38 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:11:38 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 14:11:39 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 14:11:40 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:11:41 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:11:41 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 14:11:41 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:11:41 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 14:11:43 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 14:11:43 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 14:11:43 - tradingbot - INFO - auth_routes.py:126 - User logged in: 8dab50cb...483e (8dab50cb...)
