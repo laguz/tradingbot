@@ -74,6 +74,7 @@ class Config:
     ML_ENABLE_NORMALIZATION = True
     ML_ENABLE_VOLATILITY_FEATURES = True
     ML_ENABLE_TIME_FEATURES = True
+    ML_ENABLE_MARKET_CONTEXT = False  # VIX, SPY/QQQ correlation (slower)
     ML_LOOKBACK_DAYS = 252 * 2  # 2 years of historical data
     
     # ML Validation

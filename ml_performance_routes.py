@@ -355,3 +355,69 @@ def api_smart_predictions(ticker):
             'success': False,
             'error': str(e)
         }), 500
+
+
+@ml_performance.route('/api/ml/batch-predict', methods=['POST'])
+def api_batch_predict():
+    """Run predictions for multiple tickers at once."""
+    try:
+        data = request.get_json()
+        tickers = data.get('tickers', [])
+        days = data.get('days', 5)
+        
+        if not tickers:
+            return jsonify({'error': 'No tickers provided'}), 400
+        
+        results = {}
+        for ticker in tickers:
+            try:
+                result = predict_next_days(ticker, days=days)
+                results[ticker] = result
+            except Exception as e:
+                results[ticker] = {'error': str(e)}
+        
+        return jsonify({'success': True, 'results': results})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@ml_performance.route('/api/ml/export/<ticker>')
+def api_export_predictions(ticker):
+    """Export prediction history as CSV."""
+    from flask import make_response
+    import io
+    
+    session = get_session()
+    try:
+        predictions = session.query(MLPrediction).filter(
+            MLPrediction.symbol == ticker
+        ).order_by(MLPrediction.target_date).all()
+        
+        if not predictions:
+            return jsonify({'error': 'No predictions found'}), 404
+        
+        output = io.StringIO()
+        output.write('prediction_date,target_date,predicted_price,actual_price,error,model_version,confidence\n')
+        
+        for pred in predictions:
+            error = abs(pred.actual_price - pred.predicted_price) if pred.actual_price else ''
+            output.write(f"{pred.prediction_date},{pred.target_date},{pred.predicted_price},")
+            output.write(f"{pred.actual_price or ''},{error},{pred.model_version},{pred.confidence or ''}\n")
+        
+        response = make_response(output.getvalue())
+        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = f'attachment; filename={ticker}_predictions.csv'
+        return response
+    finally:
+        session.close()
+
+
+@ml_performance.route('/api/ml/market-context')
+def api_market_context():
+    """Get current market context (VIX, SPY, regime)."""
+    try:
+        from services.ml_market_context import get_current_market_context
+        context = get_current_market_context()
+        return jsonify({'success': True, **context, 'timestamp': context['timestamp'].isoformat()})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500

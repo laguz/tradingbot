@@ -16,6 +16,13 @@ from config import get_config
 
 config = get_config()
 
+# Import market context if available
+try:
+    from services.ml_market_context import add_market_context_features
+    MARKET_CONTEXT_AVAILABLE = True
+except ImportError:
+    MARKET_CONTEXT_AVAILABLE = False
+
 
 def add_technical_indicators(df):
     """
@@ -248,6 +255,16 @@ def prepare_features(df, for_training=True):
     
     data = add_price_features(data)
     data = add_lag_features(data, lags=5)
+    
+    # Add market context features if available and enabled
+    if MARKET_CONTEXT_AVAILABLE and hasattr(config, 'ML_ENABLE_MARKET_CONTEXT') and config.ML_ENABLE_MARKET_CONTEXT:
+        try:
+            # Get ticker from DataFrame attributes or use 'UNKNOWN'
+            ticker = getattr(data, 'ticker', 'UNKNOWN')
+            data = add_market_context_features(data, ticker)
+        except Exception as e:
+            # Continue without market context if it fails
+            pass
     
     # Create targets for multi-day prediction (1 to 5 days ahead)
     if for_training:

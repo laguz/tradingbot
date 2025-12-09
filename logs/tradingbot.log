@@ -186,3 +186,33 @@
 11             HV_10    0.001302
 2025-12-08 23:03:40 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for RIOT to database
 2025-12-08 23:03:40 - tradingbot - INFO - ml_service.py:378 - Predictions complete for RIOT: [13.03, 12.73, 15.4, 15.05, 14.03]
+2025-12-08 23:04:38 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:04:38 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:04:39 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:04:39 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 23:04:48 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:04:48 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:04:49 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:04:49 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 23:05:07 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:05:07 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:06:42 - tradingbot - INFO - app.py:18 - Starting Trading Bot in development mode
+2025-12-08 23:06:42 - tradingbot - INFO - app.py:23 - Database initialized successfully
+2025-12-08 23:06:44 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:06:44 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:06:51 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:06:51 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:06:52 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:06:52 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 23:07:04 - tradingbot - INFO - app.py:18 - Starting Trading Bot in development mode
+2025-12-08 23:07:04 - tradingbot - INFO - app.py:23 - Database initialized successfully
+2025-12-08 23:09:06 - tradingbot - INFO - app.py:18 - Starting Trading Bot in development mode
+2025-12-08 23:09:06 - tradingbot - INFO - app.py:23 - Database initialized successfully
+2025-12-08 23:12:26 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:12:27 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:12:27 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:12:27 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 23:12:29 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:12:29 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:12:30 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:12:30 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
