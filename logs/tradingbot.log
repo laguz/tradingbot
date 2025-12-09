@@ -13,3 +13,18 @@
 2025-12-08 22:14:00 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
 2025-12-08 22:14:01 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
 2025-12-08 22:14:15 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
+2025-12-08 22:17:49 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:17:49 - tradingbot - ERROR - app.py:24 - Failed to initialize database: Attribute name 'metadata' is reserved when using the Declarative API.
+2025-12-08 22:18:25 - tradingbot - INFO - ml_service.py:148 - Starting prediction for RIOT, days=5
+2025-12-08 22:18:25 - tradingbot - INFO - ml_service.py:136 - Loaded cached model for RIOT (age: 0 days)
+2025-12-08 22:18:25 - tradingbot - INFO - ml_service.py:226 - Predictions complete for RIOT: [14.68, 14.48, 13.59, 13.19, 13.12]
+2025-12-08 22:18:34 - tradingbot - INFO - ml_service.py:148 - Starting prediction for TSL, days=5
+2025-12-08 22:18:34 - tradingbot - DEBUG - ml_service.py:122 - No cached model found for TSL
+2025-12-08 22:18:34 - tradingbot - INFO - ml_service.py:157 - Training new model for TSL
+2025-12-08 22:18:34 - tradingbot - INFO - ml_service.py:77 - Training ML model with 480 samples
+2025-12-08 22:18:35 - tradingbot - INFO - ml_service.py:89 - Model training complete
+2025-12-08 22:18:35 - tradingbot - INFO - ml_service.py:111 - Saved model for TSL to models/TSL_model.pkl
+2025-12-08 22:18:35 - tradingbot - INFO - ml_service.py:226 - Predictions complete for TSL: [18.68, 18.65, 18.65, 18.53, 18.58]
+2025-12-08 22:18:38 - tradingbot - INFO - ml_service.py:148 - Starting prediction for TSLA, days=5
+2025-12-08 22:18:38 - tradingbot - INFO - ml_service.py:136 - Loaded cached model for TSLA (age: 0 days)
+2025-12-08 22:18:39 - tradingbot - INFO - ml_service.py:226 - Predictions complete for TSLA: [447.46, 446.71, 447.63, 445.73, 446.41]
