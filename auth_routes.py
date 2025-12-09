@@ -165,3 +165,76 @@ def auth_status():
         })
     else:
         return jsonify({'authenticated': False})
+
+
+@auth_routes.route('/profile')
+@login_required
+def profile():
+    """Show user profile page."""
+    from models.mongodb_models import UserProfileModel
+    
+    profile_data = UserProfileModel.find_by_pubkey(current_user.pubkey)
+    
+    return render_template('profile.html', 
+                          profile=profile_data,
+                          pubkey=current_user.pubkey)
+
+
+@auth_routes.route('/api/profile/update', methods=['POST'])
+@login_required
+def update_profile():
+    """
+    Update user profile.
+    
+    Request JSON:
+        {
+            "username": "my_username"
+        }
+    
+    Response:
+        {
+            "success": true,
+            "username": "my_username"
+        }
+    """
+    from models.mongodb_models import UserProfileModel
+    
+    data = request.get_json()
+    username = data.get('username', '').strip()
+    
+    if not username:
+        return jsonify({'error': 'Username cannot be empty'}), 400
+    
+    # Validate username format (alphanumeric, underscore, hyphen, 3-20 chars)
+    import re
+    if not re.match(r'^[a-zA-Z0-9_-]{3,20}$', username):
+        return jsonify({
+            'error': 'Username must be 3-20 characters (letters, numbers, underscore, hyphen only)'
+        }), 400
+    
+    # Check if username already exists
+    if UserProfileModel.username_exists(username, exclude_pubkey=current_user.pubkey):
+        return jsonify({'error': 'Username already taken'}), 400
+    
+    # Update profile
+    try:
+        UserProfileModel.upsert(
+            pubkey=current_user.pubkey,
+            username=username,
+            metadata=current_user.metadata
+        )
+        
+        # Update current user object
+        current_user.username = username
+        
+        logger.info(f"Username updated to '{username}' for pubkey {current_user.pubkey[:8]}...")
+        
+        return jsonify({
+            'success': True,
+            'username': username,
+            'display_name': current_user.get_display_name()
+        })
+        
+    except Exception as e:
+        logger.error(f"Error updating profile: {e}")
+        return jsonify({'error': 'Failed to update profile'}), 500

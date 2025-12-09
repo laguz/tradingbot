@@ -435,3 +435,100 @@ class StockDataModel:
         collection = StockDataModel.get_collection()
         result = collection.delete_many({'symbol': symbol})
         return result.deleted_count
+
+
+class UserProfileModel:
+    """User profile data - MongoDB collection."""
+    
+    COLLECTION_NAME = 'user_profiles'
+    
+    @staticmethod
+    def get_collection():
+        """Get the user profiles collection."""
+        db = get_mongo_db()
+        if db is None:
+            raise Exception("MongoDB not configured")
+        return db[UserProfileModel.COLLECTION_NAME]
+    
+    @staticmethod
+    def upsert(pubkey: str, username: str = None, metadata: Dict = None) -> str:
+        """
+        Insert or update user profile.
+        
+        Args:
+            pubkey: User's Nostr public key
+            username: Optional custom username
+            metadata: Optional additional metadata
+            
+        Returns:
+            Document ID as string
+        """
+        collection = UserProfileModel.get_collection()
+        
+        doc = {
+            'pubkey': pubkey,
+            'updated_at': datetime.utcnow()
+        }
+        
+        if username is not None:
+            doc['username'] = username
+        
+        if metadata is not None:
+            doc['metadata'] = metadata
+        
+        result = collection.update_one(
+            {'pubkey': pubkey},
+            {'$set': doc},
+            upsert=True
+        )
+        
+        logger.debug(f"Updated profile for pubkey {pubkey[:8]}...")
+        return str(result.upserted_id) if result.upserted_id else "updated"
+    
+    @staticmethod
+    def find_by_pubkey(pubkey: str) -> Optional[Dict]:
+        """
+        Find user profile by public key.
+        
+        Args:
+            pubkey: User's Nostr public key
+            
+        Returns:
+            User profile dict or None
+        """
+        collection = UserProfileModel.get_collection()
+        return collection.find_one({'pubkey': pubkey})
+    
+    @staticmethod
+    def find_by_username(username: str) -> Optional[Dict]:
+        """
+        Find user profile by username.
+        
+        Args:
+            username: Custom username
+            
+        Returns:
+            User profile dict or None
+        """
+        collection = UserProfileModel.get_collection()
+        return collection.find_one({'username': username})
+    
+    @staticmethod
+    def username_exists(username: str, exclude_pubkey: str = None) -> bool:
+        """
+        Check if username already exists.
+        
+        Args:
+            username: Username to check
+            exclude_pubkey: Optional pubkey to exclude from check (for updates)
+            
+        Returns:
+            True if username exists
+        """
+        collection = UserProfileModel.get_collection()
+        
+        query = {'username': username}
+        if exclude_pubkey:
+            query['pubkey'] = {'$ne': exclude_pubkey}
+        
+        return collection.count_documents(query) > 0

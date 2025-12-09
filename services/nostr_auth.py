@@ -29,16 +29,33 @@ class NostrUser(UserMixin):
         self.pubkey = pubkey
         self.metadata = metadata or {}
         self.authenticated_at = datetime.now()
+        self.username = None  # Custom username from database
+        
+        # Load username from database
+        self._load_profile()
+    
+    def _load_profile(self):
+        """Load user profile from database."""
+        try:
+            from models.mongodb_models import UserProfileModel
+            profile = UserProfileModel.find_by_pubkey(self.pubkey)
+            if profile:
+                self.username = profile.get('username')
+        except Exception as e:
+            logger.debug(f"Could not load profile for {self.pubkey[:8]}: {e}")
     
     def get_id(self):
         """Return user ID for Flask-Login."""
         return self.pubkey
     
     def get_display_name(self):
-        """Get display name from metadata or truncated pubkey."""
+        """Get display name: username > metadata name > truncated pubkey."""
+        if self.username:
+            return self.username
         if self.metadata.get('name'):
             return self.metadata['name']
         return f"{self.pubkey[:8]}...{self.pubkey[-4:]}"
+
 
 
 class NostrAuthService:

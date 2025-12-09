@@ -1,0 +1,139 @@
+{% extends "layout.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card bg-dark text-light shadow-lg">
+      <div class="card-header bg-primary">
+        <h4 class="mb-0"><i class="fas fa-user-circle me-2"></i>User Profile</h4>
+      </div>
+      <div class="card-body">
+        
+        <!-- Public Key Info -->
+        <div class="mb-4">
+          <h6 class="text-muted">Public Key (Nostr)</h6>
+          <div class="input-group">
+            <input type="text" class="form-control bg-dark-glass text-light" value="{{ pubkey }}" readonly>
+            <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard('{{ pubkey }}')">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <small class="text-muted">Your Nostr public key (cannot be changed)</small>
+        </div>
+
+        <!-- Username Form -->
+        <div class="mb-4">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" 
+                 class="form-control bg-dark-glass text-light" 
+                 id="username" 
+                 name="username" 
+                 placeholder="Enter username (3-20 characters)"
+                 value="{{ profile.username if profile and profile.username else '' }}"
+                 pattern="[a-zA-Z0-9_-]{3,20}"
+                 maxlength="20">
+          <small class="text-muted">
+            Letters, numbers, underscore (_), and hyphen (-) only
+          </small>
+          <div id="usernameError" class="text-danger mt-2" style="display:none;"></div>
+          <div id="usernameSuccess" class="text-success mt-2" style="display:none;"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-primary" onclick="updateUsername()">
+            <i class="fas fa-save me-2"></i>Save Username
+          </button>
+          <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-times me-2"></i>Cancel
+          </a>
+        </div>
+
+        <!-- Current Display Name -->
+        <div class="mt-4 p-3 bg-dark-glass rounded">
+          <h6 class="text-muted mb-2">Current Display Name</h6>
+          <h5 id="currentDisplayName">{{ current_user.get_display_name() }}</h5>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Public key copied to clipboard!');
+  });
+}
+
+async function updateUsername() {
+  const username = document.getElementById('username').value.trim();
+  const errorDiv = document.getElementById('usernameError');
+  const successDiv = document.getElementById('usernameSuccess');
+  
+  // Hide previous messages
+  errorDiv.style.display = 'none';
+  successDiv.style.display = 'none';
+  
+  // Validate
+  if (!username) {
+    errorDiv.textContent = 'Username cannot be empty';
+    errorDiv.style.display = 'block';
+    return;
+  }
+  
+  if (!/^[a-zA-Z0-9_-]{3,20}$/.test(username)) {
+    errorDiv.textContent = 'Username must be 3-20 characters (letters, numbers, underscore, hyphen only)';
+    errorDiv.style.display = 'block';
+    return;
+  }
+  
+  try {
+    const response = await fetch('/api/profile/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok && data.success) {
+      successDiv.textContent = `Username updated to "${data.username}"!`;
+      successDiv.style.display = 'block';
+      
+      // Update display name
+      document.getElementById('currentDisplayName').textContent = data.display_name;
+      
+      // Update navbar
+      const navbarUser = document.querySelector('#userDropdown');
+      if (navbarUser) {
+        navbarUser.innerHTML = `<i class="fas fa-user-circle me-1"></i>${data.display_name}`;
+      }
+      
+      // Refresh page after 1.5 seconds
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } else {
+      errorDiv.textContent = data.error || 'Failed to update username';
+      errorDiv.style.display = 'block';
+    }
+  } catch (error) {
+    errorDiv.textContent = `Error: ${error.message}`;
+    errorDiv.style.display = 'block';
+  }
+}
+
+// Allow Enter key to submit
+document.getElementById('username').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    updateUsername();
+  }
+});
+</script>
+{% endblock %}

@@ -80,6 +80,10 @@ def _create_indexes():
         mongo_db.stock_ohlcv_data.create_index([('symbol', 1)])
         mongo_db.stock_ohlcv_data.create_index([('last_updated', -1)])
         
+        # UserProfile indexes
+        mongo_db.user_profiles.create_index([('pubkey', 1)], unique=True)
+        mongo_db.user_profiles.create_index([('username', 1)], unique=True, sparse=True)
+        
         logger.info("MongoDB indexes created successfully")
     except Exception as e:
         logger.warning(f"Could not create some MongoDB indexes: {e}")
