@@ -4,3 +4,12 @@
 2025-12-08 21:49:47 - tradingbot - INFO - app.py:16 - Starting Trading Bot in development mode
 2025-12-08 21:49:50 - tradingbot - INFO - app.py:16 - Starting Trading Bot in development mode
 2025-12-08 21:51:33 - tradingbot - INFO - app.py:16 - Starting Trading Bot in development mode
+2025-12-08 22:12:53 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:12:53 - tradingbot - ERROR - app.py:24 - Failed to initialize database: Attribute name 'metadata' is reserved when using the Declarative API.
+2025-12-08 22:12:55 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:12:55 - tradingbot - ERROR - app.py:24 - Failed to initialize database: Attribute name 'metadata' is reserved when using the Declarative API.
+2025-12-08 22:13:17 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 22:13:17 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 22:14:00 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 22:14:01 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 22:14:15 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
