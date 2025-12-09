@@ -12,8 +12,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-from database import get_session
-from models.db_models import MLPrediction
+from models.mongodb_models import MLPredictionModel
 from services.tradier_service import get_raw_historical_data
 from utils.logger import logger
 
@@ -45,14 +44,14 @@ def calculate_metrics(y_true, y_pred):
     }
 
 
-def calculate_directional_accuracy(y_true, y_pred, current_price):
+def calculate_directional_accuracy(y_true, y_pred, current_price=None):
     """
     Calculate directional accuracy (% of correct up/down predictions).
     
     Args:
         y_true: Actual future prices
         y_pred: Predicted future prices
-        current_price: Current price to compare against
+        current_price: Current price to compare against (optional)
         
     Returns:
         Directional accuracy as percentage
@@ -60,11 +59,19 @@ def calculate_directional_accuracy(y_true, y_pred, current_price):
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
     
-    # Determine actual direction (up=1, down=0)
-    actual_direction = (y_true > current_price).astype(int)
-    
-    # Determine predicted direction
-    pred_direction = (y_pred > current_price).astype(int)
+    if current_price is not None:
+        # Determine actual direction (up=1, down=0)
+        actual_direction = (y_true > current_price).astype(int)
+        
+        # Determine predicted direction
+        pred_direction = (y_pred > current_price).astype(int)
+    else:
+        # Use consecutive price changes
+        if len(y_true) <= 1:
+            return 0.0
+            
+        actual_direction = (np.diff(y_true) > 0).astype(int)
+        pred_direction = (np.diff(y_pred) > 0).astype(int)
     
     # Calculate accuracy
     correct = (actual_direction == pred_direction).sum()
@@ -193,62 +200,63 @@ def save_prediction_to_db(ticker, target_dates, predicted_prices, model_version,
         features_used: List of feature names
         confidence_scores: Optional list of confidence scores
     """
-    session = get_session()
-    
     try:
+        predictions = []
         for i, (target_date, predicted_price) in enumerate(zip(target_dates, predicted_prices)):
             confidence = confidence_scores[i] if confidence_scores else None
             
-            prediction = MLPrediction(
-                symbol=ticker,
-                prediction_date=datetime.now(),
-                target_date=target_date,
-                predicted_price=predicted_price,
-                actual_price=None,  # Will be filled later
-                model_version=model_version,
-                features_used=features_used,
-                confidence=confidence
-            )
-            session.add(prediction)
+            predictions.append({
+                'symbol': ticker,
+                'prediction_date': datetime.now(),
+                'target_date': target_date,
+                'predicted_price': predicted_price,
+                'actual_price': None,  # Will be filled later
+                'model_version': model_version,
+                'features_used': features_used,
+                'confidence': confidence
+            })
         
-        session.commit()
+        MLPredictionModel.insert_many(predictions)
         logger.info(f"Saved {len(predicted_prices)} predictions for {ticker} to database")
         
     except Exception as e:
-        session.rollback()
         logger.error(f"Error saving predictions to database: {e}")
-    finally:
-        session.close()
 
 
 def backfill_actual_prices():
     """
-    Update MLPrediction table with actual prices for past predictions.
+    Update MLPrediction collection with actual prices for past predictions.
     Should be run daily as a background job.
     
     Returns:
         Number of predictions updated
     """
-    session = get_session()
     updated_count = 0
     
     try:
-        # Get predictions where target_date has passed but actual_price is null
-        pending = session.query(MLPrediction).filter(
-            MLPrediction.actual_price.is_(None),
-            MLPrediction.target_date < datetime.now()
-        ).all()
+        # Get predictions from last 90 days where actual_price is None and target_date has passed
+        collection = MLPredictionModel.get_collection()
+        cutoff = datetime.now() - timedelta(days=90)
+        
+        pending = list(collection.find({
+            'actual_price': None,
+            'target_date': {'$lt': datetime.now()},
+            'prediction_date': {'$gte': cutoff}
+        }))
         
         logger.info(f"Found {len(pending)} predictions to backfill")
         
         # Group by symbol to batch API calls
         by_symbol = {}
         for pred in pending:
-            if pred.symbol not in by_symbol:
-                by_symbol[pred.symbol] = []
-            by_symbol[pred.symbol].append(pred)
+            symbol = pred['symbol']
+            if symbol not in by_symbol:
+                by_symbol[symbol] = []
+            by_symbol[symbol].append(pred)
         
-        # Fetch actual prices and update
+        # Fetch actual prices and prepare bulk updates
+        updates = []
+        
         for symbol, predictions in by_symbol.items():
             try:
                 # Get historical data for this symbol
@@ -260,12 +268,14 @@ def backfill_actual_prices():
                 
                 for pred in predictions:
                     # Find the closing price on target date
-                    target_date_str = pred.target_date.strftime('%Y-%m-%d')
+                    target_date_str = pred['target_date'].strftime('%Y-%m-%d')
                     
                     if target_date_str in df.index:
                         actual_price = float(df.loc[target_date_str, 'Close'])
-                        pred.actual_price = actual_price
-                        updated_count += 1
+                        updates.append({
+                            'id': str(pred['_id']),
+                            'actual_price': actual_price
+                        })
                     else:
                         logger.debug(f"No data for {symbol} on {target_date_str}")
                 
@@ -273,17 +283,17 @@ def backfill_actual_prices():
                 logger.error(f"Error fetching data for {symbol}: {e}")
                 continue
         
-        session.commit()
+        # Bulk update
+        if updates:
+            updated_count = MLPredictionModel.update_actual_prices_bulk(updates)
+        
         logger.info(f"Backfilled {updated_count} predictions with actual prices")
         
         return updated_count
         
     except Exception as e:
-        session.rollback()
         logger.error(f"Error in backfill_actual_prices: {e}")
         return 0
-    finally:
-        session.close()
 
 
 def get_model_performance(ticker=None, days=30):
@@ -297,35 +307,38 @@ def get_model_performance(ticker=None, days=30):
     Returns:
         Dict with performance statistics
     """
-    session = get_session()
-    
     try:
         cutoff_date = datetime.now() - timedelta(days=days)
         
-        query = session.query(MLPrediction).filter(
-            MLPrediction.actual_price.isnot(None),
-            MLPrediction.prediction_date >= cutoff_date
-        )
+        collection = MLPredictionModel.get_collection()
+        query_filter = {
+            'actual_price': {'$ne': None},
+            'prediction_date': {'$gte': cutoff_date}
+        }
         
         if ticker:
-            query = query.filter(MLPrediction.symbol == ticker)
+            query_filter['symbol'] = ticker
         
-        predictions = query.all()
+        predictions = list(collection.find(query_filter))
         
         if not predictions:
             return {'error': 'No completed predictions found'}
         
         # Calculate aggregate metrics
-        actuals = [p.actual_price for p in predictions]
-        predicted = [p.predicted_price for p in predictions]
+        actuals = [p['actual_price'] for p in predictions]
+        predicted = [p['predicted_price'] for p in predictions]
         
         metrics = calculate_metrics(actuals, predicted)
         
         # Calculate directional accuracy (need base prices)
         # For simplicity, using predicted vs actual comparison
         correct_direction = sum(1 for a, p in zip(actuals, predicted) 
-                               if (a > p) == (predictions[0].actual_price > predictions[0].predicted_price))
+                               if (a > p) == (predictions[0]['actual_price'] > predictions[0]['predicted_price']))
         dir_accuracy = (correct_direction / len(predictions)) * 100
+        
+        # Calculate average confidence
+        confidences = [p.get('confidence') for p in predictions if p.get('confidence') is not None]
+        avg_confidence = round(np.mean(confidences), 2) if confidences else None
         
         return {
             'ticker': ticker or 'All',
@@ -335,14 +348,12 @@ def get_model_performance(ticker=None, days=30):
             'rmse': metrics['rmse'],
             'mape': metrics['mape'],
             'directional_accuracy': round(dir_accuracy, 2),
-            'avg_confidence': round(np.mean([p.confidence for p in predictions if p.confidence]), 2) if any(p.confidence for p in predictions) else None
+            'avg_confidence': avg_confidence
         }
         
     except Exception as e:
         logger.error(f"Error getting model performance: {e}")
         return {'error': str(e)}
-    finally:
-        session.close()
 
 
 def print_validation_summary(results):

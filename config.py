@@ -18,6 +18,7 @@ class Config:
     
     # Database Configuration
     DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///tradingbot.db')
+    MONGODB_URI = os.getenv('MONGODB_URI')
     
     # Trading Parameters
     # Auto-Close Rules

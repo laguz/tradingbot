@@ -11,9 +11,7 @@ Implements feedback loop to learn from prediction errors:
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-from sqlalchemy import and_
-from database import Session
-from models.db_models import MLPrediction
+from models.mongodb_models import MLPredictionModel
 from services.tradier_service import get_raw_historical_data
 from services.ml_service_enhanced import predict_enhanced
 from utils.logger import logger

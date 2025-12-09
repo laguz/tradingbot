@@ -366,7 +366,10 @@ def get_raw_historical_data(ticker, timeframe):
         df['Date'] = pd.to_datetime(df['Date'])
         numeric_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
         for col in numeric_cols:
-            df[col] = pd.to_numeric(df[col])
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+        
+        # Drop rows with any NaN values
+        df.dropna(inplace=True)
             
         df.set_index('Date', inplace=True)
         df.sort_index(inplace=True)

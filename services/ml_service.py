@@ -208,7 +208,7 @@ def calculate_prediction_intervals(model, X, percentiles=[10, 50, 90]):
     for estimator in model.estimators_:
         # Each estimator (for each output day) makes a prediction
         if hasattr(estimator, 'predict'):
-            pred = estimator.predict(X.values if isinstance(X, pd.DataFrame) else X)
+            pred = estimator.predict(X if isinstance(X, pd.DataFrame) else X)
             # pred is a single value (prediction for one day)
             all_predictions.append(pred[0] if isinstance(pred, np.ndarray) else pred)
     

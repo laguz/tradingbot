@@ -1,52 +1,101 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, scoped_session
+"""
+MongoDB Database Module
+
+Provides MongoDB connection and database access.
+"""
+
+from pymongo import MongoClient
 from config import get_config
+from utils.logger import logger
 
 config = get_config()
 
-# Create SQLAlchemy engine
-engine = create_engine(
-    config.DATABASE_URL,
-    echo=config.DEBUG,  # Log SQL queries in debug mode
-    pool_pre_ping=True,  # Enable connection health checks
-    pool_recycle=3600    # Recycle connections after 1 hour
-)
+# MongoDB setup
+mongo_client = None
+mongo_db = None
 
-# Create session factory
-session_factory = sessionmaker(bind=engine)
-Session = scoped_session(session_factory)
-
-# Base class for all models
-Base = declarative_base()
+if config.MONGODB_URI:
+    try:
+        # Initialize MongoDB client with SSL configuration for development
+        mongo_client = MongoClient(
+            config.MONGODB_URI,
+            tlsAllowInvalidCertificates=True  # For development - handle SSL cert issues
+        )
+        # Extract database name from URI or use default
+        mongo_db = mongo_client.get_database('tradingbot')
+    except Exception as e:
+        logger.error(f"Failed to initialize MongoDB client: {e}")
+        mongo_client = None
+        mongo_db = None
 
 
 def init_db():
     """
-    Initialize the database by creating all tables.
+    Initialize the database connection.
     Should be called on application startup.
     """
-    from models.db_models import Position, Order, SupportResistance, MLPrediction, PositionState
-    Base.metadata.create_all(engine)
-
-
-def get_session():
-    """
-    Get a database session.
-    Usage:
-        session = get_session()
+    # Test MongoDB connection if configured
+    if mongo_db is not None:
         try:
-            # Use session
-            session.commit()
-        except:
-            session.rollback()
-            raise
-        finally:
-            session.close()
+            # Ping MongoDB to verify connection
+            mongo_client.admin.command('ping')
+            logger.info(f"MongoDB connected successfully to database: {mongo_db.name}")
+            
+            # Create indexes for better performance
+            _create_indexes()
+            
+        except Exception as e:
+            logger.error(f"MongoDB connection failed: {e}")
+    else:
+        logger.warning("MongoDB URI not configured - database features will not work!")
+
+
+def _create_indexes():
+    """Create database indexes for optimal performance."""
+    try:
+        # MLPrediction indexes
+        mongo_db.ml_predictions.create_index([('symbol', 1), ('prediction_date', -1)])
+        mongo_db.ml_predictions.create_index([('target_date', 1)])
+        mongo_db.ml_predictions.create_index([('symbol', 1), ('target_date', 1)])
+        
+        # Position indexes
+        mongo_db.positions.create_index([('symbol', 1)])
+        mongo_db.positions.create_index([('underlying', 1)])
+        mongo_db.positions.create_index([('status', 1)])
+        
+        # Order indexes
+        mongo_db.orders.create_index([('order_id', 1)], unique=True, sparse=True)
+        mongo_db.orders.create_index([('symbol', 1)])
+        mongo_db.orders.create_index([('status', 1)])
+        
+        # SupportResistance indexes
+        mongo_db.support_resistance.create_index([('symbol', 1), ('timeframe', 1)], unique=True)
+        mongo_db.support_resistance.create_index([('calculated_at', 1)])
+        
+        # PositionState indexes
+        mongo_db.position_state.create_index([('symbol', 1)], unique=True)
+        
+        logger.info("MongoDB indexes created successfully")
+    except Exception as e:
+        logger.warning(f"Could not create some MongoDB indexes: {e}")
+
+
+def get_mongo_db():
     """
-    return Session()
+    Get the MongoDB database instance.
+    Returns None if MongoDB is not configured.
+    
+    Usage:
+        db = get_mongo_db()
+        if db:
+            collection = db['my_collection']
+            # Use collection
+    """
+    return mongo_db
 
 
-def close_session():
-    """Remove the current session"""
-    Session.remove()
+def close_connection():
+    """Close MongoDB connection."""
+    if mongo_client:
+        mongo_client.close()
+        logger.info("MongoDB connection closed")

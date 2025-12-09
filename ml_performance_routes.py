@@ -11,8 +11,7 @@ from services.ml_service import load_model, predict_next_days
 from services.ml_features import prepare_features
 from services.ml_optimization import tune_hyperparameters, predict_strike_probability, get_smart_predictions
 from services.tradier_service import get_raw_historical_data
-from database import get_session
-from models.db_models import MLPrediction
+from models.mongodb_models import MLPredictionModel
 from datetime import datetime, timedelta
 from utils.logger import logger
 import pandas as pd
@@ -35,31 +34,36 @@ def show_performance():
     performance = get_model_performance(ticker=ticker, days=days)
     
     # Get recent predictions from database
-    session = get_session()
     try:
-        query = session.query(MLPrediction).order_by(MLPrediction.prediction_date.desc()).limit(50)
+        collection = MLPredictionModel.get_collection()
+        query_filter = {}
         
         if ticker:
-            query = query.filter(MLPrediction.symbol == ticker)
+            query_filter['symbol'] = ticker
         
-        recent_predictions = query.all()
+        recent_predictions = list(collection.find(query_filter).sort('prediction_date', -1).limit(50))
         
         # Format for template
         predictions_data = []
         for pred in recent_predictions:
+            error = None
+            if pred.get('actual_price'):
+                error = abs(pred['actual_price'] - pred['predicted_price'])
+            
             predictions_data.append({
-                'symbol': pred.symbol,
-                'prediction_date': pred.prediction_date.strftime('%Y-%m-%d %H:%M'),
-                'target_date': pred.target_date.strftime('%Y-%m-%d'),
-                'predicted_price': pred.predicted_price,
-                'actual_price': pred.actual_price,
-                'error': abs(pred.actual_price - pred.predicted_price) if pred.actual_price else None,
-                'model_version': pred.model_version,
-                'confidence': pred.confidence
+                'symbol': pred['symbol'],
+                'prediction_date': pred['prediction_date'].strftime('%Y-%m-%d %H:%M'),
+                'target_date': pred['target_date'].strftime('%Y-%m-%d'),
+                'predicted_price': pred['predicted_price'],
+                'actual_price': pred.get('actual_price'),
+                'error': error,
+                'model_version': pred.get('model_version'),
+                'confidence': pred.get('confidence')
             })
         
-    finally:
-        session.close()
+    except Exception as e:
+        logger.error(f"Error fetching predictions: {e}")
+        predictions_data = []
     
     return render_template('ml_performance.html', 
                           performance=performance,
@@ -227,26 +231,29 @@ def api_predictions_history(ticker):
     """
     Get prediction history for a ticker with actual vs predicted comparison.
     """
-    session = get_session()
-    
     try:
         days = int(request.args.get('days', 30))
         cutoff_date = datetime.now() - timedelta(days=days)
         
-        predictions = session.query(MLPrediction).filter(
-            MLPrediction.symbol == ticker,
-            MLPrediction.prediction_date >= cutoff_date
-        ).order_by(MLPrediction.target_date).all()
+        collection = MLPredictionModel.get_collection()
+        predictions = list(collection.find({
+            'symbol': ticker,
+            'prediction_date': {'$gte': cutoff_date}
+        }).sort('target_date', 1))
         
         # Format data for charting
         data = []
         for pred in predictions:
+            error = None
+            if pred.get('actual_price'):
+                error = abs(pred['actual_price'] - pred['predicted_price'])
+            
             data.append({
-                'target_date': pred.target_date.strftime('%Y-%m-%d'),
-                'predicted': pred.predicted_price,
-                'actual': pred.actual_price,
-                'error': abs(pred.actual_price - pred.predicted_price) if pred.actual_price else None,
-                'confidence': pred.confidence
+                'target_date': pred['target_date'].strftime('%Y-%m-%d'),
+                'predicted': pred['predicted_price'],
+                'actual': pred.get('actual_price'),
+                'error': error,
+                'confidence': pred.get('confidence')
             })
         
         return jsonify({
@@ -261,8 +268,6 @@ def api_predictions_history(ticker):
             'success': False,
             'error': str(e)
         }), 500
-    finally:
-        session.close()
 
 
 @ml_performance.route('/api/ml/tune/<ticker>', methods=['POST'])
@@ -387,11 +392,11 @@ def api_export_predictions(ticker):
     from flask import make_response
     import io
     
-    session = get_session()
     try:
-        predictions = session.query(MLPrediction).filter(
-            MLPrediction.symbol == ticker
-        ).order_by(MLPrediction.target_date).all()
+        collection = MLPredictionModel.get_collection()
+        predictions = list(collection.find({
+            'symbol': ticker
+        }).sort('target_date', 1))
         
         if not predictions:
             return jsonify({'error': 'No predictions found'}), 404
@@ -400,16 +405,20 @@ def api_export_predictions(ticker):
         output.write('prediction_date,target_date,predicted_price,actual_price,error,model_version,confidence\n')
         
         for pred in predictions:
-            error = abs(pred.actual_price - pred.predicted_price) if pred.actual_price else ''
-            output.write(f"{pred.prediction_date},{pred.target_date},{pred.predicted_price},")
-            output.write(f"{pred.actual_price or ''},{error},{pred.model_version},{pred.confidence or ''}\n")
+            error = ''
+            if pred.get('actual_price'):
+                error = abs(pred['actual_price'] - pred['predicted_price'])
+            
+            output.write(f"{pred['prediction_date']},{pred['target_date']},{pred['predicted_price']},")
+            output.write(f"{pred.get('actual_price') or ''},{error},{pred.get('model_version')},{pred.get('confidence') or ''}\n")
         
         response = make_response(output.getvalue())
         response.headers['Content-Type'] = 'text/csv'
         response.headers['Content-Disposition'] = f'attachment; filename={ticker}_predictions.csv'
         return response
-    finally:
-        session.close()
+    except Exception as e:
+        logger.error(f"Error exporting predictions: {e}")
+        return jsonify({'error': str(e)}), 500
 
 
 @ml_performance.route('/api/ml/market-context')

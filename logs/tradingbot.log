@@ -359,3 +359,1168 @@
 2025-12-09 00:05:08 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
 2025-12-09 00:05:08 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
 2025-12-09 00:05:12 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
+2025-12-09 00:05:45 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 00:05:45 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 00:05:45 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 00:05:45 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 00:05:47 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 00:05:47 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 00:05:47 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 00:05:47 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 00:06:05 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 00:06:05 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 00:06:05 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 00:06:05 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 00:06:06 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 00:06:06 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 00:06:06 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 00:06:06 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 09:36:09 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 09:36:09 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 09:36:09 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 09:36:09 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 09:36:12 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 09:36:12 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 09:36:12 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 09:36:12 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 09:36:27 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 09:36:27 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 09:36:27 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 09:36:27 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 09:36:29 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 09:36:29 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 09:36:29 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 09:36:29 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 09:36:46 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 09:36:47 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 09:36:59 - tradingbot - INFO - nostr_auth.py:73 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 09:36:59 - tradingbot - INFO - nostr_auth.py:115 - Signature verified for pubkey 8dab50cb...
+2025-12-09 09:36:59 - tradingbot - INFO - auth_routes.py:126 - User logged in: 8dab50cb...483e (8dab50cb...)
+2025-12-09 09:38:30 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 09:38:30 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 09:38:31 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 09:38:31 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [258.88, 251.09, 245.9, 248.24, 266.47]
+2025-12-09 11:38:00 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 11:38:00 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 11:38:01 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 11:38:01 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [258.93, 250.96, 245.1, 248.91, 266.35]
+2025-12-09 12:20:18 - tradingbot - ERROR - database.py:51 - MongoDB connection failed: ac-t4h8ejx-shard-00-02.scvgoqu.mongodb.net:27017: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1032) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),ac-t4h8ejx-shard-00-01.scvgoqu.mongodb.net:27017: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1032) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms),ac-t4h8ejx-shard-00-00.scvgoqu.mongodb.net:27017: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1032) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 69385a334c6bb35461821af2, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-t4h8ejx-shard-00-00.scvgoqu.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-t4h8ejx-shard-00-00.scvgoqu.mongodb.net:27017: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1032) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-t4h8ejx-shard-00-01.scvgoqu.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-t4h8ejx-shard-00-01.scvgoqu.mongodb.net:27017: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1032) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>, <ServerDescription ('ac-t4h8ejx-shard-00-02.scvgoqu.mongodb.net', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('ac-t4h8ejx-shard-00-02.scvgoqu.mongodb.net:27017: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1032) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-12-09 12:20:43 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 12:22:18 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 12:22:18 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 12:22:18 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 12:22:18 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 12:22:18 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 12:22:20 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 12:22:20 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 12:22:20 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 12:22:20 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 12:22:20 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 12:22:30 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:22:30 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:22:31 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:22:31 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:22:33 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:22:33 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:22:33 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:22:33 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:23:12 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:23:12 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:23:12 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:23:12 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:23:21 - tradingbot - INFO - ml_service.py:247 - Starting prediction for RIOT, days=5, version=2.0-ensemble
+2025-12-09 12:23:21 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for RIOT (age: 0 days)
+2025-12-09 12:23:22 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for RIOT to database
+2025-12-09 12:23:22 - tradingbot - INFO - ml_service.py:378 - Predictions complete for RIOT: [12.99, 12.73, 15.42, 15.18, 14.13]
+2025-12-09 12:25:45 - tradingbot - INFO - run_experiments.py:39 - Starting QUICK experiment
+2025-12-09 12:25:45 - tradingbot - INFO - experiment_framework.py:272 - Running quick experiment on 10 stocks
+2025-12-09 12:25:45 - tradingbot - INFO - experiment_framework.py:118 - Processing AAPL (1/10)
+2025-12-09 12:25:46 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AAPL
+2025-12-09 12:25:47 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 12:25:47 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for AAPL
+2025-12-09 12:25:47 - tradingbot - INFO - ml_service.py:260 - Training new model for AAPL
+2025-12-09 12:25:47 - tradingbot - INFO - ml_service.py:113 - Training model on 297 samples with 39 features
+2025-12-09 12:25:47 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 12:25:47 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-09 12:25:53 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-09 12:25:53 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for AAPL to models/AAPL_model_v2.pkl
+2025-12-09 12:25:53 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+27  Distance_SMA_200    0.627582
+19               OBV    0.248963
+34             Lag_1    0.041647
+37             Lag_4    0.040317
+36             Lag_3    0.009659
+31       Momentum_20    0.009208
+5           BB_Lower    0.005906
+29        Momentum_5    0.005035
+6           BB_Width    0.002023
+14     Parkinson_Vol    0.001346
+2025-12-09 12:25:53 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AAPL to database
+2025-12-09 12:25:53 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.6, 227.92, 230.89, 232.86, 235.88]
+2025-12-09 12:25:53 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AAPL
+2025-12-09 12:25:53 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AAPL
+2025-12-09 12:25:54 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 12:25:54 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 12:25:54 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AAPL to database
+2025-12-09 12:25:54 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.6, 227.92, 230.89, 232.86, 235.88]
+2025-12-09 12:25:54 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AAPL
+2025-12-09 12:25:54 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AAPL
+2025-12-09 12:25:55 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 12:25:55 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 12:25:55 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AAPL to database
+2025-12-09 12:25:55 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.6, 227.92, 230.89, 232.86, 235.88]
+2025-12-09 12:25:55 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:25:55 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:25:55 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $215.89
+2025-12-09 12:25:55 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $219.49
+2025-12-09 12:25:55 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $222.67
+2025-12-09 12:25:55 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $225.14
+2025-12-09 12:25:56 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $226.81
+2025-12-09 12:25:56 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:25:56 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AAPL
+2025-12-09 12:25:56 - tradingbot - INFO - experiment_framework.py:118 - Processing MSFT (2/10)
+2025-12-09 12:25:56 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for MSFT
+2025-12-09 12:25:56 - tradingbot - INFO - ml_service.py:247 - Starting prediction for MSFT, days=5, version=2.0-ensemble
+2025-12-09 12:25:56 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for MSFT
+2025-12-09 12:25:56 - tradingbot - INFO - ml_service.py:260 - Training new model for MSFT
+2025-12-09 12:25:57 - tradingbot - INFO - ml_service.py:113 - Training model on 297 samples with 39 features
+2025-12-09 12:25:57 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 12:25:57 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-09 12:26:02 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-09 12:26:02 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for MSFT to models/MSFT_model_v2.pkl
+2025-12-09 12:26:02 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+37             Lag_4    0.834385
+27  Distance_SMA_200    0.080651
+34             Lag_1    0.033523
+26   Distance_SMA_50    0.020207
+19               OBV    0.010303
+7        BB_Position    0.005197
+4           BB_Upper    0.002940
+6           BB_Width    0.001939
+30       Momentum_10    0.001900
+11             HV_10    0.001900
+2025-12-09 12:26:02 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for MSFT to database
+2025-12-09 12:26:02 - tradingbot - INFO - ml_service.py:378 - Predictions complete for MSFT: [417.55, 425.56, 427.71, 431.01, 429.01]
+2025-12-09 12:26:02 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for MSFT
+2025-12-09 12:26:02 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for MSFT
+2025-12-09 12:26:04 - tradingbot - INFO - ml_service.py:247 - Starting prediction for MSFT, days=5, version=2.0-ensemble
+2025-12-09 12:26:04 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for MSFT (age: 0 days)
+2025-12-09 12:26:04 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for MSFT to database
+2025-12-09 12:26:04 - tradingbot - INFO - ml_service.py:378 - Predictions complete for MSFT: [417.55, 425.55, 427.76, 431.01, 429.01]
+2025-12-09 12:26:04 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for MSFT
+2025-12-09 12:26:04 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for MSFT
+2025-12-09 12:26:05 - tradingbot - INFO - ml_service.py:247 - Starting prediction for MSFT, days=5, version=2.0-ensemble
+2025-12-09 12:26:05 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for MSFT (age: 0 days)
+2025-12-09 12:26:05 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for MSFT to database
+2025-12-09 12:26:05 - tradingbot - INFO - ml_service.py:378 - Predictions complete for MSFT: [417.55, 425.55, 427.76, 431.01, 429.01]
+2025-12-09 12:26:06 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:26:06 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:26:06 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $383.94
+2025-12-09 12:26:06 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $383.51
+2025-12-09 12:26:06 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $383.63
+2025-12-09 12:26:06 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $383.20
+2025-12-09 12:26:06 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $384.51
+2025-12-09 12:26:06 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:26:06 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for MSFT
+2025-12-09 12:26:06 - tradingbot - INFO - experiment_framework.py:118 - Processing GOOGL (3/10)
+2025-12-09 12:26:06 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for GOOGL
+2025-12-09 12:26:07 - tradingbot - INFO - ml_service.py:247 - Starting prediction for GOOGL, days=5, version=2.0-ensemble
+2025-12-09 12:26:07 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for GOOGL
+2025-12-09 12:26:07 - tradingbot - INFO - ml_service.py:260 - Training new model for GOOGL
+2025-12-09 12:26:07 - tradingbot - INFO - ml_service.py:113 - Training model on 297 samples with 39 features
+2025-12-09 12:26:07 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 12:26:07 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-09 12:26:13 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-09 12:26:13 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for GOOGL to models/GOOGL_model_v2.pkl
+2025-12-09 12:26:13 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+4           BB_Upper    0.796542
+14     Parkinson_Vol    0.083655
+19               OBV    0.073651
+5           BB_Lower    0.013467
+27  Distance_SMA_200    0.011737
+34             Lag_1    0.009030
+12             HV_50    0.007234
+8                ATR    0.000964
+38             Lag_5    0.000837
+36             Lag_3    0.000581
+2025-12-09 12:26:13 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for GOOGL to database
+2025-12-09 12:26:13 - tradingbot - INFO - ml_service.py:378 - Predictions complete for GOOGL: [162.92, 166.0, 173.39, 172.15, 172.53]
+2025-12-09 12:26:13 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for GOOGL
+2025-12-09 12:26:13 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for GOOGL
+2025-12-09 12:26:13 - tradingbot - INFO - ml_service.py:247 - Starting prediction for GOOGL, days=5, version=2.0-ensemble
+2025-12-09 12:26:13 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for GOOGL (age: 0 days)
+2025-12-09 12:26:14 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for GOOGL to database
+2025-12-09 12:26:14 - tradingbot - INFO - ml_service.py:378 - Predictions complete for GOOGL: [162.92, 166.0, 173.39, 172.15, 172.53]
+2025-12-09 12:26:14 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for GOOGL
+2025-12-09 12:26:14 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for GOOGL
+2025-12-09 12:26:14 - tradingbot - INFO - ml_service.py:247 - Starting prediction for GOOGL, days=5, version=2.0-ensemble
+2025-12-09 12:26:14 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for GOOGL (age: 0 days)
+2025-12-09 12:26:15 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for GOOGL to database
+2025-12-09 12:26:15 - tradingbot - INFO - ml_service.py:378 - Predictions complete for GOOGL: [162.92, 166.0, 173.39, 172.15, 172.53]
+2025-12-09 12:26:15 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:26:15 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:26:15 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $164.87
+2025-12-09 12:26:15 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $165.08
+2025-12-09 12:26:15 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $165.03
+2025-12-09 12:26:15 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $164.83
+2025-12-09 12:26:15 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $164.68
+2025-12-09 12:26:15 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:26:15 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for GOOGL
+2025-12-09 12:26:15 - tradingbot - INFO - experiment_framework.py:118 - Processing AMZN (4/10)
+2025-12-09 12:26:16 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AMZN
+2025-12-09 12:26:16 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AMZN, days=5, version=2.0-ensemble
+2025-12-09 12:26:16 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for AMZN
+2025-12-09 12:26:16 - tradingbot - INFO - ml_service.py:260 - Training new model for AMZN
+2025-12-09 12:26:17 - tradingbot - INFO - ml_service.py:113 - Training model on 297 samples with 39 features
+2025-12-09 12:26:17 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 12:26:17 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-09 12:26:22 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-09 12:26:22 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for AMZN to models/AMZN_model_v2.pkl
+2025-12-09 12:26:22 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+          feature  importance
+34          Lag_1    0.837078
+4        BB_Upper    0.046676
+7     BB_Position    0.022824
+11          HV_10    0.020845
+19            OBV    0.014776
+6        BB_Width    0.014334
+15  Volume_Change    0.005933
+9     ATR_Percent    0.004081
+10          HV_20    0.003539
+0             RSI    0.003479
+2025-12-09 12:26:22 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AMZN to database
+2025-12-09 12:26:22 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AMZN: [188.47, 185.14, 187.89, 190.79, 188.0]
+2025-12-09 12:26:22 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AMZN
+2025-12-09 12:26:22 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AMZN
+2025-12-09 12:26:23 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AMZN, days=5, version=2.0-ensemble
+2025-12-09 12:26:23 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AMZN (age: 0 days)
+2025-12-09 12:26:24 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AMZN to database
+2025-12-09 12:26:24 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AMZN: [188.47, 185.14, 187.89, 190.79, 187.99]
+2025-12-09 12:26:24 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AMZN
+2025-12-09 12:26:24 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AMZN
+2025-12-09 12:26:24 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AMZN, days=5, version=2.0-ensemble
+2025-12-09 12:26:24 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AMZN (age: 0 days)
+2025-12-09 12:26:25 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AMZN to database
+2025-12-09 12:26:25 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AMZN: [188.47, 185.14, 187.89, 190.79, 187.99]
+2025-12-09 12:26:25 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:26:25 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:26:25 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $198.86
+2025-12-09 12:26:25 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $198.50
+2025-12-09 12:26:25 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $200.04
+2025-12-09 12:26:25 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $200.94
+2025-12-09 12:26:25 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $201.78
+2025-12-09 12:26:25 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:26:25 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AMZN
+2025-12-09 12:26:25 - tradingbot - INFO - experiment_framework.py:118 - Processing NVDA (5/10)
+2025-12-09 12:26:25 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for NVDA
+2025-12-09 12:26:26 - tradingbot - INFO - ml_service.py:247 - Starting prediction for NVDA, days=5, version=2.0-ensemble
+2025-12-09 12:26:26 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for NVDA
+2025-12-09 12:26:26 - tradingbot - INFO - ml_service.py:260 - Training new model for NVDA
+2025-12-09 12:26:26 - tradingbot - INFO - ml_service.py:113 - Training model on 297 samples with 39 features
+2025-12-09 12:26:26 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 12:26:26 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-09 12:26:32 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-09 12:26:32 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for NVDA to models/NVDA_model_v2.pkl
+2025-12-09 12:26:32 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+19               OBV    0.802128
+34             Lag_1    0.131943
+27  Distance_SMA_200    0.017926
+18          VP_Trend    0.009484
+6           BB_Width    0.009184
+5           BB_Lower    0.004661
+15     Volume_Change    0.003237
+12             HV_50    0.003105
+26   Distance_SMA_50    0.002674
+28   Distance_EMA_12    0.002645
+2025-12-09 12:26:32 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for NVDA to database
+2025-12-09 12:26:32 - tradingbot - INFO - ml_service.py:378 - Predictions complete for NVDA: [122.76, 141.64, 151.54, 153.37, 152.47]
+2025-12-09 12:26:32 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for NVDA
+2025-12-09 12:26:32 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for NVDA
+2025-12-09 12:26:32 - tradingbot - INFO - ml_service.py:247 - Starting prediction for NVDA, days=5, version=2.0-ensemble
+2025-12-09 12:26:32 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for NVDA (age: 0 days)
+2025-12-09 12:26:33 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for NVDA to database
+2025-12-09 12:26:33 - tradingbot - INFO - ml_service.py:378 - Predictions complete for NVDA: [122.76, 141.64, 151.54, 153.37, 152.47]
+2025-12-09 12:26:33 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for NVDA
+2025-12-09 12:26:33 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for NVDA
+2025-12-09 12:26:33 - tradingbot - INFO - ml_service.py:247 - Starting prediction for NVDA, days=5, version=2.0-ensemble
+2025-12-09 12:26:33 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for NVDA (age: 0 days)
+2025-12-09 12:26:34 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for NVDA to database
+2025-12-09 12:26:34 - tradingbot - INFO - ml_service.py:378 - Predictions complete for NVDA: [122.76, 141.64, 151.54, 153.37, 152.47]
+2025-12-09 12:26:34 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:26:34 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:26:34 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $120.93
+2025-12-09 12:26:34 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $121.14
+2025-12-09 12:26:34 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $120.65
+2025-12-09 12:26:34 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $120.67
+2025-12-09 12:26:34 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $121.32
+2025-12-09 12:26:34 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:26:34 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for NVDA
+2025-12-09 12:26:34 - tradingbot - INFO - experiment_framework.py:118 - Processing META (6/10)
+2025-12-09 12:26:35 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for META
+2025-12-09 12:26:35 - tradingbot - INFO - ml_service.py:247 - Starting prediction for META, days=5, version=2.0-ensemble
+2025-12-09 12:26:35 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for META
+2025-12-09 12:26:35 - tradingbot - INFO - ml_service.py:260 - Training new model for META
+2025-12-09 12:26:36 - tradingbot - INFO - ml_service.py:113 - Training model on 297 samples with 39 features
+2025-12-09 12:26:36 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 12:26:36 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-09 12:26:41 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-09 12:26:41 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for META to models/META_model_v2.pkl
+2025-12-09 12:26:41 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+34             Lag_1    0.924408
+11             HV_10    0.031916
+38             Lag_5    0.011023
+28   Distance_EMA_12    0.007573
+30       Momentum_10    0.002836
+4           BB_Upper    0.002649
+27  Distance_SMA_200    0.002254
+12             HV_50    0.002239
+26   Distance_SMA_50    0.001877
+8                ATR    0.001799
+2025-12-09 12:26:41 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for META to database
+2025-12-09 12:26:41 - tradingbot - INFO - ml_service.py:378 - Predictions complete for META: [568.95, 573.21, 579.06, 577.49, 583.47]
+2025-12-09 12:26:41 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for META
+2025-12-09 12:26:41 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for META
+2025-12-09 12:26:42 - tradingbot - INFO - ml_service.py:247 - Starting prediction for META, days=5, version=2.0-ensemble
+2025-12-09 12:26:42 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for META (age: 0 days)
+2025-12-09 12:26:42 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for META to database
+2025-12-09 12:26:42 - tradingbot - INFO - ml_service.py:378 - Predictions complete for META: [568.95, 573.21, 579.06, 577.49, 583.47]
+2025-12-09 12:26:42 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for META
+2025-12-09 12:26:42 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for META
+2025-12-09 12:26:43 - tradingbot - INFO - ml_service.py:247 - Starting prediction for META, days=5, version=2.0-ensemble
+2025-12-09 12:26:43 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for META (age: 0 days)
+2025-12-09 12:26:44 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for META to database
+2025-12-09 12:26:44 - tradingbot - INFO - ml_service.py:378 - Predictions complete for META: [569.09, 573.21, 579.18, 577.45, 583.61]
+2025-12-09 12:26:44 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:26:44 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:26:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $603.37
+2025-12-09 12:26:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $605.74
+2025-12-09 12:26:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $605.80
+2025-12-09 12:26:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $603.57
+2025-12-09 12:26:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $603.85
+2025-12-09 12:26:44 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:26:44 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for META
+2025-12-09 12:26:44 - tradingbot - INFO - experiment_framework.py:118 - Processing TSLA (7/10)
+2025-12-09 12:26:44 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for TSLA
+2025-12-09 12:26:45 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:26:45 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:26:45 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:26:45 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:26:45 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for TSLA
+2025-12-09 12:26:45 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for TSLA
+2025-12-09 12:26:46 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:26:46 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:26:47 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:26:47 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:26:47 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for TSLA
+2025-12-09 12:26:47 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for TSLA
+2025-12-09 12:26:47 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:26:47 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:26:48 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:26:48 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:26:48 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:26:48 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:26:48 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $255.34
+2025-12-09 12:26:48 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $256.37
+2025-12-09 12:26:48 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $257.39
+2025-12-09 12:26:48 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $253.25
+2025-12-09 12:26:48 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $251.37
+2025-12-09 12:26:48 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:26:48 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for TSLA
+2025-12-09 12:26:48 - tradingbot - INFO - experiment_framework.py:118 - Processing BRK.B (8/10)
+2025-12-09 12:26:58 - tradingbot - INFO - experiment_framework.py:118 - Processing JPM (9/10)
+2025-12-09 12:27:28 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 12:27:28 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 12:27:28 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 12:27:28 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 12:27:28 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 12:37:33 - tradingbot - INFO - run_experiments.py:39 - Starting QUICK experiment
+2025-12-09 12:37:33 - tradingbot - INFO - experiment_framework.py:272 - Running quick experiment on 10 stocks
+2025-12-09 12:37:33 - tradingbot - INFO - experiment_framework.py:118 - Processing AAPL (1/10)
+2025-12-09 12:37:34 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AAPL
+2025-12-09 12:37:34 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 12:37:34 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 12:37:35 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AAPL to database
+2025-12-09 12:37:35 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.58, 227.93, 230.89, 232.86, 235.88]
+2025-12-09 12:37:35 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AAPL
+2025-12-09 12:37:35 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AAPL
+2025-12-09 12:37:35 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 12:37:35 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 12:37:36 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AAPL to database
+2025-12-09 12:37:36 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.58, 227.93, 230.89, 232.86, 235.88]
+2025-12-09 12:37:36 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AAPL
+2025-12-09 12:37:36 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AAPL
+2025-12-09 12:37:36 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 12:37:36 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 12:37:37 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AAPL to database
+2025-12-09 12:37:37 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.58, 227.93, 230.89, 232.86, 235.88]
+2025-12-09 12:37:37 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:37:37 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:37:37 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $215.89
+2025-12-09 12:37:37 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $219.49
+2025-12-09 12:37:37 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $222.67
+2025-12-09 12:37:37 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $225.14
+2025-12-09 12:37:37 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $226.81
+2025-12-09 12:37:37 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:37:37 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AAPL
+2025-12-09 12:37:37 - tradingbot - INFO - experiment_framework.py:118 - Processing MSFT (2/10)
+2025-12-09 12:37:38 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for MSFT
+2025-12-09 12:37:38 - tradingbot - INFO - ml_service.py:247 - Starting prediction for MSFT, days=5, version=2.0-ensemble
+2025-12-09 12:37:38 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for MSFT (age: 0 days)
+2025-12-09 12:37:39 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for MSFT to database
+2025-12-09 12:37:39 - tradingbot - INFO - ml_service.py:378 - Predictions complete for MSFT: [413.44, 414.47, 425.58, 430.06, 428.22]
+2025-12-09 12:37:39 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for MSFT
+2025-12-09 12:37:39 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for MSFT
+2025-12-09 12:37:39 - tradingbot - INFO - ml_service.py:247 - Starting prediction for MSFT, days=5, version=2.0-ensemble
+2025-12-09 12:37:39 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for MSFT (age: 0 days)
+2025-12-09 12:37:40 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for MSFT to database
+2025-12-09 12:37:40 - tradingbot - INFO - ml_service.py:378 - Predictions complete for MSFT: [413.44, 414.47, 425.58, 430.06, 428.22]
+2025-12-09 12:37:40 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for MSFT
+2025-12-09 12:37:40 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for MSFT
+2025-12-09 12:37:41 - tradingbot - INFO - ml_service.py:247 - Starting prediction for MSFT, days=5, version=2.0-ensemble
+2025-12-09 12:37:41 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for MSFT (age: 0 days)
+2025-12-09 12:37:41 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for MSFT to database
+2025-12-09 12:37:41 - tradingbot - INFO - ml_service.py:378 - Predictions complete for MSFT: [413.44, 414.47, 425.58, 430.05, 428.22]
+2025-12-09 12:37:41 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:37:41 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:37:41 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $383.94
+2025-12-09 12:37:41 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $383.51
+2025-12-09 12:37:41 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $383.63
+2025-12-09 12:37:41 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $383.20
+2025-12-09 12:37:41 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $384.51
+2025-12-09 12:37:41 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:37:41 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for MSFT
+2025-12-09 12:37:41 - tradingbot - INFO - experiment_framework.py:118 - Processing GOOGL (3/10)
+2025-12-09 12:37:42 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for GOOGL
+2025-12-09 12:37:42 - tradingbot - INFO - ml_service.py:247 - Starting prediction for GOOGL, days=5, version=2.0-ensemble
+2025-12-09 12:37:42 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for GOOGL (age: 0 days)
+2025-12-09 12:37:43 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for GOOGL to database
+2025-12-09 12:37:43 - tradingbot - INFO - ml_service.py:378 - Predictions complete for GOOGL: [162.91, 165.99, 173.4, 172.15, 172.53]
+2025-12-09 12:37:43 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for GOOGL
+2025-12-09 12:37:43 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for GOOGL
+2025-12-09 12:37:43 - tradingbot - INFO - ml_service.py:247 - Starting prediction for GOOGL, days=5, version=2.0-ensemble
+2025-12-09 12:37:44 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for GOOGL (age: 0 days)
+2025-12-09 12:37:44 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for GOOGL to database
+2025-12-09 12:37:44 - tradingbot - INFO - ml_service.py:378 - Predictions complete for GOOGL: [162.91, 165.99, 173.4, 172.15, 172.53]
+2025-12-09 12:37:44 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for GOOGL
+2025-12-09 12:37:44 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for GOOGL
+2025-12-09 12:37:45 - tradingbot - INFO - ml_service.py:247 - Starting prediction for GOOGL, days=5, version=2.0-ensemble
+2025-12-09 12:37:45 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for GOOGL (age: 0 days)
+2025-12-09 12:37:46 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for GOOGL to database
+2025-12-09 12:37:46 - tradingbot - INFO - ml_service.py:378 - Predictions complete for GOOGL: [162.91, 165.99, 173.4, 172.15, 172.53]
+2025-12-09 12:37:46 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:37:46 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:37:46 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $164.87
+2025-12-09 12:37:46 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $165.08
+2025-12-09 12:37:46 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $165.03
+2025-12-09 12:37:46 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $164.83
+2025-12-09 12:37:46 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $164.68
+2025-12-09 12:37:46 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:37:46 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for GOOGL
+2025-12-09 12:37:46 - tradingbot - INFO - experiment_framework.py:118 - Processing AMZN (4/10)
+2025-12-09 12:37:47 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AMZN
+2025-12-09 12:37:47 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AMZN, days=5, version=2.0-ensemble
+2025-12-09 12:37:47 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AMZN (age: 0 days)
+2025-12-09 12:37:48 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AMZN to database
+2025-12-09 12:37:48 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AMZN: [188.34, 184.97, 187.74, 190.45, 184.14]
+2025-12-09 12:37:48 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AMZN
+2025-12-09 12:37:48 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AMZN
+2025-12-09 12:37:48 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AMZN, days=5, version=2.0-ensemble
+2025-12-09 12:37:48 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AMZN (age: 0 days)
+2025-12-09 12:37:49 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AMZN to database
+2025-12-09 12:37:49 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AMZN: [188.32, 184.97, 187.74, 190.45, 184.14]
+2025-12-09 12:37:49 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AMZN
+2025-12-09 12:37:49 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AMZN
+2025-12-09 12:37:49 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AMZN, days=5, version=2.0-ensemble
+2025-12-09 12:37:49 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AMZN (age: 0 days)
+2025-12-09 12:37:50 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for AMZN to database
+2025-12-09 12:37:50 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AMZN: [188.32, 184.97, 187.74, 190.45, 184.14]
+2025-12-09 12:37:50 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:37:50 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:37:50 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $198.86
+2025-12-09 12:37:50 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $198.50
+2025-12-09 12:37:50 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $200.04
+2025-12-09 12:37:50 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $200.94
+2025-12-09 12:37:50 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $201.78
+2025-12-09 12:37:50 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:37:50 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AMZN
+2025-12-09 12:37:50 - tradingbot - INFO - experiment_framework.py:118 - Processing NVDA (5/10)
+2025-12-09 12:37:51 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for NVDA
+2025-12-09 12:37:51 - tradingbot - INFO - ml_service.py:247 - Starting prediction for NVDA, days=5, version=2.0-ensemble
+2025-12-09 12:37:51 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for NVDA (age: 0 days)
+2025-12-09 12:37:52 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for NVDA to database
+2025-12-09 12:37:52 - tradingbot - INFO - ml_service.py:378 - Predictions complete for NVDA: [122.76, 141.64, 151.55, 153.39, 152.47]
+2025-12-09 12:37:52 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for NVDA
+2025-12-09 12:37:52 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for NVDA
+2025-12-09 12:37:52 - tradingbot - INFO - ml_service.py:247 - Starting prediction for NVDA, days=5, version=2.0-ensemble
+2025-12-09 12:37:52 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for NVDA (age: 0 days)
+2025-12-09 12:37:53 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for NVDA to database
+2025-12-09 12:37:53 - tradingbot - INFO - ml_service.py:378 - Predictions complete for NVDA: [122.76, 141.64, 151.55, 153.39, 152.47]
+2025-12-09 12:37:53 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for NVDA
+2025-12-09 12:37:53 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for NVDA
+2025-12-09 12:37:54 - tradingbot - INFO - ml_service.py:247 - Starting prediction for NVDA, days=5, version=2.0-ensemble
+2025-12-09 12:37:54 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for NVDA (age: 0 days)
+2025-12-09 12:37:54 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for NVDA to database
+2025-12-09 12:37:54 - tradingbot - INFO - ml_service.py:378 - Predictions complete for NVDA: [122.76, 141.64, 151.54, 153.37, 152.47]
+2025-12-09 12:37:54 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:37:54 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:37:54 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $120.93
+2025-12-09 12:37:54 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $121.14
+2025-12-09 12:37:54 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $120.65
+2025-12-09 12:37:54 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $120.67
+2025-12-09 12:37:54 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $121.32
+2025-12-09 12:37:54 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:37:54 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for NVDA
+2025-12-09 12:37:54 - tradingbot - INFO - experiment_framework.py:118 - Processing META (6/10)
+2025-12-09 12:37:55 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for META
+2025-12-09 12:37:55 - tradingbot - INFO - ml_service.py:247 - Starting prediction for META, days=5, version=2.0-ensemble
+2025-12-09 12:37:55 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for META (age: 0 days)
+2025-12-09 12:37:56 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for META to database
+2025-12-09 12:37:56 - tradingbot - INFO - ml_service.py:378 - Predictions complete for META: [568.98, 573.21, 581.47, 577.49, 583.48]
+2025-12-09 12:37:56 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for META
+2025-12-09 12:37:56 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for META
+2025-12-09 12:37:56 - tradingbot - INFO - ml_service.py:247 - Starting prediction for META, days=5, version=2.0-ensemble
+2025-12-09 12:37:56 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for META (age: 0 days)
+2025-12-09 12:37:57 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for META to database
+2025-12-09 12:37:57 - tradingbot - INFO - ml_service.py:378 - Predictions complete for META: [568.98, 573.21, 581.47, 577.49, 583.48]
+2025-12-09 12:37:57 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for META
+2025-12-09 12:37:57 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for META
+2025-12-09 12:37:57 - tradingbot - INFO - ml_service.py:247 - Starting prediction for META, days=5, version=2.0-ensemble
+2025-12-09 12:37:58 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for META (age: 0 days)
+2025-12-09 12:37:58 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for META to database
+2025-12-09 12:37:58 - tradingbot - INFO - ml_service.py:378 - Predictions complete for META: [568.98, 573.21, 581.47, 577.49, 583.48]
+2025-12-09 12:37:58 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:37:58 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:37:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $603.37
+2025-12-09 12:37:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $605.74
+2025-12-09 12:37:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $605.80
+2025-12-09 12:37:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $603.57
+2025-12-09 12:37:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $603.85
+2025-12-09 12:37:58 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:37:58 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for META
+2025-12-09 12:37:58 - tradingbot - INFO - experiment_framework.py:118 - Processing TSLA (7/10)
+2025-12-09 12:37:59 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for TSLA
+2025-12-09 12:37:59 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:37:59 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:38:00 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:38:00 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:38:00 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for TSLA
+2025-12-09 12:38:00 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for TSLA
+2025-12-09 12:38:01 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:38:01 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:38:01 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:38:01 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.19, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:38:01 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for TSLA
+2025-12-09 12:38:01 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for TSLA
+2025-12-09 12:38:02 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:38:02 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:38:03 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:38:03 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.14, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:38:03 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:38:03 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:38:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $255.34
+2025-12-09 12:38:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $256.37
+2025-12-09 12:38:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $257.39
+2025-12-09 12:38:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $253.25
+2025-12-09 12:38:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $251.37
+2025-12-09 12:38:03 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:38:03 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for TSLA
+2025-12-09 12:38:03 - tradingbot - INFO - experiment_framework.py:118 - Processing BRK.B (8/10)
+2025-12-09 12:38:09 - tradingbot - INFO - ml_service.py:247 - Starting prediction for RIOT, days=5, version=2.0-ensemble
+2025-12-09 12:38:09 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for RIOT (age: 0 days)
+2025-12-09 12:38:10 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for RIOT to database
+2025-12-09 12:38:10 - tradingbot - INFO - ml_service.py:378 - Predictions complete for RIOT: [12.99, 12.73, 15.41, 15.18, 14.13]
+2025-12-09 12:38:13 - tradingbot - INFO - experiment_framework.py:118 - Processing JPM (9/10)
+2025-12-09 12:38:13 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JPM
+2025-12-09 12:38:14 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JPM, days=5, version=2.0-ensemble
+2025-12-09 12:38:14 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for JPM
+2025-12-09 12:38:14 - tradingbot - INFO - ml_service.py:260 - Training new model for JPM
+2025-12-09 12:38:14 - tradingbot - INFO - ml_service.py:113 - Training model on 296 samples with 39 features
+2025-12-09 12:38:14 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 12:38:14 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-09 12:38:19 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:38:19 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:38:19 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 12:38:19 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.06, 251.05, 245.1, 248.91, 266.18]
+2025-12-09 12:38:20 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-09 12:38:20 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for JPM to models/JPM_model_v2.pkl
+2025-12-09 12:38:20 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+34             Lag_1    0.968958
+19               OBV    0.011624
+26   Distance_SMA_50    0.003031
+14     Parkinson_Vol    0.002796
+10             HV_20    0.001915
+2        Signal_Line    0.001878
+18          VP_Trend    0.001524
+13         Vol_Ratio    0.001290
+27  Distance_SMA_200    0.001099
+33         HL_Spread    0.000981
+2025-12-09 12:38:20 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for JPM to database
+2025-12-09 12:38:20 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JPM: [209.47, 214.71, 218.0, 220.83, 219.86]
+2025-12-09 12:38:20 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JPM
+2025-12-09 12:38:20 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JPM
+2025-12-09 12:38:21 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JPM, days=5, version=2.0-ensemble
+2025-12-09 12:38:21 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JPM (age: 0 days)
+2025-12-09 12:38:22 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for JPM to database
+2025-12-09 12:38:22 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JPM: [209.47, 214.71, 218.0, 220.83, 219.86]
+2025-12-09 12:38:22 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JPM
+2025-12-09 12:38:22 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JPM
+2025-12-09 12:38:22 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JPM, days=5, version=2.0-ensemble
+2025-12-09 12:38:22 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JPM (age: 0 days)
+2025-12-09 12:38:23 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for JPM to database
+2025-12-09 12:38:23 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JPM: [209.47, 214.71, 218.0, 220.83, 219.86]
+2025-12-09 12:38:23 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 113 samples
+2025-12-09 12:38:23 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:38:23 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $227.12
+2025-12-09 12:38:23 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $227.10
+2025-12-09 12:38:23 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $227.39
+2025-12-09 12:38:23 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $227.38
+2025-12-09 12:38:23 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $227.48
+2025-12-09 12:38:23 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:38:23 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JPM
+2025-12-09 12:38:23 - tradingbot - INFO - experiment_framework.py:118 - Processing JNJ (10/10)
+2025-12-09 12:38:23 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JNJ
+2025-12-09 12:38:24 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JNJ, days=5, version=2.0-ensemble
+2025-12-09 12:38:24 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for JNJ
+2025-12-09 12:38:24 - tradingbot - INFO - ml_service.py:260 - Training new model for JNJ
+2025-12-09 12:38:24 - tradingbot - INFO - ml_service.py:113 - Training model on 297 samples with 39 features
+2025-12-09 12:38:24 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 12:38:24 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-09 12:38:29 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-09 12:38:29 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for JNJ to models/JNJ_model_v2.pkl
+2025-12-09 12:38:29 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+4           BB_Upper    0.747513
+27  Distance_SMA_200    0.198594
+19               OBV    0.038041
+6           BB_Width    0.006077
+34             Lag_1    0.004345
+1               MACD    0.000564
+2        Signal_Line    0.000561
+9        ATR_Percent    0.000551
+0                RSI    0.000530
+37             Lag_4    0.000344
+2025-12-09 12:38:30 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for JNJ to database
+2025-12-09 12:38:30 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JNJ: [166.87, 163.67, 167.15, 162.73, 162.29]
+2025-12-09 12:38:30 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JNJ
+2025-12-09 12:38:30 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JNJ
+2025-12-09 12:38:30 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JNJ, days=5, version=2.0-ensemble
+2025-12-09 12:38:30 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JNJ (age: 0 days)
+2025-12-09 12:38:31 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for JNJ to database
+2025-12-09 12:38:31 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JNJ: [166.87, 163.67, 167.15, 162.73, 162.29]
+2025-12-09 12:38:31 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JNJ
+2025-12-09 12:38:31 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JNJ
+2025-12-09 12:38:31 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JNJ, days=5, version=2.0-ensemble
+2025-12-09 12:38:31 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JNJ (age: 0 days)
+2025-12-09 12:38:32 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for JNJ to database
+2025-12-09 12:38:32 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JNJ: [166.87, 163.67, 167.15, 162.73, 162.29]
+2025-12-09 12:38:32 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:38:32 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:38:32 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $162.61
+2025-12-09 12:38:32 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $162.34
+2025-12-09 12:38:32 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $161.99
+2025-12-09 12:38:32 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $161.61
+2025-12-09 12:38:32 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $161.42
+2025-12-09 12:38:32 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:38:32 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JNJ
+2025-12-09 12:38:32 - tradingbot - INFO - experiment_framework.py:210 - Results saved to research/results/experiment_results_20251209_123832.json
+2025-12-09 12:38:32 - tradingbot - INFO - experiment_framework.py:192 - ================================================================================
+2025-12-09 12:38:32 - tradingbot - INFO - experiment_framework.py:193 - AGGREGATED RESULTS
+2025-12-09 12:38:32 - tradingbot - INFO - experiment_framework.py:194 - ================================================================================
+2025-12-09 12:38:32 - tradingbot - INFO - experiment_framework.py:195 - Direct MAE: nan ± nan
+2025-12-09 12:38:32 - tradingbot - INFO - experiment_framework.py:196 - Recursive MAE: nan ± nan
+2025-12-09 12:39:14 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 12:39:14 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 12:39:14 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 12:39:14 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 12:39:14 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 12:39:54 - tradingbot - INFO - run_experiments.py:39 - Starting QUICK experiment
+2025-12-09 12:39:54 - tradingbot - INFO - experiment_framework.py:272 - Running quick experiment on 10 stocks
+2025-12-09 12:39:54 - tradingbot - INFO - experiment_framework.py:118 - Processing AAPL (1/10)
+2025-12-09 12:39:55 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AAPL
+2025-12-09 12:39:55 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 12:39:55 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 12:39:56 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for AAPL to database
+2025-12-09 12:39:56 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.58, 227.93, 230.89, 232.86, 235.89]
+2025-12-09 12:39:56 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AAPL
+2025-12-09 12:39:56 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AAPL
+2025-12-09 12:39:56 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 12:39:56 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 12:39:57 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for AAPL to database
+2025-12-09 12:39:57 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.58, 227.93, 230.89, 232.86, 235.89]
+2025-12-09 12:39:57 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AAPL
+2025-12-09 12:39:57 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AAPL
+2025-12-09 12:39:58 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 12:39:58 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 12:39:58 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for AAPL to database
+2025-12-09 12:39:58 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.58, 227.93, 230.89, 232.86, 235.89]
+2025-12-09 12:39:58 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:39:58 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:39:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $215.89
+2025-12-09 12:39:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $219.49
+2025-12-09 12:39:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $222.67
+2025-12-09 12:39:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $225.14
+2025-12-09 12:39:58 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $226.81
+2025-12-09 12:39:58 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:39:58 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AAPL
+2025-12-09 12:39:58 - tradingbot - INFO - experiment_framework.py:118 - Processing MSFT (2/10)
+2025-12-09 12:39:59 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for MSFT
+2025-12-09 12:39:59 - tradingbot - INFO - ml_service.py:247 - Starting prediction for MSFT, days=5, version=2.0-ensemble
+2025-12-09 12:39:59 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for MSFT (age: 0 days)
+2025-12-09 12:40:00 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for MSFT to database
+2025-12-09 12:40:00 - tradingbot - INFO - ml_service.py:378 - Predictions complete for MSFT: [411.7, 413.61, 425.54, 430.03, 428.25]
+2025-12-09 12:40:00 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for MSFT
+2025-12-09 12:40:00 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for MSFT
+2025-12-09 12:40:01 - tradingbot - INFO - ml_service.py:247 - Starting prediction for MSFT, days=5, version=2.0-ensemble
+2025-12-09 12:40:01 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for MSFT (age: 0 days)
+2025-12-09 12:40:01 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for MSFT to database
+2025-12-09 12:40:01 - tradingbot - INFO - ml_service.py:378 - Predictions complete for MSFT: [411.7, 413.61, 425.54, 430.03, 428.25]
+2025-12-09 12:40:01 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for MSFT
+2025-12-09 12:40:01 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for MSFT
+2025-12-09 12:40:02 - tradingbot - INFO - ml_service.py:247 - Starting prediction for MSFT, days=5, version=2.0-ensemble
+2025-12-09 12:40:02 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for MSFT (age: 0 days)
+2025-12-09 12:40:02 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for MSFT to database
+2025-12-09 12:40:02 - tradingbot - INFO - ml_service.py:378 - Predictions complete for MSFT: [409.36, 411.52, 425.04, 430.03, 428.32]
+2025-12-09 12:40:03 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:40:03 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:40:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $383.94
+2025-12-09 12:40:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $383.51
+2025-12-09 12:40:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $383.63
+2025-12-09 12:40:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $383.20
+2025-12-09 12:40:03 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $384.51
+2025-12-09 12:40:03 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:40:03 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for MSFT
+2025-12-09 12:40:03 - tradingbot - INFO - experiment_framework.py:118 - Processing GOOGL (3/10)
+2025-12-09 12:40:03 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for GOOGL
+2025-12-09 12:40:04 - tradingbot - INFO - ml_service.py:247 - Starting prediction for GOOGL, days=5, version=2.0-ensemble
+2025-12-09 12:40:04 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for GOOGL (age: 0 days)
+2025-12-09 12:40:04 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for GOOGL to database
+2025-12-09 12:40:04 - tradingbot - INFO - ml_service.py:378 - Predictions complete for GOOGL: [162.92, 165.99, 173.4, 172.15, 172.53]
+2025-12-09 12:40:04 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for GOOGL
+2025-12-09 12:40:04 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for GOOGL
+2025-12-09 12:40:05 - tradingbot - INFO - ml_service.py:247 - Starting prediction for GOOGL, days=5, version=2.0-ensemble
+2025-12-09 12:40:05 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for GOOGL (age: 0 days)
+2025-12-09 12:40:06 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for GOOGL to database
+2025-12-09 12:40:06 - tradingbot - INFO - ml_service.py:378 - Predictions complete for GOOGL: [162.92, 165.99, 173.4, 172.15, 172.53]
+2025-12-09 12:40:06 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for GOOGL
+2025-12-09 12:40:06 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for GOOGL
+2025-12-09 12:40:06 - tradingbot - INFO - ml_service.py:247 - Starting prediction for GOOGL, days=5, version=2.0-ensemble
+2025-12-09 12:40:06 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for GOOGL (age: 0 days)
+2025-12-09 12:40:07 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for GOOGL to database
+2025-12-09 12:40:07 - tradingbot - INFO - ml_service.py:378 - Predictions complete for GOOGL: [162.92, 165.99, 173.4, 172.15, 172.53]
+2025-12-09 12:40:07 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:40:07 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:40:07 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $164.87
+2025-12-09 12:40:07 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $165.08
+2025-12-09 12:40:07 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $165.03
+2025-12-09 12:40:07 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $164.83
+2025-12-09 12:40:07 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $164.68
+2025-12-09 12:40:07 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:40:07 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for GOOGL
+2025-12-09 12:40:07 - tradingbot - INFO - experiment_framework.py:118 - Processing AMZN (4/10)
+2025-12-09 12:40:07 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AMZN
+2025-12-09 12:40:08 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AMZN, days=5, version=2.0-ensemble
+2025-12-09 12:40:08 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AMZN (age: 0 days)
+2025-12-09 12:40:09 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for AMZN to database
+2025-12-09 12:40:09 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AMZN: [188.31, 184.97, 187.74, 190.45, 184.14]
+2025-12-09 12:40:09 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AMZN
+2025-12-09 12:40:09 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AMZN
+2025-12-09 12:40:10 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AMZN, days=5, version=2.0-ensemble
+2025-12-09 12:40:10 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AMZN (age: 0 days)
+2025-12-09 12:40:11 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for AMZN to database
+2025-12-09 12:40:11 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AMZN: [188.31, 184.97, 187.74, 190.45, 184.14]
+2025-12-09 12:40:11 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AMZN
+2025-12-09 12:40:11 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for AMZN
+2025-12-09 12:40:12 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AMZN, days=5, version=2.0-ensemble
+2025-12-09 12:40:12 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AMZN (age: 0 days)
+2025-12-09 12:40:12 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for AMZN to database
+2025-12-09 12:40:12 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AMZN: [188.34, 184.97, 187.74, 190.45, 184.14]
+2025-12-09 12:40:13 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:40:13 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:40:13 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $198.86
+2025-12-09 12:40:13 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $198.50
+2025-12-09 12:40:13 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $200.04
+2025-12-09 12:40:13 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $200.94
+2025-12-09 12:40:13 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $201.78
+2025-12-09 12:40:13 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:40:13 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for AMZN
+2025-12-09 12:40:13 - tradingbot - INFO - experiment_framework.py:118 - Processing NVDA (5/10)
+2025-12-09 12:40:13 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for NVDA
+2025-12-09 12:40:14 - tradingbot - INFO - ml_service.py:247 - Starting prediction for NVDA, days=5, version=2.0-ensemble
+2025-12-09 12:40:14 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for NVDA (age: 0 days)
+2025-12-09 12:40:14 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for NVDA to database
+2025-12-09 12:40:14 - tradingbot - INFO - ml_service.py:378 - Predictions complete for NVDA: [122.76, 141.64, 151.55, 153.39, 152.47]
+2025-12-09 12:40:14 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for NVDA
+2025-12-09 12:40:14 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for NVDA
+2025-12-09 12:40:15 - tradingbot - INFO - ml_service.py:247 - Starting prediction for NVDA, days=5, version=2.0-ensemble
+2025-12-09 12:40:15 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for NVDA (age: 0 days)
+2025-12-09 12:40:16 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for NVDA to database
+2025-12-09 12:40:16 - tradingbot - INFO - ml_service.py:378 - Predictions complete for NVDA: [122.76, 141.64, 151.55, 153.39, 152.47]
+2025-12-09 12:40:16 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for NVDA
+2025-12-09 12:40:16 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for NVDA
+2025-12-09 12:40:16 - tradingbot - INFO - ml_service.py:247 - Starting prediction for NVDA, days=5, version=2.0-ensemble
+2025-12-09 12:40:16 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for NVDA (age: 0 days)
+2025-12-09 12:40:17 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for NVDA to database
+2025-12-09 12:40:17 - tradingbot - INFO - ml_service.py:378 - Predictions complete for NVDA: [122.76, 141.64, 151.55, 153.39, 152.47]
+2025-12-09 12:40:17 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:40:17 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:40:17 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $120.93
+2025-12-09 12:40:17 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $121.14
+2025-12-09 12:40:17 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $120.65
+2025-12-09 12:40:17 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $120.67
+2025-12-09 12:40:17 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $121.32
+2025-12-09 12:40:17 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:40:17 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for NVDA
+2025-12-09 12:40:17 - tradingbot - INFO - experiment_framework.py:118 - Processing META (6/10)
+2025-12-09 12:40:18 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for META
+2025-12-09 12:40:18 - tradingbot - INFO - ml_service.py:247 - Starting prediction for META, days=5, version=2.0-ensemble
+2025-12-09 12:40:18 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for META (age: 0 days)
+2025-12-09 12:40:19 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for META to database
+2025-12-09 12:40:19 - tradingbot - INFO - ml_service.py:378 - Predictions complete for META: [568.98, 573.21, 579.06, 577.49, 583.46]
+2025-12-09 12:40:19 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for META
+2025-12-09 12:40:19 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for META
+2025-12-09 12:40:19 - tradingbot - INFO - ml_service.py:247 - Starting prediction for META, days=5, version=2.0-ensemble
+2025-12-09 12:40:19 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for META (age: 0 days)
+2025-12-09 12:40:20 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for META to database
+2025-12-09 12:40:20 - tradingbot - INFO - ml_service.py:378 - Predictions complete for META: [568.98, 573.21, 579.06, 577.49, 583.46]
+2025-12-09 12:40:20 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for META
+2025-12-09 12:40:20 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for META
+2025-12-09 12:40:21 - tradingbot - INFO - ml_service.py:247 - Starting prediction for META, days=5, version=2.0-ensemble
+2025-12-09 12:40:21 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for META (age: 0 days)
+2025-12-09 12:40:21 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for META to database
+2025-12-09 12:40:21 - tradingbot - INFO - ml_service.py:378 - Predictions complete for META: [568.98, 573.21, 579.06, 577.49, 583.46]
+2025-12-09 12:40:22 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:40:22 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:40:22 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $603.37
+2025-12-09 12:40:22 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $605.74
+2025-12-09 12:40:22 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $605.80
+2025-12-09 12:40:22 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $603.57
+2025-12-09 12:40:22 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $603.85
+2025-12-09 12:40:22 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:40:22 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for META
+2025-12-09 12:40:22 - tradingbot - INFO - experiment_framework.py:118 - Processing TSLA (7/10)
+2025-12-09 12:40:22 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for TSLA
+2025-12-09 12:40:23 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:40:23 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:40:23 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for TSLA to database
+2025-12-09 12:40:23 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:40:23 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for TSLA
+2025-12-09 12:40:23 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for TSLA
+2025-12-09 12:40:24 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:40:24 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:40:24 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for TSLA to database
+2025-12-09 12:40:24 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:40:24 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for TSLA
+2025-12-09 12:40:24 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for TSLA
+2025-12-09 12:40:25 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:40:25 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:40:25 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for TSLA to database
+2025-12-09 12:40:25 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:40:26 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:40:26 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:40:26 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $255.34
+2025-12-09 12:40:26 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $256.37
+2025-12-09 12:40:26 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $257.39
+2025-12-09 12:40:26 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $253.25
+2025-12-09 12:40:26 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $251.37
+2025-12-09 12:40:26 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:40:26 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for TSLA
+2025-12-09 12:40:26 - tradingbot - INFO - experiment_framework.py:118 - Processing BRK.B (8/10)
+2025-12-09 12:40:36 - tradingbot - INFO - experiment_framework.py:118 - Processing JPM (9/10)
+2025-12-09 12:40:36 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JPM
+2025-12-09 12:40:37 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JPM, days=5, version=2.0-ensemble
+2025-12-09 12:40:37 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JPM (age: 0 days)
+2025-12-09 12:40:38 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for JPM to database
+2025-12-09 12:40:38 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JPM: [209.63, 216.93, 218.05, 220.93, 220.13]
+2025-12-09 12:40:38 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JPM
+2025-12-09 12:40:38 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JPM
+2025-12-09 12:40:38 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JPM, days=5, version=2.0-ensemble
+2025-12-09 12:40:38 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JPM (age: 0 days)
+2025-12-09 12:40:39 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for JPM to database
+2025-12-09 12:40:39 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JPM: [209.63, 216.93, 218.05, 220.93, 220.13]
+2025-12-09 12:40:39 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JPM
+2025-12-09 12:40:39 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JPM
+2025-12-09 12:40:39 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JPM, days=5, version=2.0-ensemble
+2025-12-09 12:40:39 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JPM (age: 0 days)
+2025-12-09 12:40:40 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for JPM to database
+2025-12-09 12:40:40 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JPM: [209.63, 216.93, 218.05, 220.93, 220.13]
+2025-12-09 12:40:40 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 113 samples
+2025-12-09 12:40:40 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:40:40 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $227.12
+2025-12-09 12:40:40 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $227.10
+2025-12-09 12:40:40 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $227.39
+2025-12-09 12:40:40 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $227.38
+2025-12-09 12:40:40 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $227.48
+2025-12-09 12:40:40 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:40:40 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JPM
+2025-12-09 12:40:40 - tradingbot - INFO - experiment_framework.py:118 - Processing JNJ (10/10)
+2025-12-09 12:40:41 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JNJ
+2025-12-09 12:40:41 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JNJ, days=5, version=2.0-ensemble
+2025-12-09 12:40:41 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JNJ (age: 0 days)
+2025-12-09 12:40:42 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for JNJ to database
+2025-12-09 12:40:42 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JNJ: [166.87, 163.67, 167.15, 162.73, 162.29]
+2025-12-09 12:40:42 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JNJ
+2025-12-09 12:40:42 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JNJ
+2025-12-09 12:40:42 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JNJ, days=5, version=2.0-ensemble
+2025-12-09 12:40:42 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JNJ (age: 0 days)
+2025-12-09 12:40:43 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for JNJ to database
+2025-12-09 12:40:43 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JNJ: [166.87, 163.67, 167.15, 162.73, 162.29]
+2025-12-09 12:40:43 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JNJ
+2025-12-09 12:40:43 - tradingbot - INFO - experiment_framework.py:44 - Running comparison for JNJ
+2025-12-09 12:40:43 - tradingbot - INFO - ml_service.py:247 - Starting prediction for JNJ, days=5, version=2.0-ensemble
+2025-12-09 12:40:43 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for JNJ (age: 0 days)
+2025-12-09 12:40:44 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for JNJ to database
+2025-12-09 12:40:44 - tradingbot - INFO - ml_service.py:378 - Predictions complete for JNJ: [166.87, 163.67, 167.15, 162.73, 162.29]
+2025-12-09 12:40:44 - tradingbot - INFO - recursive_forecaster.py:89 - Recursive forecaster fitted on 115 samples
+2025-12-09 12:40:44 - tradingbot - INFO - recursive_forecaster.py:108 - Starting recursive prediction for 5 days
+2025-12-09 12:40:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 1: Predicted $162.61
+2025-12-09 12:40:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 2: Predicted $162.34
+2025-12-09 12:40:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 3: Predicted $161.99
+2025-12-09 12:40:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 4: Predicted $161.61
+2025-12-09 12:40:44 - tradingbot - DEBUG - recursive_forecaster.py:136 - Day 5: Predicted $161.42
+2025-12-09 12:40:44 - tradingbot - INFO - recursive_forecaster.py:157 - Recursive prediction complete: 5 days forecasted
+2025-12-09 12:40:44 - tradingbot - INFO - experiment_framework.py:101 - Comparison complete for JNJ
+2025-12-09 12:40:44 - tradingbot - INFO - experiment_framework.py:210 - Results saved to research/results/experiment_results_20251209_124044.json
+2025-12-09 12:40:44 - tradingbot - INFO - experiment_framework.py:192 - ================================================================================
+2025-12-09 12:40:44 - tradingbot - INFO - experiment_framework.py:193 - AGGREGATED RESULTS
+2025-12-09 12:40:44 - tradingbot - INFO - experiment_framework.py:194 - ================================================================================
+2025-12-09 12:40:44 - tradingbot - INFO - experiment_framework.py:195 - Direct MAE: 15.90 ± 9.22
+2025-12-09 12:40:44 - tradingbot - INFO - experiment_framework.py:196 - Recursive MAE: 7.02 ± 5.41
+2025-12-09 12:40:44 - tradingbot - INFO - experiment_framework.py:197 - MAE t-test p-value: 0.0376
+2025-12-09 12:40:44 - tradingbot - INFO - experiment_framework.py:198 - ================================================================================
+2025-12-09 12:40:44 - tradingbot - INFO - run_experiments.py:58 - Experiment complete!
+2025-12-09 12:44:13 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:44:13 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:44:14 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for TSLA to database
+2025-12-09 12:44:14 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:44:16 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:44:16 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:44:16 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for TSLA to database
+2025-12-09 12:44:16 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:46:23 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 12:46:24 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 12:46:24 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 12:46:24 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 12:46:24 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 12:46:51 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 12:46:52 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 12:46:52 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 12:46:52 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 12:46:52 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 12:51:05 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:51:05 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:51:06 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for TSLA to database
+2025-12-09 12:51:06 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.21, 251.65, 245.11, 248.91, 265.94]
+2025-12-09 12:51:09 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 12:51:10 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 12:51:10 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 12:51:10 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 12:51:10 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 12:51:19 - tradingbot - INFO - run_experiments.py:50 - Starting QUICK experiment - Phase 2: Strike Probability
+2025-12-09 12:51:19 - tradingbot - INFO - strike_probability_experiment.py:398 - Running quick strike probability experiment on 5 stocks
+2025-12-09 12:51:19 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing AAPL (1/5)
+2025-12-09 12:51:20 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AAPL on 2023-12-11
+2025-12-09 12:51:20 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AAPL @ $202.83900000000003 in 7 days
+2025-12-09 12:51:21 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AAPL: Actual=False, ML=0.87, BS=nan, Hist=0.5
+2025-12-09 12:51:21 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AAPL on 2024-05-30
+2025-12-09 12:51:22 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AAPL @ $200.8545 in 7 days
+2025-12-09 12:51:22 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AAPL: Actual=False, ML=0.865, BS=0.5633, Hist=0.0
+2025-12-09 12:51:22 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AAPL on 2024-11-14
+2025-12-09 12:51:23 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AAPL @ $239.631 in 7 days
+2025-12-09 12:51:24 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AAPL: Actual=False, ML=None, BS=0.5818, Hist=0.0
+2025-12-09 12:51:24 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing MSFT (2/5)
+2025-12-09 12:51:24 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for MSFT on 2023-12-11
+2025-12-09 12:51:25 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for MSFT @ $389.865 in 7 days
+2025-12-09 12:51:25 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for MSFT: Actual=False, ML=0.045, BS=nan, Hist=0.5
+2025-12-09 12:51:25 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for MSFT on 2024-05-30
+2025-12-09 12:51:26 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for MSFT @ $435.4035 in 7 days
+2025-12-09 12:51:27 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for MSFT: Actual=False, ML=0.995, BS=0.5275, Hist=0.0
+2025-12-09 12:51:27 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for MSFT on 2024-11-14
+2025-12-09 12:51:27 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for MSFT @ $448.2345 in 7 days
+2025-12-09 12:51:28 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for MSFT: Actual=False, ML=1.0, BS=0.5354, Hist=0.1233
+2025-12-09 12:51:28 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing GOOGL (3/5)
+2025-12-09 12:51:28 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for GOOGL on 2023-12-11
+2025-12-09 12:51:29 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for GOOGL @ $139.9545 in 7 days
+2025-12-09 12:51:29 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for GOOGL: Actual=True, ML=0.46, BS=nan, Hist=0.5
+2025-12-09 12:51:29 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for GOOGL on 2024-05-30
+2025-12-09 12:51:30 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for GOOGL @ $180.71550000000002 in 7 days
+2025-12-09 12:51:31 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for GOOGL: Actual=False, ML=0.95, BS=0.6468, Hist=0.0
+2025-12-09 12:51:31 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for GOOGL on 2024-11-14
+2025-12-09 12:51:31 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for GOOGL @ $184.359 in 7 days
+2025-12-09 12:51:32 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for GOOGL: Actual=False, ML=0.995, BS=0.625, Hist=0.0837
+2025-12-09 12:51:32 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing AMZN (4/5)
+2025-12-09 12:51:32 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AMZN on 2023-12-11
+2025-12-09 12:51:33 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AMZN @ $153.18449999999999 in 7 days
+2025-12-09 12:51:33 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AMZN: Actual=True, ML=0.015, BS=nan, Hist=0.5
+2025-12-09 12:51:33 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AMZN on 2024-05-30
+2025-12-09 12:51:34 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AMZN @ $188.286 in 7 days
+2025-12-09 12:51:34 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AMZN: Actual=False, ML=0.57, BS=0.5971, Hist=0.1909
+2025-12-09 12:51:34 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AMZN on 2024-11-14
+2025-12-09 12:51:35 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AMZN @ $222.054 in 7 days
+2025-12-09 12:51:35 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AMZN: Actual=False, ML=None, BS=0.6362, Hist=0.0
+2025-12-09 12:51:35 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing NVDA (5/5)
+2025-12-09 12:51:36 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for NVDA on 2023-12-11
+2025-12-09 12:51:37 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for NVDA @ $48.95835 in 7 days
+2025-12-09 12:51:37 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for NVDA: Actual=True, ML=0.005, BS=nan, Hist=0.5
+2025-12-09 12:51:37 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for NVDA on 2024-05-30
+2025-12-09 12:51:38 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for NVDA @ $116.025 in 7 days
+2025-12-09 12:51:38 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for NVDA: Actual=True, ML=0.1, BS=0.7817, Hist=0.0
+2025-12-09 12:51:38 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for NVDA on 2024-11-14
+2025-12-09 12:51:39 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for NVDA @ $154.09799999999998 in 7 days
+2025-12-09 12:51:39 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for NVDA: Actual=False, ML=None, BS=0.7946, Hist=0.0
+2025-12-09 12:51:39 - tradingbot - INFO - strike_probability_experiment.py:335 - Results saved to research/results/strike_prob_results_20251209_125139.json
+2025-12-09 12:51:58 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 12:51:59 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 12:51:59 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 12:51:59 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 12:51:59 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 12:52:06 - tradingbot - INFO - run_experiments.py:50 - Starting QUICK experiment - Phase 2: Strike Probability
+2025-12-09 12:52:06 - tradingbot - INFO - strike_probability_experiment.py:398 - Running quick strike probability experiment on 5 stocks
+2025-12-09 12:52:06 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing AAPL (1/5)
+2025-12-09 12:52:07 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AAPL on 2023-12-11
+2025-12-09 12:52:07 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AAPL @ $202.83900000000003 in 7 days
+2025-12-09 12:52:08 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 12:52:08 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 12:52:08 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AAPL: Actual=False, ML=0.87, BS=nan, Hist=0.5
+2025-12-09 12:52:08 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AAPL on 2024-05-30
+2025-12-09 12:52:09 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AAPL @ $200.8545 in 7 days
+2025-12-09 12:52:09 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for TSLA to database
+2025-12-09 12:52:09 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.23, 251.11, 245.1, 248.91, 265.94]
+2025-12-09 12:52:10 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AAPL: Actual=False, ML=0.865, BS=0.5633, Hist=0.0
+2025-12-09 12:52:10 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AAPL on 2024-11-14
+2025-12-09 12:52:10 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AAPL @ $239.631 in 7 days
+2025-12-09 12:52:11 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AAPL: Actual=False, ML=None, BS=0.5818, Hist=0.0
+2025-12-09 12:52:11 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing MSFT (2/5)
+2025-12-09 12:52:12 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for MSFT on 2023-12-11
+2025-12-09 12:52:12 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for MSFT @ $389.865 in 7 days
+2025-12-09 12:52:13 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for MSFT: Actual=False, ML=0.045, BS=nan, Hist=0.5
+2025-12-09 12:52:13 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for MSFT on 2024-05-30
+2025-12-09 12:52:13 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for MSFT @ $435.4035 in 7 days
+2025-12-09 12:52:14 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for MSFT: Actual=False, ML=0.995, BS=0.5275, Hist=0.0
+2025-12-09 12:52:14 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for MSFT on 2024-11-14
+2025-12-09 12:52:15 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for MSFT @ $448.2345 in 7 days
+2025-12-09 12:52:15 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for MSFT: Actual=False, ML=1.0, BS=0.5354, Hist=0.1233
+2025-12-09 12:52:15 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing GOOGL (3/5)
+2025-12-09 12:52:16 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for GOOGL on 2023-12-11
+2025-12-09 12:52:16 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for GOOGL @ $139.9545 in 7 days
+2025-12-09 12:52:17 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for GOOGL: Actual=True, ML=0.46, BS=nan, Hist=0.5
+2025-12-09 12:52:17 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for GOOGL on 2024-05-30
+2025-12-09 12:52:17 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for GOOGL @ $180.71550000000002 in 7 days
+2025-12-09 12:52:18 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for GOOGL: Actual=False, ML=0.95, BS=0.6468, Hist=0.0
+2025-12-09 12:52:18 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for GOOGL on 2024-11-14
+2025-12-09 12:52:18 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for GOOGL @ $184.359 in 7 days
+2025-12-09 12:52:19 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for GOOGL: Actual=False, ML=0.995, BS=0.625, Hist=0.0837
+2025-12-09 12:52:19 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing AMZN (4/5)
+2025-12-09 12:52:19 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AMZN on 2023-12-11
+2025-12-09 12:52:20 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AMZN @ $153.18449999999999 in 7 days
+2025-12-09 12:52:20 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AMZN: Actual=True, ML=0.015, BS=nan, Hist=0.5
+2025-12-09 12:52:20 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AMZN on 2024-05-30
+2025-12-09 12:52:21 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AMZN @ $188.286 in 7 days
+2025-12-09 12:52:21 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AMZN: Actual=False, ML=0.57, BS=0.5971, Hist=0.1909
+2025-12-09 12:52:21 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for AMZN on 2024-11-14
+2025-12-09 12:52:22 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for AMZN @ $222.054 in 7 days
+2025-12-09 12:52:23 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for AMZN: Actual=False, ML=None, BS=0.6362, Hist=0.0
+2025-12-09 12:52:23 - tradingbot - INFO - strike_probability_experiment.py:196 - Processing NVDA (5/5)
+2025-12-09 12:52:24 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for NVDA on 2023-12-11
+2025-12-09 12:52:24 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for NVDA @ $48.95835 in 7 days
+2025-12-09 12:52:25 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for NVDA: Actual=True, ML=0.005, BS=nan, Hist=0.5
+2025-12-09 12:52:25 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for NVDA on 2024-05-30
+2025-12-09 12:52:25 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for NVDA @ $116.025 in 7 days
+2025-12-09 12:52:26 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for NVDA: Actual=True, ML=0.1, BS=0.7817, Hist=0.0
+2025-12-09 12:52:26 - tradingbot - INFO - strike_probability_experiment.py:90 - Running comparison for NVDA on 2024-11-14
+2025-12-09 12:52:27 - tradingbot - INFO - ml_optimization.py:110 - Predicting strike probability for NVDA @ $154.09799999999998 in 7 days
+2025-12-09 12:52:27 - tradingbot - INFO - strike_probability_experiment.py:174 - Comparison complete for NVDA: Actual=False, ML=None, BS=0.7946, Hist=0.0
+2025-12-09 12:52:27 - tradingbot - INFO - strike_probability_experiment.py:335 - Results saved to research/results/strike_prob_results_20251209_125227.json
+2025-12-09 12:52:27 - tradingbot - INFO - strike_probability_experiment.py:314 - ================================================================================
+2025-12-09 12:52:27 - tradingbot - INFO - strike_probability_experiment.py:315 - AGGREGATED RESULTS
+2025-12-09 12:52:27 - tradingbot - INFO - strike_probability_experiment.py:316 - ================================================================================
+2025-12-09 12:52:27 - tradingbot - INFO - strike_probability_experiment.py:318 - ML Brier Score: 0.7314
+2025-12-09 12:52:27 - tradingbot - INFO - strike_probability_experiment.py:320 - Black-Scholes Brier Score: 0.3470
+2025-12-09 12:52:27 - tradingbot - INFO - strike_probability_experiment.py:322 - Historical Brier Score: 0.1539
+2025-12-09 12:52:27 - tradingbot - INFO - strike_probability_experiment.py:323 - ================================================================================
+2025-12-09 12:52:27 - tradingbot - INFO - run_experiments.py:69 - Experiment complete!
+2025-12-09 13:03:16 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 13:03:17 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 13:03:17 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for TSLA to database
+2025-12-09 13:03:17 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.21, 251.65, 245.11, 248.91, 265.94]
+2025-12-09 13:03:25 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:03:26 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:03:26 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:03:26 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:03:26 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:03:28 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:03:28 - tradingbot - INFO - database.py:58 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:03:28 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:03:28 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:03:28 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:04:52 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 13:04:52 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 13:04:53 - tradingbot - INFO - ml_evaluation.py:223 - Saved 5 predictions for TSLA to database
+2025-12-09 13:04:53 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.21, 251.65, 245.11, 248.91, 265.94]
+2025-12-09 13:18:08 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:18:09 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:18:10 - tradingbot - INFO - database.py:78 - MongoDB indexes created successfully
+2025-12-09 13:18:10 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:18:10 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:18:10 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:18:14 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:18:15 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:18:16 - tradingbot - INFO - database.py:78 - MongoDB indexes created successfully
+2025-12-09 13:18:16 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:18:16 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:18:16 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:20:06 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:20:06 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:20:07 - tradingbot - INFO - database.py:78 - MongoDB indexes created successfully
+2025-12-09 13:20:07 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:20:07 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:20:07 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:26:43 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:26:44 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:26:44 - tradingbot - INFO - database.py:78 - MongoDB indexes created successfully
+2025-12-09 13:26:44 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:26:44 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:26:44 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:26:46 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:26:46 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:26:47 - tradingbot - INFO - database.py:78 - MongoDB indexes created successfully
+2025-12-09 13:26:47 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:26:47 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:26:47 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:27:01 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 13:27:01 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 13:27:02 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for TSLA to database
+2025-12-09 13:27:02 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.21, 251.65, 245.11, 248.91, 265.94]
+2025-12-09 13:27:04 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 13:27:04 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 13:27:05 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for TSLA to database
+2025-12-09 13:27:05 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.21, 251.65, 245.11, 248.91, 265.94]
+2025-12-09 13:29:03 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:29:04 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:29:04 - tradingbot - INFO - database.py:78 - MongoDB indexes created successfully
+2025-12-09 13:29:04 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:29:04 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:29:04 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:29:42 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:29:43 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:29:44 - tradingbot - INFO - database.py:78 - MongoDB indexes created successfully
+2025-12-09 13:29:44 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:29:44 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:29:44 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:29:45 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:29:46 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:29:47 - tradingbot - INFO - database.py:78 - MongoDB indexes created successfully
+2025-12-09 13:29:47 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:29:47 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:29:47 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:30:10 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 13:30:10 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 13:30:11 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for TSLA to database
+2025-12-09 13:30:11 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.21, 251.65, 245.11, 248.91, 265.94]
+2025-12-09 13:30:27 - tradingbot - INFO - ml_evaluation.py:247 - Found 0 predictions to backfill
+2025-12-09 13:30:27 - tradingbot - INFO - ml_evaluation.py:290 - Backfilled 0 predictions with actual prices

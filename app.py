@@ -9,7 +9,7 @@ from ml_correction_routes import ml_correction
 from auth_routes import auth_routes, init_login_manager
 from config import get_config
 from utils.logger import logger
-from database import init_db
+from database import init_db, mongo_db, mongo_client
 import os
 
 config = get_config()

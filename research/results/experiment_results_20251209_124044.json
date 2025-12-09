@@ -1,0 +1,812 @@
+[
+  {
+    "ticker": "AAPL",
+    "train_end": "2023-12-11",
+    "test_days": 5,
+    "actual_prices": [
+      194.71,
+      197.96,
+      198.11,
+      197.57,
+      195.89
+    ],
+    "direct": {
+      "predictions": [
+        226.58,
+        227.93,
+        230.89,
+        232.86,
+        235.89
+      ],
+      "mae": 33.982,
+      "rmse": 34.1579,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "AAPL",
+    "train_end": "2024-07-29",
+    "test_days": 5,
+    "actual_prices": [
+      218.8,
+      222.08,
+      218.36,
+      219.86,
+      209.27
+    ],
+    "direct": {
+      "predictions": [
+        226.58,
+        227.93,
+        230.89,
+        232.86,
+        235.89
+      ],
+      "mae": 13.156,
+      "rmse": 15.0291,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "AAPL",
+    "train_end": "2025-03-14",
+    "test_days": 5,
+    "actual_prices": [
+      214.0,
+      212.69,
+      215.24,
+      214.1,
+      218.27
+    ],
+    "direct": {
+      "predictions": [
+        226.58,
+        227.93,
+        230.89,
+        232.86,
+        235.89
+      ],
+      "mae": 15.97,
+      "rmse": 16.1111,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "predictions": [
+        215.89230000000003,
+        219.4879500000001,
+        222.6721000000002,
+        225.13790000000014,
+        226.81094999999996
+      ],
+      "mae": 7.1402,
+      "rmse": 7.7435,
+      "directional_accuracy": 50.0
+    }
+  },
+  {
+    "ticker": "MSFT",
+    "train_end": "2023-12-11",
+    "test_days": 5,
+    "actual_prices": [
+      374.38,
+      374.37,
+      365.93,
+      370.73,
+      372.65
+    ],
+    "direct": {
+      "predictions": [
+        411.7,
+        413.61,
+        425.54,
+        430.03,
+        428.25
+      ],
+      "mae": 50.214,
+      "rmse": 51.1737,
+      "directional_accuracy": 25.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "MSFT",
+    "train_end": "2024-07-29",
+    "test_days": 5,
+    "actual_prices": [
+      422.92,
+      418.35,
+      417.11,
+      408.49,
+      395.15
+    ],
+    "direct": {
+      "predictions": [
+        411.7,
+        413.61,
+        425.54,
+        430.03,
+        428.25
+      ],
+      "mae": 15.806,
+      "rmse": 18.8627,
+      "directional_accuracy": 25.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "MSFT",
+    "train_end": "2025-03-14",
+    "test_days": 5,
+    "actual_prices": [
+      388.7,
+      383.52,
+      387.82,
+      386.84,
+      391.26
+    ],
+    "direct": {
+      "predictions": [
+        409.36,
+        411.52,
+        425.04,
+        430.03,
+        428.32
+      ],
+      "mae": 33.226,
+      "rmse": 34.1613,
+      "directional_accuracy": 25.0
+    },
+    "recursive": {
+      "predictions": [
+        383.9365499999998,
+        383.5093999999995,
+        383.6284999999996,
+        383.2000499999998,
+        384.5061499999998
+      ],
+      "mae": 3.8719,
+      "rmse": 4.4525,
+      "directional_accuracy": 100.0
+    }
+  },
+  {
+    "ticker": "GOOGL",
+    "train_end": "2023-12-11",
+    "test_days": 5,
+    "actual_prices": [
+      132.52,
+      132.57,
+      131.94,
+      132.6,
+      135.8
+    ],
+    "direct": {
+      "predictions": [
+        162.92,
+        165.99,
+        173.4,
+        172.15,
+        172.53
+      ],
+      "mae": 36.312,
+      "rmse": 36.533,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "GOOGL",
+    "train_end": "2024-07-29",
+    "test_days": 5,
+    "actual_prices": [
+      170.29,
+      171.54,
+      170.76,
+      166.66,
+      159.25
+    ],
+    "direct": {
+      "predictions": [
+        162.92,
+        165.99,
+        173.4,
+        172.15,
+        172.53
+      ],
+      "mae": 6.866,
+      "rmse": 7.7277,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "GOOGL",
+    "train_end": "2025-03-14",
+    "test_days": 5,
+    "actual_prices": [
+      164.29,
+      160.67,
+      163.89,
+      162.8,
+      163.99
+    ],
+    "direct": {
+      "predictions": [
+        162.92,
+        165.99,
+        173.4,
+        172.15,
+        172.53
+      ],
+      "mae": 6.818,
+      "rmse": 7.4963,
+      "directional_accuracy": 75.0
+    },
+    "recursive": {
+      "predictions": [
+        164.8711,
+        165.0812000000001,
+        165.03240000000002,
+        164.82595000000012,
+        164.67520000000007
+      ],
+      "mae": 1.7692,
+      "rmse": 2.2661,
+      "directional_accuracy": 25.0
+    }
+  },
+  {
+    "ticker": "AMZN",
+    "train_end": "2023-12-11",
+    "test_days": 5,
+    "actual_prices": [
+      147.48,
+      148.84,
+      147.42,
+      149.97,
+      154.07
+    ],
+    "direct": {
+      "predictions": [
+        188.31,
+        184.97,
+        187.74,
+        190.45,
+        184.14
+      ],
+      "mae": 37.566,
+      "rmse": 37.7915,
+      "directional_accuracy": 25.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "AMZN",
+    "train_end": "2024-07-29",
+    "test_days": 5,
+    "actual_prices": [
+      181.71,
+      186.98,
+      184.07,
+      167.9,
+      161.02
+    ],
+    "direct": {
+      "predictions": [
+        188.31,
+        184.97,
+        187.74,
+        190.45,
+        184.14
+      ],
+      "mae": 11.59,
+      "rmse": 14.8601,
+      "directional_accuracy": 25.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "AMZN",
+    "train_end": "2025-03-14",
+    "test_days": 5,
+    "actual_prices": [
+      195.74,
+      192.82,
+      195.54,
+      194.95,
+      196.21
+    ],
+    "direct": {
+      "predictions": [
+        188.34,
+        184.97,
+        187.74,
+        190.45,
+        184.14
+      ],
+      "mae": 7.924,
+      "rmse": 8.2844,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "predictions": [
+        198.86164999999983,
+        198.5007499999999,
+        200.03844999999987,
+        200.93654999999998,
+        201.78059999999988
+      ],
+      "mae": 4.9716,
+      "rmse": 5.0818,
+      "directional_accuracy": 75.0
+    }
+  },
+  {
+    "ticker": "NVDA",
+    "train_end": "2023-12-11",
+    "test_days": 5,
+    "actual_prices": [
+      47.657,
+      48.088,
+      48.35,
+      48.89,
+      50.077
+    ],
+    "direct": {
+      "predictions": [
+        122.76,
+        141.64,
+        151.55,
+        153.39,
+        152.47
+      ],
+      "mae": 95.7496,
+      "rmse": 96.3818,
+      "directional_accuracy": 75.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "NVDA",
+    "train_end": "2024-07-29",
+    "test_days": 5,
+    "actual_prices": [
+      103.73,
+      117.02,
+      109.21,
+      107.27,
+      100.45
+    ],
+    "direct": {
+      "predictions": [
+        122.76,
+        141.64,
+        151.55,
+        153.39,
+        152.47
+      ],
+      "mae": 36.826,
+      "rmse": 38.972,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "NVDA",
+    "train_end": "2025-03-14",
+    "test_days": 5,
+    "actual_prices": [
+      119.53,
+      115.43,
+      117.52,
+      118.53,
+      117.7
+    ],
+    "direct": {
+      "predictions": [
+        122.76,
+        141.64,
+        151.55,
+        153.39,
+        152.47
+      ],
+      "mae": 26.62,
+      "rmse": 29.2561,
+      "directional_accuracy": 75.0
+    },
+    "recursive": {
+      "predictions": [
+        120.92984999999982,
+        121.13914999999986,
+        120.65454999999987,
+        120.67199999999988,
+        121.31685000000003
+      ],
+      "mae": 3.2005,
+      "rmse": 3.5228,
+      "directional_accuracy": 25.0
+    }
+  },
+  {
+    "ticker": "META",
+    "train_end": "2023-12-11",
+    "test_days": 5,
+    "actual_prices": [
+      334.22,
+      334.74,
+      333.17,
+      334.92,
+      344.62
+    ],
+    "direct": {
+      "predictions": [
+        568.98,
+        573.21,
+        579.06,
+        577.49,
+        583.46
+      ],
+      "mae": 240.106,
+      "rmse": 240.1361,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "META",
+    "train_end": "2024-07-29",
+    "test_days": 5,
+    "actual_prices": [
+      463.19,
+      474.83,
+      497.74,
+      488.14,
+      475.73
+    ],
+    "direct": {
+      "predictions": [
+        568.98,
+        573.21,
+        579.06,
+        577.49,
+        583.46
+      ],
+      "mae": 96.514,
+      "rmse": 97.0281,
+      "directional_accuracy": 75.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "META",
+    "train_end": "2025-03-14",
+    "test_days": 5,
+    "actual_prices": [
+      604.9,
+      582.36,
+      584.06,
+      586.0,
+      596.25
+    ],
+    "direct": {
+      "predictions": [
+        568.98,
+        573.21,
+        579.06,
+        577.49,
+        583.46
+      ],
+      "mae": 14.274,
+      "rmse": 18.083,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "predictions": [
+        603.37345,
+        605.74175,
+        605.79695,
+        603.5722500000003,
+        603.8526499999999
+      ],
+      "mae": 14.364,
+      "rmse": 16.662,
+      "directional_accuracy": 50.0
+    }
+  },
+  {
+    "ticker": "TSLA",
+    "train_end": "2023-12-11",
+    "test_days": 5,
+    "actual_prices": [
+      237.01,
+      239.29,
+      251.05,
+      253.5,
+      252.08
+    ],
+    "direct": {
+      "predictions": [
+        260.23,
+        251.11,
+        245.1,
+        248.91,
+        265.94
+      ],
+      "mae": 11.888,
+      "rmse": 13.6195,
+      "directional_accuracy": 25.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "TSLA",
+    "train_end": "2024-07-29",
+    "test_days": 5,
+    "actual_prices": [
+      222.62,
+      232.07,
+      216.86,
+      207.67,
+      198.88
+    ],
+    "direct": {
+      "predictions": [
+        260.23,
+        251.11,
+        245.1,
+        248.91,
+        265.94
+      ],
+      "mae": 38.638,
+      "rmse": 41.8863,
+      "directional_accuracy": 25.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "TSLA",
+    "train_end": "2025-03-14",
+    "test_days": 5,
+    "actual_prices": [
+      238.01,
+      225.31,
+      235.86,
+      236.26,
+      248.71
+    ],
+    "direct": {
+      "predictions": [
+        260.23,
+        251.11,
+        245.1,
+        248.91,
+        265.94
+      ],
+      "mae": 17.428,
+      "rmse": 18.448,
+      "directional_accuracy": 75.0
+    },
+    "recursive": {
+      "predictions": [
+        255.34285000000037,
+        256.3738000000001,
+        257.3911,
+        253.25084999999984,
+        251.3690999999999
+      ],
+      "mae": 17.9155,
+      "rmse": 20.1233,
+      "directional_accuracy": 25.0
+    }
+  },
+  {
+    "ticker": "JPM",
+    "train_end": "2023-12-11",
+    "test_days": 5,
+    "actual_prices": [
+      160.52,
+      161.06,
+      163.99,
+      165.23,
+      166.23
+    ],
+    "direct": {
+      "predictions": [
+        209.63,
+        216.93,
+        218.05,
+        220.93,
+        220.13
+      ],
+      "mae": 53.728,
+      "rmse": 53.7837,
+      "directional_accuracy": 75.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "JPM",
+    "train_end": "2024-07-26",
+    "test_days": 5,
+    "actual_prices": [
+      210.85,
+      215.19,
+      212.8,
+      207.96,
+      199.14
+    ],
+    "direct": {
+      "predictions": [
+        209.63,
+        216.93,
+        218.05,
+        220.93,
+        220.13
+      ],
+      "mae": 8.434,
+      "rmse": 11.3215,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "JPM",
+    "train_end": "2025-03-13",
+    "test_days": 5,
+    "actual_prices": [
+      232.44,
+      233.93,
+      234.97,
+      239.11,
+      239.01
+    ],
+    "direct": {
+      "predictions": [
+        209.63,
+        216.93,
+        218.05,
+        220.93,
+        220.13
+      ],
+      "mae": 18.758,
+      "rmse": 18.8815,
+      "directional_accuracy": 100.0
+    },
+    "recursive": {
+      "predictions": [
+        227.12320000000028,
+        227.10040000000023,
+        227.3881500000003,
+        227.37555000000026,
+        227.47540000000026
+      ],
+      "mae": 8.5995,
+      "rmse": 8.9793,
+      "directional_accuracy": 25.0
+    }
+  },
+  {
+    "ticker": "JNJ",
+    "train_end": "2023-12-11",
+    "test_days": 5,
+    "actual_prices": [
+      155.07,
+      155.79,
+      156.87,
+      155.16,
+      155.44
+    ],
+    "direct": {
+      "predictions": [
+        166.87,
+        163.67,
+        167.15,
+        162.73,
+        162.29
+      ],
+      "mae": 8.876,
+      "rmse": 9.0691,
+      "directional_accuracy": 50.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "JNJ",
+    "train_end": "2024-07-29",
+    "test_days": 5,
+    "actual_prices": [
+      161.33,
+      157.85,
+      160.76,
+      164.14,
+      161.25
+    ],
+    "direct": {
+      "predictions": [
+        166.87,
+        163.67,
+        167.15,
+        162.73,
+        162.29
+      ],
+      "mae": 4.04,
+      "rmse": 4.6576,
+      "directional_accuracy": 75.0
+    },
+    "recursive": {
+      "error": "Not enough data after feature engineering"
+    }
+  },
+  {
+    "ticker": "JNJ",
+    "train_end": "2025-03-14",
+    "test_days": 5,
+    "actual_prices": [
+      162.84,
+      164.25,
+      162.99,
+      163.02,
+      163.63
+    ],
+    "direct": {
+      "predictions": [
+        166.87,
+        163.67,
+        167.15,
+        162.73,
+        162.29
+      ],
+      "mae": 2.08,
+      "rmse": 2.6744,
+      "directional_accuracy": 0.0
+    },
+    "recursive": {
+      "predictions": [
+        162.6121000000004,
+        162.34155000000032,
+        161.98585000000026,
+        161.61150000000023,
+        161.42440000000016
+      ],
+      "mae": 1.3509,
+      "rmse": 1.5199,
+      "directional_accuracy": 25.0
+    }
+  }
+]

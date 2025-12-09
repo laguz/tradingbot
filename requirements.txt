@@ -14,3 +14,4 @@ tzdata
 xgboost
 flask-login
 pynostr
+pymongo

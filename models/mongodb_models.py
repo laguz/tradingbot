@@ -1,0 +1,294 @@
+"""
+MongoDB Collection Models
+
+Provides MongoDB collection interfaces to replace SQLAlchemy models.
+Each model class provides helper methods for CRUD operations.
+"""
+
+from datetime import datetime
+from typing import Dict, List, Optional, Any
+from database import get_mongo_db
+from utils.logger import logger
+
+
+class MLPredictionModel:
+    """Machine learning prediction history - MongoDB collection."""
+    
+    COLLECTION_NAME = 'ml_predictions'
+    
+    @staticmethod
+    def get_collection():
+        """Get the MLPrediction collection."""
+        db = get_mongo_db()
+        if db is None:
+            raise Exception("MongoDB not configured")
+        return db[MLPredictionModel.COLLECTION_NAME]
+    
+    @staticmethod
+    def insert(symbol: str, prediction_date: datetime, target_date: datetime,
+               predicted_price: float, model_version: str, features_used: List[str],
+               confidence: float = None, actual_price: float = None) -> str:
+        """
+        Insert a new ML prediction.
+        
+        Returns:
+            Inserted document ID as string
+        """
+        collection = MLPredictionModel.get_collection()
+        
+        doc = {
+            'symbol': symbol,
+            'prediction_date': prediction_date,
+            'target_date': target_date,
+            'predicted_price': predicted_price,
+            'actual_price': actual_price,
+            'model_version': model_version,
+            'features_used': features_used,
+            'confidence': confidence,
+            'created_at': datetime.utcnow()
+        }
+        
+        result = collection.insert_one(doc)
+        logger.debug(f"Inserted ML prediction for {symbol}: {result.inserted_id}")
+        return str(result.inserted_id)
+    
+    @staticmethod
+    def insert_many(predictions: List[Dict]) -> List[str]:
+        """Insert multiple predictions at once."""
+        collection = MLPredictionModel.get_collection()
+        
+        # Add created_at to all
+        for pred in predictions:
+            if 'created_at' not in pred:
+                pred['created_at'] = datetime.utcnow()
+        
+        result = collection.insert_many(predictions)
+        return [str(id) for id in result.inserted_ids]
+    
+    @staticmethod
+    def find_by_symbol(symbol: str, limit: int = 100) -> List[Dict]:
+        """Find predictions for a symbol, most recent first."""
+        collection = MLPredictionModel.get_collection()
+        cursor = collection.find(
+            {'symbol': symbol}
+        ).sort('prediction_date', -1).limit(limit)
+        return list(cursor)
+    
+    @staticmethod
+    def find_recent(days: int = 30, limit: int = 1000) -> List[Dict]:
+        """Find predictions from the last N days."""
+        collection = MLPredictionModel.get_collection()
+        cutoff_date = datetime.utcnow()
+        from datetime import timedelta
+        cutoff_date = cutoff_date - timedelta(days=days)
+        
+        cursor = collection.find(
+            {'prediction_date': {'$gte': cutoff_date}}
+        ).sort('prediction_date', -1).limit(limit)
+        return list(cursor)
+    
+    @staticmethod
+    def find_for_correction(symbol: str, target_date: datetime) -> List[Dict]:
+        """Find predictions that need actual price updates."""
+        collection = MLPredictionModel.get_collection()
+        cursor = collection.find({
+            'symbol': symbol,
+            'target_date': target_date,
+            'actual_price': None
+        })
+        return list(cursor)
+    
+    @staticmethod
+    def update_actual_price(prediction_id: str, actual_price: float) -> bool:
+        """Update the actual price for a prediction."""
+        from bson import ObjectId
+        collection = MLPredictionModel.get_collection()
+        
+        result = collection.update_one(
+            {'_id': ObjectId(prediction_id)},
+            {'$set': {'actual_price': actual_price}}
+        )
+        return result.modified_count > 0
+    
+    @staticmethod
+    def update_actual_prices_bulk(updates: List[Dict]) -> int:
+        """Bulk update actual prices. Updates dict: {id, actual_price}"""
+        from bson import ObjectId
+        collection = MLPredictionModel.get_collection()
+        
+        from pymongo import UpdateOne
+        operations = [
+            UpdateOne(
+                {'_id': ObjectId(update['id'])},
+                {'$set': {'actual_price': update['actual_price']}}
+            )
+            for update in updates
+        ]
+        
+        if not operations:
+            return 0
+        
+        result = collection.bulk_write(operations)
+        return result.modified_count
+    
+    @staticmethod
+    def get_stats_by_symbol(symbol: str) -> Dict:
+        """Get prediction statistics for a symbol."""
+        collection = MLPredictionModel.get_collection()
+        
+        pipeline = [
+            {'$match': {'symbol': symbol, 'actual_price': {'$ne': None}}},
+            {'$group': {
+                '_id': '$symbol',
+                'count': {'$sum': 1},
+                'avg_predicted': {'$avg': '$predicted_price'},
+                'avg_actual': {'$avg': '$actual_price'}
+            }}
+        ]
+        
+        result = list(collection.aggregate(pipeline))
+        return result[0] if result else {}
+
+
+class PositionModel:
+    """Historical position records - MongoDB collection."""
+    
+    COLLECTION_NAME = 'positions'
+    
+    @staticmethod
+    def get_collection():
+        db = get_mongo_db()
+        if db is None:
+            raise Exception("MongoDB not configured")
+        return db[PositionModel.COLLECTION_NAME]
+    
+    @staticmethod
+    def insert(symbol: str, underlying: str, option_type: str, strike: float,
+               expiration: str, quantity: int, entry_price: float, **kwargs) -> str:
+        """Insert a new position."""
+        collection = PositionModel.get_collection()
+        
+        doc = {
+            'symbol': symbol,
+            'underlying': underlying,
+            'option_type': option_type,
+            'strike': strike,
+            'expiration': expiration,
+            'quantity': quantity,
+            'entry_price': entry_price,
+            'exit_price': kwargs.get('exit_price'),
+            'entry_date': kwargs.get('entry_date', datetime.utcnow()),
+            'exit_date': kwargs.get('exit_date'),
+            'pl_amount': kwargs.get('pl_amount'),
+            'pl_percent': kwargs.get('pl_percent'),
+            'status': kwargs.get('status', 'open'),
+            'notes': kwargs.get('notes'),
+            'created_at': datetime.utcnow(),
+            'updated_at': datetime.utcnow()
+        }
+        
+        result = collection.insert_one(doc)
+        return str(result.inserted_id)
+    
+    @staticmethod
+    def find_open_positions() -> List[Dict]:
+        """Find all open positions."""
+        collection = PositionModel.get_collection()
+        cursor = collection.find({'status': 'open'}).sort('entry_date', -1)
+        return list(cursor)
+
+
+class OrderModel:
+    """Order history - MongoDB collection."""
+    
+    COLLECTION_NAME = 'orders'
+    
+    @staticmethod
+    def get_collection():
+        db = get_mongo_db()
+        if db is None:
+            raise Exception("MongoDB not configured")
+        return db[OrderModel.COLLECTION_NAME]
+
+
+class SupportResistanceModel:
+    """Cached support and resistance levels - MongoDB collection."""
+    
+    COLLECTION_NAME = 'support_resistance'
+    
+    @staticmethod
+    def get_collection():
+        db = get_mongo_db()
+        if db is None:
+            raise Exception("MongoDB not configured")
+        return db[SupportResistanceModel.COLLECTION_NAME]
+    
+    @staticmethod
+    def upsert(symbol: str, timeframe: str, support_levels: List[float],
+               resistance_levels: List[float], expires_at: datetime = None) -> str:
+        """Insert or update S/R levels for a symbol/timeframe."""
+        collection = SupportResistanceModel.get_collection()
+        
+        doc = {
+            'symbol': symbol,
+            'timeframe': timeframe,
+            'support_levels': support_levels,
+            'resistance_levels': resistance_levels,
+            'calculated_at': datetime.utcnow(),
+            'expires_at': expires_at
+        }
+        
+        result = collection.update_one(
+            {'symbol': symbol, 'timeframe': timeframe},
+            {'$set': doc},
+            upsert=True
+        )
+        
+        return str(result.upserted_id) if result.upserted_id else "updated"
+    
+    @staticmethod
+    def find_by_symbol_timeframe(symbol: str, timeframe: str) -> Optional[Dict]:
+        """Find cached S/R levels."""
+        collection = SupportResistanceModel.get_collection()
+        return collection.find_one({'symbol': symbol, 'timeframe': timeframe})
+
+
+class PositionStateModel:
+    """Position state tracking - MongoDB collection."""
+    
+    COLLECTION_NAME = 'position_state'
+    
+    @staticmethod
+    def get_collection():
+        db = get_mongo_db()
+        if db is None:
+            raise Exception("MongoDB not configured")
+        return db[PositionStateModel.COLLECTION_NAME]
+    
+    @staticmethod
+    def upsert(symbol: str, itm_consecutive_days: int = 0,
+               last_check_date: str = None, additional_metadata: Dict = None) -> str:
+        """Insert or update position state."""
+        collection = PositionStateModel.get_collection()
+        
+        doc = {
+            'symbol': symbol,
+            'itm_consecutive_days': itm_consecutive_days,
+            'last_check_date': last_check_date,
+            'additional_metadata': additional_metadata or {},
+            'updated_at': datetime.utcnow()
+        }
+        
+        result = collection.update_one(
+            {'symbol': symbol},
+            {'$set': doc},
+            upsert=True
+        )
+        
+        return str(result.upserted_id) if result.upserted_id else "updated"
+    
+    @staticmethod
+    def find_by_symbol(symbol: str) -> Optional[Dict]:
+        """Find position state for a symbol."""
+        collection = PositionStateModel.get_collection()
+        return collection.find_one({'symbol': symbol})
