@@ -337,3 +337,25 @@
 2025-12-08 23:51:20 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
 2025-12-08 23:51:42 - tradingbot - INFO - ml_evaluation.py:242 - Found 0 predictions to backfill
 2025-12-08 23:51:42 - tradingbot - INFO - ml_evaluation.py:277 - Backfilled 0 predictions with actual prices
+2025-12-09 00:01:15 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 00:01:15 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 00:01:15 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 00:01:15 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 00:01:39 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 00:01:39 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 00:01:39 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 00:01:39 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 00:01:40 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 00:01:40 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 00:01:40 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 00:01:40 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 00:01:49 - tradingbot - INFO - nostr_auth.py:73 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 00:01:49 - tradingbot - INFO - nostr_auth.py:115 - Signature verified for pubkey 8dab50cb...
+2025-12-09 00:01:49 - tradingbot - INFO - auth_routes.py:126 - User logged in: 8dab50cb...483e (8dab50cb...)
+2025-12-09 00:04:59 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 00:04:59 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 00:05:00 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-09 00:05:00 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-09 00:05:08 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 00:05:08 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 00:05:12 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels

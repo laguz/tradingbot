@@ -5,6 +5,7 @@ from services.tradier_service import get_account_summary, get_open_positions, ge
 from spread_routes import spreads
 from prediction_routes import predictions
 from ml_performance_routes import ml_performance
+from ml_correction_routes import ml_correction
 from auth_routes import auth_routes, init_login_manager
 from config import get_config
 from utils.logger import logger
@@ -35,6 +36,8 @@ app.register_blueprint(auth_routes)
 app.register_blueprint(spreads)
 app.register_blueprint(predictions)
 app.register_blueprint(ml_performance)
+app.register_blueprint(ml_correction)
+logger.info("All blueprints registered including ML self-correction")
 
 # --- Main Page Routes ---
 
