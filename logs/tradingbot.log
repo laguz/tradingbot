@@ -50,3 +50,15 @@
 2025-12-08 22:30:14 - tradingbot - INFO - ml_service.py:148 - Starting prediction for RIOT, days=5
 2025-12-08 22:30:14 - tradingbot - INFO - ml_service.py:136 - Loaded cached model for RIOT (age: 0 days)
 2025-12-08 22:30:15 - tradingbot - INFO - ml_service.py:226 - Predictions complete for RIOT: [14.68, 14.48, 13.59, 13.19, 13.12]
+2025-12-08 22:44:45 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:44:45 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:47:24 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:47:24 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:47:53 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:47:53 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:48:17 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:48:17 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:49:19 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:49:19 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:49:36 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:49:36 - tradingbot - INFO - app.py:22 - Database initialized successfully

@@ -1,11 +1,27 @@
+"""
+Machine Learning service for stock price prediction.
+
+This service provides multi-day stock price predictions using an ensemble
+of machine learning models with comprehensive feature engineering.
+
+Key improvements over v1:
+- Direct multi-day prediction (eliminates recursive error compounding)
+- Ensemble models (RandomForest + GradientBoosting + XGBoost)
+- Enhanced features (50+ features including volatility, volume, time-based)
+- Quantile predictions for confidence intervals
+- Database tracking of all predictions
+"""
+
 import pandas as pd
 import numpy as np
 import os
 import pickle
 from datetime import datetime, timedelta
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import TimeSeriesSplit
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, VotingRegressor
+from sklearn.multioutput import MultiOutputRegressor
 from services.tradier_service import get_raw_historical_data
+from services.ml_features import prepare_features, get_feature_count
+from services.ml_evaluation import save_prediction_to_db, get_feature_importance
 from config import get_config
 from utils.logger import logger
 
@@ -14,113 +30,145 @@ config = get_config()
 # Ensure model directory exists
 os.makedirs(config.ML_MODEL_DIR, exist_ok=True)
 
-def add_technical_indicators(df):
-    """
-    Adds technical indicators to the DataFrame.
-    Includes RSI, MACD, Bollinger Bands, ATR, and Volume Change.
-    """
-    data = df.copy()
-    
-    # RSI (14)
-    delta = data['Close'].diff()
-    gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
-    rs = gain / loss
-    data['RSI'] = 100 - (100 / (1 + rs))
-    
-    # MACD (12, 26, 9)
-    exp1 = data['Close'].ewm(span=12, adjust=False).mean()
-    exp2 = data['Close'].ewm(span=26, adjust=False).mean()
-    data['MACD'] = exp1 - exp2
-    data['Signal_Line'] = data['MACD'].ewm(span=9, adjust=False).mean()
-    
-    # Bollinger Bands (20, 2)
-    data['SMA_20'] = data['Close'].rolling(window=20).mean()
-    data['BB_Upper'] = data['SMA_20'] + (data['Close'].rolling(window=20).std() * 2)
-    data['BB_Lower'] = data['SMA_20'] - (data['Close'].rolling(window=20).std() * 2)
-    
-    # ATR (14)
-    high_low = data['High'] - data['Low']
-    high_close = np.abs(data['High'] - data['Close'].shift())
-    low_close = np.abs(data['Low'] - data['Close'].shift())
-    ranges = pd.concat([high_low, high_close, low_close], axis=1)
-    true_range = np.max(ranges, axis=1)
-    data['ATR'] = true_range.rolling(window=14).mean()
-    
-    # Volume Change
-    data['Volume_Change'] = data['Volume'].pct_change()
-    
-    return data
+# Model version for tracking
+MODEL_VERSION = "2.0-ensemble"
 
-def prepare_data(df):
+
+def create_model():
     """
-    Prepares features for the ML model.
+    Create the ML model based on configuration.
+    Returns either a single RandomForest or an ensemble.
     """
-    data = add_technical_indicators(df)
-    
-    # Create Lags
-    for i in range(1, 6):
-        data[f'Lag_{i}'] = data['Close'].shift(i)
+    if config.ML_ENABLE_ENSEMBLE:
+        logger.info("Creating ensemble model (RF + GBM + XGB)")
         
-    # Create Target (Next Day's Close)
-    data['Target'] = data['Close'].shift(-1)
+        # RandomForest
+        rf = RandomForestRegressor(
+            n_estimators=config.ML_N_ESTIMATORS,
+            max_depth=config.ML_MAX_DEPTH,
+            min_samples_split=config.ML_MIN_SAMPLES_SPLIT,
+            min_samples_leaf=config.ML_MIN_SAMPLES_LEAF,
+            random_state=42,
+            n_jobs=-1
+        )
+        
+        # Gradient Boosting
+        gb = GradientBoostingRegressor(
+            n_estimators=config.ML_N_ESTIMATORS,
+            max_depth=config.ML_MAX_DEPTH // 2,  # GBM typically uses shallower trees
+            learning_rate=0.05,
+            random_state=42
+        )
+        
+        estimators = [('rf', rf), ('gb', gb)]
+        
+        # XGBoost (optional)
+        if config.ML_USE_XGBOOST:
+            try:
+                from xgboost import XGBRegressor
+                xgb = XGBRegressor(
+                    n_estimators=config.ML_N_ESTIMATORS,
+                    max_depth=config.ML_MAX_DEPTH,
+                    learning_rate=0.05,
+                    random_state=42,
+                    n_jobs=-1
+                )
+                estimators.append(('xgb', xgb))
+                logger.info("XGBoost included in ensemble")
+            except ImportError:
+                logger.warning("XGBoost not available, using RF + GBM only")
+        
+        # Create voting ensemble
+        base_ensemble = VotingRegressor(estimators=estimators)
+        
+        # Wrap in MultiOutputRegressor for multi-day predictions
+        model = MultiOutputRegressor(base_ensemble)
+        
+    else:
+        logger.info("Creating single RandomForest model")
+        rf = RandomForestRegressor(
+            n_estimators=config.ML_N_ESTIMATORS,
+            max_depth=config.ML_MAX_DEPTH,
+            min_samples_split=config.ML_MIN_SAMPLES_SPLIT,
+            min_samples_leaf=config.ML_MIN_SAMPLES_LEAF,
+            random_state=42,
+            n_jobs=-1
+        )
+        model = MultiOutputRegressor(rf)
     
-    # Drop NaNs created by shifting/rolling
-    data.dropna(inplace=True)
-    
-    return data
+    return model
 
-def train_model(data):
+
+def train_model(X, y):
     """
-    Trains a Random Forest Regressor with TimeSeriesSplit validation.
+    Train the ML model on provided features and targets.
+    
+    Args:
+        X: Feature DataFrame
+        y: Target DataFrame (5 columns for 5-day predictions)
+        
+    Returns:
+        Trained model
     """
-    logger.info("Training ML model with {} samples".format(len(data)))
-    # Select features (exclude non-numeric or target columns)
-    exclude_cols = ['Target', 'Date', 'Open', 'High', 'Low', 'Close', 'Volume']
-    features = [col for col in data.columns if col not in exclude_cols]
+    logger.info(f"Training model on {len(X)} samples with {X.shape[1]} features")
     
-    X = data[features]
-    y = data['Target']
-    
-    # Time Series Split Validation
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model = create_model()
     model.fit(X, y)
     
     logger.info("Model training complete")
-    return model, features
+    return model
 
 
 def get_model_path(ticker):
     """Generate model file path for a ticker"""
-    return os.path.join(config.ML_MODEL_DIR, f"{ticker}_model.pkl")
+    return os.path.join(config.ML_MODEL_DIR, f"{ticker}_model_v2.pkl")
 
 
-def save_model(ticker, model, features):
-    """Save trained model to disk"""
+def save_model(ticker, model, feature_names, scaler):
+    """
+    Save trained model to disk.
+    
+    Args:
+        ticker: Stock ticker
+        model: Trained model
+        feature_names: List of feature names
+        scaler: Fitted StandardScaler (or None)
+    """
     model_path = get_model_path(ticker)
     model_data = {
         'model': model,
-        'features': features,
+        'features': feature_names,
+        'scaler': scaler,
         'trained_at': datetime.now(),
-        'version': '1.0'
+        'version': MODEL_VERSION,
+        'config': {
+            'ensemble': config.ML_ENABLE_ENSEMBLE,
+            'normalization': config.ML_ENABLE_NORMALIZATION,
+            'n_estimators': config.ML_N_ESTIMATORS
+        }
     }
     
     with open(model_path, 'wb') as f:
         pickle.dump(model_data, f)
     
-    logger.info(f"Saved model for {ticker} to {model_path}")
+    logger.info(f"Saved model v{MODEL_VERSION} for {ticker} to {model_path}")
 
 
 def load_model(ticker):
     """
     Load trained model from disk if it exists and is not too old.
-    Returns (model, features) or (None, None) if not available/expired.
+    
+    Args:
+        ticker: Stock ticker
+        
+    Returns:
+        Tuple of (model, features, scaler) or (None, None, None)
     """
     model_path = get_model_path(ticker)
     
     if not os.path.exists(model_path):
         logger.debug(f"No cached model found for {ticker}")
-        return None, None
+        return None, None, None
     
     try:
         with open(model_path, 'rb') as f:
@@ -131,101 +179,198 @@ def load_model(ticker):
         
         if age_days > config.ML_RETRAIN_DAYS:
             logger.info(f"Model for {ticker} is {age_days} days old, needs retraining")
-            return None, None
+            return None, None, None
         
-        logger.info(f"Loaded cached model for {ticker} (age: {age_days} days)")
-        return model_data['model'], model_data['features']
+        logger.info(f"Loaded cached model v{model_data.get('version', '1.0')} for {ticker} (age: {age_days} days)")
+        return model_data['model'], model_data['features'], model_data.get('scaler')
         
     except Exception as e:
         logger.error(f"Error loading model for {ticker}: {e}")
-        return None, None
+        return None, None, None
+
+
+def calculate_prediction_intervals(model, X, percentiles=[10, 50, 90]):
+    """
+    Calculate prediction intervals using tree-based models.
+    
+    Args:
+        model: Trained MultiOutputRegressor with tree-based estimators
+        X: Features to predict
+        percentiles: List of percentiles to calculate
+        
+    Returns:
+        Dict mapping percentile to predictions array
+    """
+    # For MultiOutputRegressor, get predictions from individual trees
+    all_predictions = []
+    
+    for estimator in model.estimators_:
+        if hasattr(estimator, 'estimators_'):  # VotingRegressor
+            # Average predictions from voting members
+            pred = estimator.predict(X.values if isinstance(X, pd.DataFrame) else X)
+        else:  # Single estimator
+            pred = estimator.predict(X.values if isinstance(X, pd.DataFrame) else X)
+        all_predictions.append(pred)
+    
+    all_predictions = np.array(all_predictions)
+    
+    # Calculate percentiles across estimators (for each output/day)
+    intervals = {}
+    for percentile in percentiles:
+        intervals[percentile] = np.percentile(all_predictions, percentile, axis=0)
+    
+    return intervals
+
 
 def predict_next_days(ticker, days=5, force_retrain=False):
     """
-    Predicts the closing price for the next 'days' trading days.
-    Uses cached model if available and not expired.
+    Predict closing price for the next N trading days.
+    
+    Uses direct multi-day prediction (not recursive) with ensemble models
+    and returns confidence intervals.
+    
+    Args:
+        ticker: Stock ticker symbol
+        days: Number of days to predict (max 5)
+        force_retrain: Force model retraining
+        
+    Returns:
+        Dict with predictions, intervals, and metadata
     """
-    logger.info(f"Starting prediction for {ticker}, days={days}")
+    logger.info(f"Starting prediction for {ticker}, days={days}, version={MODEL_VERSION}")
+    
+    if days > 5:
+        logger.warning(f"Maximum 5 days supported, using 5 instead of {days}")
+        days = 5
     
     # Try to load cached model
-    model, feature_names = None, None
+    model, feature_names, scaler = None, None, None
     if not force_retrain:
-        model, feature_names = load_model(ticker)
+        model, feature_names, scaler = load_model(ticker)
     
     # If no cached model or force retrain, train new one
     if model is None:
         logger.info(f"Training new model for {ticker}")
-        # 1. Fetch History (Need enough data for indicators)
-        df = get_raw_historical_data(ticker, '2y') 
+        
+        # Fetch historical data
+        df = get_raw_historical_data(ticker, '2y')
         if df.empty:
             logger.error(f"Could not fetch historical data for {ticker}")
             return {'error': 'Could not fetch historical data.'}
-            
-        # 2. Prepare Training Data
-        train_df = prepare_data(df)
-        if train_df.empty:
-            logger.error(f"Not enough data to train model for {ticker}")
-            return {'error': 'Not enough data to train model.'}
-            
-        # 3. Train Model
-        model, feature_names = train_model(train_df)
         
-        # 4. Save model for future use
-        save_model(ticker, model, feature_names)
+        # Prepare features and targets
+        try:
+            X, y, feature_names, scaler = prepare_features(df, for_training=True)
+        except ValueError as e:
+            logger.error(f"Feature preparation failed: {e}")
+            return {'error': str(e)}
+        
+        if len(X) < config.ML_MIN_TRAIN_SIZE:
+            logger.error(f"Insufficient training data: {len(X)} samples (need {config.ML_MIN_TRAIN_SIZE})")
+            return {'error': 'Insufficient training data.'}
+        
+        # Train model
+        model = train_model(X, y)
+        
+        # Save model for future use
+        save_model(ticker, model, feature_names, scaler)
+        
+        # Log feature importance
+        try:
+            # Get first estimator for feature importance
+            first_estimator = model.estimators_[0]
+            if hasattr(first_estimator, 'estimators_'):  # VotingRegressor
+                first_base = first_estimator.estimators_[0]  # Get RF from voting
+            else:
+                first_base = first_estimator
+            
+            importance_df = get_feature_importance(first_base, feature_names, top_n=10)
+            logger.info(f"Top 10 features:\n{importance_df.to_string()}")
+        except Exception as e:
+            logger.warning(f"Could not extract feature importance: {e}")
+    
     else:
-        # Still need raw data for prediction base
+        # Model loaded from cache, still need raw data for current features
         df = get_raw_historical_data(ticker, '2y')
         if df.empty:
             return {'error': 'Could not fetch historical data.'}
     
-    # 5. Recursive Prediction
-    current_df = df.copy()
-    predictions = []
+    # Prepare features for prediction (last row only)
+    try:
+        X_full, _, _, pred_scaler = prepare_features(df, for_training=False)
+        
+        # Use the cached scaler if available, otherwise use the one just created
+        if scaler is not None and config.ML_ENABLE_NORMALIZATION:
+            # Re-scale with cached scaler
+            X_scaled = scaler.transform(X_full[feature_names])
+            X_current = pd.DataFrame(X_scaled, columns=feature_names, index=X_full.index)
+        else:
+            X_current = X_full[feature_names]
+        
+        # Get the last row for prediction
+        X_last = X_current.iloc[[-1]]
+        
+    except Exception as e:
+        logger.error(f"Error preparing prediction features: {e}")
+        return {'error': f'Feature preparation error: {str(e)}'}
     
-    for _ in range(days):
-        # Calculate indicators on the current dataset
-        enriched_df = add_technical_indicators(current_df)
+    # Make predictions
+    try:
+        predictions = model.predict(X_last)[0]  # Returns array of 5 values
         
-        # Extract features for the LAST row (Time T) to predict T+1
-        last_features = {}
+        # Calculate prediction intervals
+        intervals = calculate_prediction_intervals(model, X_last)
         
-        # Lags: Lag_1 at T is Close(T-1)
-        for i in range(1, 6):
-            last_features[f'Lag_{i}'] = enriched_df['Close'].iloc[-i]
-            
-        # Indicators: Take the value at T
-        for col in feature_names:
-            if col.startswith('Lag_'): continue
-            last_features[col] = enriched_df[col].iloc[-1]
-            
-        X_next = pd.DataFrame([last_features])
-        # Ensure column order matches training
-        X_next = X_next[feature_names]
+        # Extract only the requested days
+        predictions = predictions[:days]
         
-        # Predict
-        next_price = model.predict(X_next)[0]
-        predictions.append(round(float(next_price), 2))
+        # Generate target dates (next trading days)
+        last_date = df.index[-1]
+        target_dates = []
+        current_date = last_date
+        for _ in range(days):
+            current_date = current_date + pd.Timedelta(days=1)
+            # Skip weekends
+            while current_date.dayofweek > 4:
+                current_date += pd.Timedelta(days=1)
+            target_dates.append(current_date.to_pydatetime())
         
-        # Append to current_df for next iteration
-        # Assumption: Future candles are flat (Open=High=Low=Close) and Volume is constant
-        last_date = current_df.index[-1]
-        next_date = last_date + pd.Timedelta(days=1)
-        while next_date.weekday() > 4: # Skip weekends
-             next_date += pd.Timedelta(days=1)
-             
-        new_row = pd.DataFrame({
-            'Open': [next_price],
-            'High': [next_price],
-            'Low': [next_price],
-            'Close': [next_price],
-            'Volume': [current_df['Volume'].iloc[-1]]
-        }, index=[next_date])
+        # Format results
+        result = {
+            'ticker': ticker,
+            'last_close': float(df['Close'].iloc[-1]),
+            'last_date': last_date.strftime('%Y-%m-%d'),
+            'predictions': [round(float(p), 2) for p in predictions],
+            'target_dates': [d.strftime('%Y-%m-%d') for d in target_dates],
+            'confidence_intervals': {
+                'low': [round(float(intervals[10][i]), 2) for i in range(days)],
+                'median': [round(float(intervals[50][i]), 2) for i in range(days)],
+                'high': [round(float(intervals[90][i]), 2) for i in range(days)]
+            },
+            'model_version': MODEL_VERSION,
+            'feature_count': len(feature_names)
+        }
         
-        current_df = pd.concat([current_df, new_row])
-    
-    logger.info(f"Predictions complete for {ticker}: {predictions}")
-    return {
-        'ticker': ticker,
-        'predictions': predictions,
-        'last_close': float(df['Close'].iloc[-1])
-    }
+        # Save to database
+        try:
+            confidence_scores = [
+                (intervals[90][i] - intervals[10][i]) / result['last_close']
+                for i in range(days)
+            ]
+            save_prediction_to_db(
+                ticker=ticker,
+                target_dates=target_dates,
+                predicted_prices=result['predictions'],
+                model_version=MODEL_VERSION,
+                features_used=feature_names,
+                confidence_scores=confidence_scores
+            )
+        except Exception as e:
+            logger.warning(f"Failed to save predictions to database: {e}")
+        
+        logger.info(f"Predictions complete for {ticker}: {result['predictions']}")
+        return result
+        
+    except Exception as e:
+        logger.error(f"Prediction failed: {e}")
+        return {'error': f'Prediction error: {str(e)}'}

@@ -61,6 +61,24 @@ class Config:
     ML_MODEL_DIR = 'models'
     ML_RETRAIN_DAYS = 7       # Retrain model every N days
     ML_CACHE_HOURS = 24       # Cache predictions for N hours
+    
+    # ML Model Hyperparameters
+    ML_N_ESTIMATORS = 200     # Number of trees in forest
+    ML_MAX_DEPTH = 15         # Maximum tree depth
+    ML_MIN_SAMPLES_SPLIT = 5  # Minimum samples to split node
+    ML_MIN_SAMPLES_LEAF = 2   # Minimum samples in leaf
+    ML_ENABLE_ENSEMBLE = True # Use ensemble vs single RF
+    ML_USE_XGBOOST = True     # Include XGBoost in ensemble
+    
+    # ML Feature Configuration
+    ML_ENABLE_NORMALIZATION = True
+    ML_ENABLE_VOLATILITY_FEATURES = True
+    ML_ENABLE_TIME_FEATURES = True
+    ML_LOOKBACK_DAYS = 252 * 2  # 2 years of historical data
+    
+    # ML Validation
+    ML_VALIDATION_SPLITS = 5
+    ML_MIN_TRAIN_SIZE = 252   # Minimum 1 year training data
 
 
 class DevelopmentConfig(Config):
