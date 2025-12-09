@@ -241,3 +241,81 @@
 2025-12-08 23:24:13 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
 2025-12-08 23:24:15 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
 2025-12-08 23:24:37 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
+2025-12-08 23:27:16 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:27:16 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:27:16 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:30:07 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:30:07 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:30:07 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:30:08 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:30:08 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:30:08 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:32:05 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:32:19 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:32:19 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:32:19 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:32:21 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:32:21 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:32:21 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:32:37 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:32:45 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:33:26 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:33:44 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:33:44 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:33:44 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:33:45 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:33:45 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:33:45 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:34:20 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:34:20 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:34:20 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:34:33 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:34:33 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:34:33 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:34:40 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:34:40 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:34:40 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:34:41 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:34:41 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:34:41 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:35:01 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:35:19 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:36:55 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:36:55 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:36:55 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:37:06 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:37:06 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:37:06 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:37:41 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:37:41 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:37:41 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:37:42 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:37:42 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:37:42 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:38:03 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:38:03 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:38:03 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:38:38 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:38:38 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:38:38 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:39:16 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:39:16 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:39:16 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:39:28 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:39:28 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:39:28 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:39:29 - tradingbot - INFO - app.py:20 - Starting Trading Bot in development mode
+2025-12-08 23:39:29 - tradingbot - INFO - app.py:25 - Database initialized successfully
+2025-12-08 23:39:29 - tradingbot - INFO - app.py:31 - Flask-Login initialized with Nostr authentication
+2025-12-08 23:39:34 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:39:35 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:40:06 - tradingbot - INFO - nostr_auth.py:73 - Generated challenge for pubkey 8dab50cb...
+2025-12-08 23:40:06 - tradingbot - INFO - nostr_auth.py:115 - Signature verified for pubkey 8dab50cb...
+2025-12-08 23:40:06 - tradingbot - INFO - auth_routes.py:126 - User logged in: 8dab50cb...483e (8dab50cb...)
+2025-12-08 23:40:15 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:40:15 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-08 23:40:20 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
+2025-12-08 23:40:28 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:40:29 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:40:29 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:40:29 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]

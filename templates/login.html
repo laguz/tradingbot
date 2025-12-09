@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with Nostr - Trading Bot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo i {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-top: 1rem;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .nostr-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            display: block;
+        }
+
+        .btn-nostr {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-nostr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+        .btn-nostr:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .info-box h6 {
+            color: #667eea;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .info-box ul {
+            margin: 0;
+            padding-left: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .info-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        .status-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <h1>Trading Bot</h1>
+            <p>Secure login with Nostr</p>
+        </div>
+
+        <button id="loginBtn" class="btn btn-nostr">
+            <i class="fas fa-key me-2"></i>
+            Connect with Nostr Extension
+        </button>
+
+        <div id="statusMessage" class="status-message"></div>
+
+        <div class="info-box">
+            <h6><i class="fas fa-shield-alt me-2"></i>What is Nostr?</h6>
+            <ul>
+                <li>Decentralized authentication protocol</li>
+                <li>No passwords - just your cryptographic keys</li>
+                <li>Privacy-focused and secure</li>
+            </ul>
+
+            <h6 class="mt-3"><i class="fas fa-download me-2"></i>Get Started</h6>
+            <p class="mb-2" style="color: #666; font-size: 0.9rem;">
+                Install a Nostr browser extension:
+            </p>
+            <ul>
+                <li><a href="https://getalby.com/" target="_blank">Alby</a> (Chrome, Firefox)</li>
+                <li><a href="https://github.com/fiatjaf/nos2x" target="_blank">nos2x</a> (Chrome)</li>
+                <li><a href="https://github.com/supertestnet/horse" target="_blank">Horse</a> (Chrome)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const loginBtn = document.getElementById('loginBtn');
+        const statusMessage = document.getElementById('statusMessage');
+
+        function showStatus(message, isError = false) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status-message ' + (isError ? 'error' : 'success');
+            statusMessage.style.display = 'block';
+        }
+
+        function hideStatus() {
+            statusMessage.style.display = 'none';
+        }
+
+        async function loginWithNostr() {
+            hideStatus();
+
+            // Check if Nostr extension is available
+            if (!window.nostr) {
+                showStatus('No Nostr extension found. Please install Alby, nos2x, or another Nostr extension.', true);
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="spinner me-2"></span> Connecting...';
+
+            try {
+                // Get public key from extension
+                const pubkey = await window.nostr.getPublicKey();
+                console.log('Public key:', pubkey);
+
+                // Get challenge from server
+                loginBtn.innerHTML = '<span class="spinner me-2"></span> Getting challenge...';
+                const challengeRes = await fetch('/api/auth/challenge', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pubkey })
+                });
+
+                if (!challengeRes.ok) {
+                    throw new Error('Failed to get challenge');
+                }
+
+                const { challenge } = await challengeRes.json();
+                console.log('Challenge received');
+
+                // Sign challenge with extension
+                loginBtn.innerHTML = '<span class="spinner me-2"></span> Please sign in your Nostr extension...';
+
+                const signedEvent = await window.nostr.signEvent({
+                    kind: 22242,  // Custom kind for auth
+                    created_at: Math.floor(Date.now() / 1000),
+                    tags: [],
+                    content: challenge
+                });
+
+                const signature = signedEvent.sig;
+                console.log('Challenge signed');
+
+                // Get user metadata if available
+                let metadata = {};
+                try {
+                    const metadataRes = await fetch(`https://relay.nostr.info/${pubkey}/metadata`);
+                    if (metadataRes.ok) {
+                        metadata = await metadataRes.json();
+                    }
+                } catch (e) {
+                    console.log('Could not fetch metadata');
+                }
+
+                // Verify signature with server
+                loginBtn.innerHTML = '<span class="spinner me-2"></span> Verifying...';
+                const verifyRes = await fetch('/api/auth/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        pubkey,
+                        signature,
+                        metadata
+                    })
+                });
+
+                if (!verifyRes.ok) {
+                    throw new Error('Verification failed');
+                }
+
+                const result = await verifyRes.json();
+
+                if (result.success) {
+                    showStatus('Successfully authenticated! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
+                } else {
+                    throw new Error(result.error || 'Authentication failed');
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                showStatus('Authentication failed: ' + error.message, true);
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-key me-2"></i> Connect with Nostr Extension';
+            }
+        }
+
+        loginBtn.addEventListener('click', loginWithNostr);
+
+        // Auto-login if extension is available and user wants
+        window.addEventListener('load', () => {
+            if (window.nostr && localStorage.getItem('nostr_auto_login') === 'true') {
+                loginWithNostr();
+            }
+        });
+    </script>
+</body>
+
+</html>

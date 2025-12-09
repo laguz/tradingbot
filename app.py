@@ -1,9 +1,11 @@
 from flask import Flask, render_template, jsonify, request
+from flask_login import login_required, current_user
 # UPDATED: Added get_option_expirations to the import list
 from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data, get_option_expirations, get_current_price, check_and_close_positions
 from spread_routes import spreads
 from prediction_routes import predictions
 from ml_performance_routes import ml_performance
+from auth_routes import auth_routes, init_login_manager
 from config import get_config
 from utils.logger import logger
 from database import init_db
@@ -24,7 +26,12 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize database: {e}")
 
+# Initialize Flask-Login
+init_login_manager(app)
+logger.info("Flask-Login initialized with Nostr authentication")
 
+# Register blueprints
+app.register_blueprint(auth_routes)
 app.register_blueprint(spreads)
 app.register_blueprint(predictions)
 app.register_blueprint(ml_performance)
@@ -32,7 +39,8 @@ app.register_blueprint(ml_performance)
 # --- Main Page Routes ---
 
 @app.route('/')
-def dashboard():
+@login_required
+def index():
     """
     Renders the main dashboard page with live account data.
     """

@@ -12,3 +12,5 @@ alembic
 tenacity
 tzdata
 xgboost
+flask-login
+pynostr
