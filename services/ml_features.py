@@ -118,17 +118,12 @@ def add_volume_features(df):
     # Volume-Price trend
     data['VP_Trend'] = (data['Close'].pct_change() * data['Volume']).rolling(window=10).mean()
     
-    # On-Balance Volume (OBV)
-    obv = [0]
-    for i in range(1, len(data)):
-        if data['Close'].iloc[i] > data['Close'].iloc[i-1]:
-            obv.append(obv[-1] + data['Volume'].iloc[i])
-        elif data['Close'].iloc[i] < data['Close'].iloc[i-1]:
-            obv.append(obv[-1] - data['Volume'].iloc[i])
-        else:
-            obv.append(obv[-1])
-    data['OBV'] = obv
-    data['OBV_MA'] = pd.Series(obv).rolling(window=20).mean()
+    # On-Balance Volume (OBV) - vectorized for better performance
+    close_diff = data['Close'].diff()
+    volume_direction = np.where(close_diff > 0, data['Volume'], 
+                                np.where(close_diff < 0, -data['Volume'], 0))
+    data['OBV'] = volume_direction.cumsum()
+    data['OBV_MA'] = data['OBV'].rolling(window=20).mean()
     
     return data
 

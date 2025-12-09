@@ -3,6 +3,7 @@ from flask import Flask, render_template, jsonify, request
 from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data, get_option_expirations, get_current_price, check_and_close_positions
 from spread_routes import spreads
 from prediction_routes import predictions
+from ml_performance_routes import ml_performance
 from config import get_config
 from utils.logger import logger
 from database import init_db
@@ -26,6 +27,7 @@ except Exception as e:
 
 app.register_blueprint(spreads)
 app.register_blueprint(predictions)
+app.register_blueprint(ml_performance)
 
 # --- Main Page Routes ---
 

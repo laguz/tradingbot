@@ -62,3 +62,127 @@
 2025-12-08 22:49:19 - tradingbot - INFO - app.py:22 - Database initialized successfully
 2025-12-08 22:49:36 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
 2025-12-08 22:49:36 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:52:02 - tradingbot - INFO - ml_service.py:240 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 22:52:02 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for TSLA
+2025-12-08 22:52:02 - tradingbot - INFO - ml_service.py:253 - Training new model for TSLA
+2025-12-08 22:52:02 - tradingbot - ERROR - ml_service.py:265 - Feature preparation failed: Not enough data after feature engineering. Need more historical data.
+2025-12-08 22:52:09 - tradingbot - INFO - ml_service.py:240 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 22:52:09 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for TSLA
+2025-12-08 22:52:09 - tradingbot - INFO - ml_service.py:253 - Training new model for TSLA
+2025-12-08 22:52:10 - tradingbot - ERROR - ml_service.py:265 - Feature preparation failed: Not enough data after feature engineering. Need more historical data.
+2025-12-08 22:52:30 - tradingbot - INFO - ml_service.py:240 - Starting prediction for SPY, days=5, version=2.0-ensemble
+2025-12-08 22:52:30 - tradingbot - INFO - ml_service.py:253 - Training new model for SPY
+2025-12-08 22:52:30 - tradingbot - ERROR - ml_service.py:265 - Feature preparation failed: Not enough data after feature engineering. Need more historical data.
+2025-12-08 22:52:53 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:52:53 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:52:59 - tradingbot - INFO - ml_service.py:240 - Starting prediction for SPY, days=5, version=2.0-ensemble
+2025-12-08 22:52:59 - tradingbot - INFO - ml_service.py:253 - Training new model for SPY
+2025-12-08 22:52:59 - tradingbot - INFO - ml_service.py:113 - Training model on 296 samples with 39 features
+2025-12-08 22:52:59 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-08 22:52:59 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-08 22:53:05 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-08 22:53:05 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for SPY to models/SPY_model_v2.pkl
+2025-12-08 22:53:05 - tradingbot - INFO - ml_service.py:288 - Top 10 features:
+             feature  importance
+36             Lag_3    0.730573
+27  Distance_SMA_200    0.115300
+38             Lag_5    0.061187
+34             Lag_1    0.038926
+7        BB_Position    0.011272
+19               OBV    0.010261
+14     Parkinson_Vol    0.005995
+6           BB_Width    0.005721
+4           BB_Upper    0.005180
+1               MACD    0.002632
+2025-12-08 22:53:05 - tradingbot - ERROR - ml_service.py:375 - Prediction failed: index 1 is out of bounds for axis 0 with size 1
+2025-12-08 22:53:35 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:53:35 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:55:29 - tradingbot - INFO - ml_service.py:247 - Starting prediction for SPY, days=5, version=2.0-ensemble
+2025-12-08 22:55:29 - tradingbot - INFO - ml_service.py:260 - Training new model for SPY
+2025-12-08 22:55:30 - tradingbot - INFO - ml_service.py:113 - Training model on 296 samples with 39 features
+2025-12-08 22:55:30 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-08 22:55:30 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-08 22:55:35 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-08 22:55:35 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for SPY to models/SPY_model_v2.pkl
+2025-12-08 22:55:35 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+36             Lag_3    0.730573
+27  Distance_SMA_200    0.115300
+38             Lag_5    0.061187
+34             Lag_1    0.038926
+7        BB_Position    0.011272
+19               OBV    0.010261
+14     Parkinson_Vol    0.005995
+6           BB_Width    0.005721
+4           BB_Upper    0.005180
+1               MACD    0.002632
+2025-12-08 22:55:36 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for SPY to database
+2025-12-08 22:55:36 - tradingbot - INFO - ml_service.py:378 - Predictions complete for SPY: [577.33, 573.36, 575.14, 575.53, 582.77]
+2025-12-08 22:57:56 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 22:57:56 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for TSLA
+2025-12-08 22:57:56 - tradingbot - INFO - ml_service.py:260 - Training new model for TSLA
+2025-12-08 22:57:56 - tradingbot - INFO - ml_service.py:113 - Training model on 296 samples with 39 features
+2025-12-08 22:57:56 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-08 22:57:56 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-08 22:58:02 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-08 22:58:02 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for TSLA to models/TSLA_model_v2.pkl
+2025-12-08 22:58:02 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+34             Lag_1    0.717440
+35             Lag_2    0.215672
+19               OBV    0.020567
+12             HV_50    0.008471
+28   Distance_EMA_12    0.006539
+6           BB_Width    0.003522
+27  Distance_SMA_200    0.003496
+21             Month    0.003434
+15     Volume_Change    0.002745
+14     Parkinson_Vol    0.002621
+2025-12-08 22:58:02 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 22:58:02 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 22:58:22 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 22:58:22 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 22:58:23 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 22:58:23 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 23:01:05 - tradingbot - INFO - app.py:18 - Starting Trading Bot in development mode
+2025-12-08 23:01:05 - tradingbot - INFO - app.py:23 - Database initialized successfully
+2025-12-08 23:01:27 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:01:27 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:01:28 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:01:28 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 23:01:30 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:01:30 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:01:30 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:01:30 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 23:03:01 - tradingbot - INFO - app.py:18 - Starting Trading Bot in development mode
+2025-12-08 23:03:01 - tradingbot - INFO - app.py:23 - Database initialized successfully
+2025-12-08 23:03:11 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:03:11 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:03:12 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:03:12 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 23:03:13 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-08 23:03:14 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-08 23:03:14 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for TSLA to database
+2025-12-08 23:03:14 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [257.81, 251.15, 245.63, 248.15, 267.51]
+2025-12-08 23:03:34 - tradingbot - INFO - ml_service.py:247 - Starting prediction for RIOT, days=5, version=2.0-ensemble
+2025-12-08 23:03:34 - tradingbot - DEBUG - ml_service.py:170 - No cached model found for RIOT
+2025-12-08 23:03:34 - tradingbot - INFO - ml_service.py:260 - Training new model for RIOT
+2025-12-08 23:03:34 - tradingbot - INFO - ml_service.py:113 - Training model on 296 samples with 39 features
+2025-12-08 23:03:34 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-08 23:03:34 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available, using RF + GBM only
+2025-12-08 23:03:40 - tradingbot - INFO - ml_service.py:118 - Model training complete
+2025-12-08 23:03:40 - tradingbot - INFO - ml_service.py:154 - Saved model v2.0-ensemble for RIOT to models/RIOT_model_v2.pkl
+2025-12-08 23:03:40 - tradingbot - INFO - ml_service.py:295 - Top 10 features:
+             feature  importance
+34             Lag_1    0.685561
+27  Distance_SMA_200    0.251323
+19               OBV    0.034217
+14     Parkinson_Vol    0.004614
+38             Lag_5    0.004098
+35             Lag_2    0.002978
+37             Lag_4    0.002823
+5           BB_Lower    0.002385
+26   Distance_SMA_50    0.002184
+11             HV_10    0.001302
+2025-12-08 23:03:40 - tradingbot - INFO - ml_evaluation.py:215 - Saved 5 predictions for RIOT to database
+2025-12-08 23:03:40 - tradingbot - INFO - ml_service.py:378 - Predictions complete for RIOT: [13.03, 12.73, 15.4, 15.05, 14.03]
