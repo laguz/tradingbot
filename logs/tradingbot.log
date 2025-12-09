@@ -28,3 +28,25 @@
 2025-12-08 22:18:38 - tradingbot - INFO - ml_service.py:148 - Starting prediction for TSLA, days=5
 2025-12-08 22:18:38 - tradingbot - INFO - ml_service.py:136 - Loaded cached model for TSLA (age: 0 days)
 2025-12-08 22:18:39 - tradingbot - INFO - ml_service.py:226 - Predictions complete for TSLA: [447.46, 446.71, 447.63, 445.73, 446.41]
+2025-12-08 22:25:14 - tradingbot - INFO - ml_service.py:148 - Starting prediction for TSLA, days=5
+2025-12-08 22:25:14 - tradingbot - INFO - ml_service.py:136 - Loaded cached model for TSLA (age: 0 days)
+2025-12-08 22:25:14 - tradingbot - INFO - ml_service.py:226 - Predictions complete for TSLA: [447.46, 446.71, 447.63, 445.73, 446.41]
+2025-12-08 22:25:51 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:25:51 - tradingbot - ERROR - app.py:24 - Failed to initialize database: Attribute name 'metadata' is reserved when using the Declarative API.
+2025-12-08 22:25:52 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:25:52 - tradingbot - ERROR - app.py:24 - Failed to initialize database: Attribute name 'metadata' is reserved when using the Declarative API.
+2025-12-08 22:28:46 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:28:46 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:29:28 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:29:28 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:29:29 - tradingbot - INFO - app.py:17 - Starting Trading Bot in development mode
+2025-12-08 22:29:29 - tradingbot - INFO - app.py:22 - Database initialized successfully
+2025-12-08 22:29:42 - tradingbot - INFO - ml_service.py:148 - Starting prediction for TSLA, days=5
+2025-12-08 22:29:42 - tradingbot - INFO - ml_service.py:136 - Loaded cached model for TSLA (age: 0 days)
+2025-12-08 22:29:42 - tradingbot - INFO - ml_service.py:226 - Predictions complete for TSLA: [447.46, 446.71, 447.63, 445.73, 446.41]
+2025-12-08 22:29:45 - tradingbot - INFO - ml_service.py:148 - Starting prediction for TSLA, days=5
+2025-12-08 22:29:45 - tradingbot - INFO - ml_service.py:136 - Loaded cached model for TSLA (age: 0 days)
+2025-12-08 22:29:45 - tradingbot - INFO - ml_service.py:226 - Predictions complete for TSLA: [447.46, 446.71, 447.63, 445.73, 446.41]
+2025-12-08 22:30:14 - tradingbot - INFO - ml_service.py:148 - Starting prediction for RIOT, days=5
+2025-12-08 22:30:14 - tradingbot - INFO - ml_service.py:136 - Loaded cached model for RIOT (age: 0 days)
+2025-12-08 22:30:15 - tradingbot - INFO - ml_service.py:226 - Predictions complete for RIOT: [14.68, 14.48, 13.59, 13.19, 13.12]

@@ -88,5 +88,5 @@ class PositionState(Base):
     symbol = Column(String(50), unique=True, nullable=False, index=True)
     itm_consecutive_days = Column(Integer, default=0)
     last_check_date = Column(String(20))  # YYYY-MM-DD format
-    metadata = Column(JSON, nullable=True)  # Additional state data
+    additional_metadata = Column(JSON, nullable=True)  # Additional state data
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
