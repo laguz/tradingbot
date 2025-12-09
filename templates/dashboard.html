@@ -124,10 +124,10 @@
                                 <td>${{ "{:,.2f}".format(pos.current_price * 100 * pos.quantity) }}</td>
                                 {% if pos.pl_dollars >= 0 %}
                                 <td class="text-success">${{ "{:,.2f}".format(pos.pl_dollars) }}</td>
-                                <td class="text-success">+{{ pos.pl_percent|round(2) }}%</td>
+                                <td class="text-success">+{{ pos.pl_percent|abs|round(2) }}%</td>
                                 {% else %}
                                 <td class="text-danger">-${{ "{:,.2f}".format(pos.pl_dollars|abs) }}</td>
-                                <td class="text-danger">{{ pos.pl_percent|round(2) }}%</td>
+                                <td class="text-danger">-{{ pos.pl_percent|abs|round(2) }}%</td>
                                 {% endif %}
                                 <td>
                                     <small>
@@ -143,10 +143,10 @@
                                 <td>${{ "{:,.2f}".format(pos.current_price) }}</td>
                                 {% if pos.pl_dollars >= 0 %}
                                 <td class="text-success">${{ "{:,.2f}".format(pos.pl_dollars) }}</td>
-                                <td class="text-success">+{{ pos.pl_percent|round(2) }}%</td>
+                                <td class="text-success">+{{ pos.pl_percent|abs|round(2) }}%</td>
                                 {% else %}
                                 <td class="text-danger">-${{ "{:,.2f}".format(pos.pl_dollars|abs) }}</td>
-                                <td class="text-danger">{{ pos.pl_percent|round(2) }}%</td>
+                                <td class="text-danger">-{{ pos.pl_percent|abs|round(2) }}%</td>
                                 {% endif %}
                                 <td>
                                     {% if pos.dte %}<small>DTE: {{ pos.dte }}</small>{% endif %}

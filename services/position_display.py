@@ -157,22 +157,18 @@ def create_spread_position(short_leg: Dict, long_leg: Dict) -> Dict:
     print(f"Quantity: {quantity}")
     print(f"Net credit: ${net_credit:.2f}")
     
-    # Current prices for closing the spread (per-share from API)
+    # Current prices for closing the spread (already per-contract from tradier_service)
     # Short leg: We need to BUY to close, so use ASK price
     # Long leg: We need to SELL to close, so use BID price
-    short_ask_per_share = abs(short_leg.get('ask_price', short_leg.get('current_price', 0)))
-    long_bid_per_share = abs(long_leg.get('bid_price', long_leg.get('current_price', 0)))
-    
-    # Convert to per-contract values
-    short_ask_total = short_ask_per_share * 100
-    long_bid_total = long_bid_per_share * 100
+    short_ask_total = abs(short_leg.get('ask_price', short_leg.get('current_price', 0)))
+    long_bid_total = abs(long_leg.get('bid_price', long_leg.get('current_price', 0)))
     
     # Current spread value (what it would cost to close)
     # Cost to close = (buy back short at ask) - (sell long at bid) × quantity
     current_spread_value = (short_ask_total - long_bid_total) * quantity
     
-    print(f"Short ask: ${short_ask_per_share:.2f} per share (${short_ask_total:.2f} per contract)")
-    print(f"Long bid: ${long_bid_per_share:.2f} per share (${long_bid_total:.2f} per contract)")
+    print(f"Short ask: ${short_ask_total:.2f} per contract (${short_ask_total/100:.2f} per share)")
+    print(f"Long bid: ${long_bid_total:.2f} per contract (${long_bid_total/100:.2f} per share)")
     print(f"Current spread value: ${current_spread_value:.2f}")
     
     # P&L: Credit received - current value to close

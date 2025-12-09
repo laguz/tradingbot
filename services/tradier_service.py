@@ -117,9 +117,6 @@ def get_open_positions():
             if bid_price is None:
                 bid_price = current_price
 
-            pl_dollars = (current_price - cost_basis_per_share) * pos['quantity']
-            pl_percent = (pl_dollars / pos['cost_basis']) * 100 if pos['cost_basis'] != 0 else 0
-            
             # Calculate DTE from OCC Symbol
             # Format: SYMBOLYYMMDD[C/P]STRIKE
             # e.g. TSLA251219P00410000 -> 251219 -> 2025-12-19
@@ -148,14 +145,31 @@ def get_open_positions():
                     option_type = 'call' if opt_type == 'C' else 'put'
             except Exception as e:
                 print(f"Error parsing details for {pos['symbol']}: {e}")
+            
+            # For options, convert prices to per-contract (multiply by 100)
+            # For stocks, keep as-is
+            is_option = underlying is not None
+            multiplier = 100 if is_option else 1
+            
+            # Calculate P/L with correct units
+            if is_option:
+                # For options, use per-contract values
+                entry_price_for_pl = cost_basis_per_share
+                current_price_for_pl = current_price * multiplier
+                pl_dollars = (current_price_for_pl - entry_price_for_pl) * pos['quantity']
+            else:
+                # For stocks, use per-share values
+                pl_dollars = (current_price - cost_basis_per_share) * pos['quantity']
+            
+            pl_percent = (pl_dollars / pos['cost_basis']) * 100 if pos['cost_basis'] != 0 else 0
 
             enriched_positions.append({
                 'symbol': pos['symbol'], 
                 'quantity': pos['quantity'], 
                 'entry_price': cost_basis_per_share,
-                'current_price': current_price, 
-                'ask_price': ask_price,
-                'bid_price': bid_price,
+                'current_price': current_price * multiplier, 
+                'ask_price': ask_price * multiplier,
+                'bid_price': bid_price * multiplier,
                 'pl_dollars': pl_dollars, 
                 'pl_percent': pl_percent,
                 'dte': dte,
