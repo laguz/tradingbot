@@ -1553,3 +1553,23 @@
 2025-12-09 13:43:06 - tradingbot - INFO - stock_data_service.py:110 - Fetching MSFT data from Tradier API (1m)
 2025-12-09 13:43:07 - tradingbot - DEBUG - mongodb_models.py:330 - Inserted 21 OHLCV records
 2025-12-09 13:43:07 - tradingbot - INFO - stock_data_service.py:46 - Saved 21 OHLCV records for MSFT
+2025-12-09 13:46:07 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:46:08 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:46:09 - tradingbot - INFO - database.py:83 - MongoDB indexes created successfully
+2025-12-09 13:46:09 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:46:09 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:46:09 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:46:11 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:46:11 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:46:12 - tradingbot - INFO - database.py:83 - MongoDB indexes created successfully
+2025-12-09 13:46:12 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:46:12 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:46:12 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:46:20 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 13:46:20 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 13:46:20 - tradingbot - DEBUG - stock_data_service.py:105 - No cached data found for TSLA, fetching from API
+2025-12-09 13:46:20 - tradingbot - INFO - stock_data_service.py:110 - Fetching TSLA data from Tradier API (2y)
+2025-12-09 13:46:22 - tradingbot - DEBUG - mongodb_models.py:330 - Inserted 501 OHLCV records
+2025-12-09 13:46:22 - tradingbot - INFO - stock_data_service.py:46 - Saved 501 OHLCV records for TSLA
+2025-12-09 13:46:22 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for TSLA to database
+2025-12-09 13:46:22 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.21, 251.48, 245.11, 248.91, 265.94]
