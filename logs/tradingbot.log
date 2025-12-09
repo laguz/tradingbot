@@ -1573,3 +1573,41 @@
 2025-12-09 13:46:22 - tradingbot - INFO - stock_data_service.py:46 - Saved 501 OHLCV records for TSLA
 2025-12-09 13:46:22 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for TSLA to database
 2025-12-09 13:46:22 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.21, 251.48, 245.11, 248.91, 265.94]
+2025-12-09 13:50:53 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 13:50:53 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 13:50:53 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for AAPL from database cache
+2025-12-09 13:50:53 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for AAPL to database
+2025-12-09 13:50:53 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.65, 228.05, 230.98, 232.97, 235.95]
+2025-12-09 13:50:57 - tradingbot - INFO - ml_service.py:247 - Starting prediction for AAPL, days=5, version=2.0-ensemble
+2025-12-09 13:50:57 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for AAPL (age: 0 days)
+2025-12-09 13:50:57 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for AAPL from database cache
+2025-12-09 13:50:58 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for AAPL to database
+2025-12-09 13:50:58 - tradingbot - INFO - ml_service.py:378 - Predictions complete for AAPL: [226.65, 228.05, 230.98, 232.97, 235.95]
+2025-12-09 13:51:14 - tradingbot - INFO - ml_service.py:247 - Starting prediction for SPY, days=5, version=2.0-ensemble
+2025-12-09 13:51:15 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for SPY (age: 0 days)
+2025-12-09 13:51:15 - tradingbot - DEBUG - stock_data_service.py:105 - No cached data found for SPY, fetching from API
+2025-12-09 13:51:15 - tradingbot - INFO - stock_data_service.py:110 - Fetching SPY data from Tradier API (2y)
+2025-12-09 13:51:17 - tradingbot - DEBUG - mongodb_models.py:330 - Inserted 501 OHLCV records
+2025-12-09 13:51:17 - tradingbot - INFO - stock_data_service.py:46 - Saved 501 OHLCV records for SPY
+2025-12-09 13:51:17 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for SPY to database
+2025-12-09 13:51:17 - tradingbot - INFO - ml_service.py:378 - Predictions complete for SPY: [577.17, 573.32, 574.59, 574.2, 579.53]
+2025-12-09 13:56:21 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:56:22 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:56:23 - tradingbot - INFO - database.py:83 - MongoDB indexes created successfully
+2025-12-09 13:56:23 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:56:23 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:56:23 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 13:57:15 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 13:57:16 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 13:57:17 - tradingbot - INFO - database.py:83 - MongoDB indexes created successfully
+2025-12-09 13:57:17 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 13:57:17 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 13:57:17 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 14:01:02 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
+2025-12-09 14:01:27 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
+2025-12-09 14:01:37 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
+2025-12-09 14:01:45 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 14:01:51 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 14:03:14 - tradingbot - INFO - tradier_service.py:866 - Starting auto-close position check
+2025-12-09 14:03:15 - tradingbot - DEBUG - tradier_service.py:895 - Current time in EST: 2025-12-09 14:03:15.776246-05:00, past noon: True
+2025-12-09 14:03:15 - tradingbot - INFO - tradier_service.py:979 - Auto-close check complete: 7 checked, 0 closed, 0 errors

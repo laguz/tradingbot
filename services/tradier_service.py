@@ -1019,7 +1019,7 @@ def check_and_roll_positions():
     Criteria:
     - Single Leg
     - DTE < 9
-    - ITM OR Option Price < 1.01
+    - (Price < 1.01) OR (ITM for > 2 consecutive days)
     
     Action:
     - BTC current
@@ -1034,6 +1034,26 @@ def check_and_roll_positions():
     for p in positions:
         if p['quantity'] > 0 and p.get('underlying') and p.get('expiration') and p.get('option_type'):
             long_legs.add((p['underlying'], p['expiration'], p['option_type']))
+    
+    # Fetch all underlying prices at once for efficiency
+    underlyings = list(set([p.get('underlying') for p in positions if p.get('underlying')]))
+    underlying_prices = {}
+    
+    if underlyings:
+        try:
+            symbols_str = ','.join(underlyings)
+            q_res = requests.get(BASE_URL + "markets/quotes", headers=HEADERS, params={'symbols': symbols_str})
+            if q_res.status_code == 200:
+                quotes = q_res.json().get('quotes', {}).get('quote', [])
+                if not isinstance(quotes, list):
+                    quotes = [quotes]
+                for q in quotes:
+                    underlying_prices[q['symbol']] = q.get('last')
+        except Exception as e:
+            logger.error(f"Error fetching underlying prices: {e}")
+    
+    # Update position state for ITM tracking
+    state = manage_position_state(positions, underlying_prices)
             
     results = {
         'rolled': [],
@@ -1061,41 +1081,35 @@ def check_and_roll_positions():
         if dte is None or strike is None: continue
         
         # Check Roll Criteria
-        # 1. DTE < 9
-        if dte >= 9: continue
+        # 1. DTE < config threshold
+        if dte >= config.AUTO_ROLL_DTE: continue
         
-        # 2. ITM or Price < 1.01
+        # 2. Check ITM status and consecutive days
         is_itm = False
-        # Fetch underlying price if not in pos (it should be from get_open_positions)
-        # We need the underlying price for ITM check. 
-        # get_open_positions enriches with 'current_price' of the OPTION, but we need UNDERLYING price for ITM.
-        # Wait, get_open_positions does NOT return underlying price in the dict, only 'underlying' symbol.
-        # We need to fetch it.
+        itm_days = 0
+        u_price = underlying_prices.get(underlying)
         
-        # Optimization: We could fetch all underlying prices at once like in check_and_close.
-        # For now, let's just fetch for the candidate to be safe/simple, or reuse the logic.
-        # Actually, let's fetch it.
-        try:
-            q_res = requests.get(BASE_URL + "markets/quotes", headers=HEADERS, params={'symbols': underlying})
-            if q_res.status_code == 200:
-                u_price = q_res.json()['quotes']['quote']['last']
-                if option_type == 'put' and u_price < strike: is_itm = True
-                elif option_type == 'call' and u_price > strike: is_itm = True
-            else:
-                print(f"Could not fetch quote for {underlying}")
-                continue
-        except:
-            continue
+        if u_price is not None:
+            if option_type == 'put' and u_price < strike:
+                is_itm = True
+            elif option_type == 'call' and u_price > strike:
+                is_itm = True
             
+            # Get ITM consecutive days from position state
+            pos_state = state.get(symbol, {})
+            itm_days = pos_state.get('itm_consecutive_days', 0)
+        
         should_roll = False
         reason = ""
         
-        if is_itm:
+        # Roll if price is very low (regardless of ITM status)
+        if current_price < config.AUTO_ROLL_MIN_PRICE:
             should_roll = True
-            reason = "ITM"
-        elif current_price < 1.01:
+            reason = f"Price < ${config.AUTO_ROLL_MIN_PRICE}"
+        # Roll if ITM for more than configured consecutive days
+        elif is_itm and itm_days > config.AUTO_ROLL_ITM_DAYS:
             should_roll = True
-            reason = "Price < $1.01"
+            reason = f"ITM for {itm_days} consecutive days (threshold: {config.AUTO_ROLL_ITM_DAYS})"
             
         if should_roll:
             print(f"Rolling {symbol}: {reason}")
@@ -1105,21 +1119,24 @@ def check_and_roll_positions():
                 expirations = get_option_expirations(underlying)
                 if 'error' in expirations: raise Exception("Could not fetch expirations")
                 
-                # Find first exp > 42 days
+                # Find first exp > configured minimum days
                 target_exp = None
                 today = date.today()
                 for exp in expirations:
                     exp_date = datetime.strptime(exp, '%Y-%m-%d').date()
-                    if (exp_date - today).days > 42:
+                    if (exp_date - today).days > config.AUTO_ROLL_MIN_EXP_DAYS:
                         target_exp = exp
                         break
                         
                 if not target_exp:
-                    results['errors'].append({'symbol': symbol, 'error': 'No expiration > 42 days found'})
+                    results['errors'].append({
+                        'symbol': symbol, 
+                        'error': f'No expiration > {config.AUTO_ROLL_MIN_EXP_DAYS} days found'
+                    })
                     continue
                     
                 # Calculate New Strike
-                new_strike = strike - 1 if option_type == 'put' else strike + 1
+                new_strike = strike - config.AUTO_ROLL_STRIKE_ADJUSTMENT if option_type == 'put' else strike + config.AUTO_ROLL_STRIKE_ADJUSTMENT
                 
                 # Generate New OCC Symbol
                 new_occ = _generate_occ_symbol(underlying, target_exp, option_type, new_strike)
@@ -1148,6 +1165,7 @@ def check_and_roll_positions():
                         'symbol': symbol,
                         'new_symbol': new_occ,
                         'reason': reason,
+                        'itm_days': itm_days if is_itm else None,
                         'order_id': res.get('order', {}).get('id')
                     })
                     

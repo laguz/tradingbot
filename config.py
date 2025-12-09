@@ -33,6 +33,7 @@ class Config:
     # Auto-Roll Rules
     AUTO_ROLL_DTE = 9         # Roll when DTE < this
     AUTO_ROLL_MIN_PRICE = 1.01  # Roll when option price < this
+    AUTO_ROLL_ITM_DAYS = 2    # Roll ITM positions after this many consecutive days
     AUTO_ROLL_MIN_EXP_DAYS = 42  # New expiration must be > this many days
     AUTO_ROLL_STRIKE_ADJUSTMENT = 1  # Adjust strike by this amount
     
