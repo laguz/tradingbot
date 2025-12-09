@@ -82,6 +82,24 @@ class Config:
     # ML Validation
     ML_VALIDATION_SPLITS = 5
     ML_MIN_TRAIN_SIZE = 252   # Minimum 1 year training data
+    
+    # Automated Trading Configuration
+    AUTO_TRADE_ENABLED = False  # Master switch - KEEP FALSE UNTIL TESTED
+    AUTO_TRADE_DRY_RUN = True   # Simulation mode (no real orders)
+    AUTO_TRADE_MAX_DAILY_LOSS = 500.0  # Stop trading if daily loss exceeds this
+    AUTO_TRADE_MAX_POSITION_SIZE = 5   # Maximum contracts per position
+    AUTO_TRADE_MAX_POSITIONS = 10      # Maximum open positions at once
+    AUTO_TRADE_SYMBOLS = ['SPY', 'QQQ', 'AAPL', 'MSFT', 'TSLA']  # Allowed symbols
+    AUTO_TRADE_SCHEDULE_HOURS = [10, 14]  # Hours to run (24-hour format, EST)
+    AUTO_TRADE_MIN_CONFIDENCE = 0.65   # ML prediction confidence threshold
+    AUTO_TRADE_MIN_CREDIT = 0.75       # Minimum credit for spreads
+    AUTO_TRADE_SPREAD_WIDTH = 5.0      # Default spread width
+    AUTO_TRADE_WHEEL_DTE_MIN = 40      # Minimum DTE for wheel positions
+    AUTO_TRADE_WHEEL_DTE_MAX = 50      # Maximum DTE for wheel positions
+    AUTO_TRADE_SPREAD_DTE_MIN = 18     # Minimum DTE for credit spreads
+    AUTO_TRADE_SPREAD_DTE_MAX = 25     # Maximum DTE for credit spreads
+    AUTO_TRADE_NOTIFICATION_EMAIL = os.getenv('NOTIFICATION_EMAIL')  # Optional email alerts
+
 
 
 class DevelopmentConfig(Config):

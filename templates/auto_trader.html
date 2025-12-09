@@ -1,0 +1,224 @@
+{% extends "layout.html" %}
+
+{% block title %}Automated Trader{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-4"><i class="fas fa-robot me-2"></i>Automated Trading Bot</h2>
+
+        <!-- Status Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-dark text-light">
+                    <div class="card-body">
+                        <h6 class="text-muted">Status</h6>
+                        <h4 id="botStatus">Loading...</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-dark text-light">
+                    <div class="card-body">
+                        <h6 class="text-muted">Daily P&L</h6>
+                        <h4 id="dailyPnl">$0.00</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-dark text-light">
+                    <div class="card-body">
+                        <h6 class="text-muted">Positions</h6>
+                        <h4 id="positions">0/0</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-dark text-light">
+                    <div class="card-body">
+                        <h6 class="text-muted">Today's Trades</h6>
+                        <h4 id="todayTrades">0</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="card bg-dark text-light mb-4">
+            <div class="card-header bg-primary">
+                <h5 class="mb-0">Controls</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex gap-2 mb-3">
+                    <button id="runBtn" class="btn btn-success" onclick="runBot()">
+                        <i class="fas fa-play me-2"></i>Run Now
+                    </button>
+                    <button id="emergencyBtn" class="btn btn-danger" onclick="emergencyStop()">
+                        <i class="fas fa-stop-circle me-2"></i>Emergency Stop
+                    </button>
+                    <button id="resumeBtn" class="btn btn-warning" onclick="resume()" style="display:none;">
+                        <i class="fas fa-play-circle me-2"></i>Resume
+                    </button>
+                </div>
+
+                <div id="configInfo" class="small text-muted"></div>
+            </div>
+        </div>
+
+        <!-- Recent Trades -->
+        <div class="card bg-dark text-light">
+            <div class="card-header bg-primary">
+                <h5 class="mb-0">Recent Trades (Last 7 Days)</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-dark table-sm">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Symbol</th>
+                                <th>Strategy</th>
+                                <th>Details</th>
+                                <th>Confidence</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tradesTable">
+                            <tr>
+                                <td colspan="6" class="text-center">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let statusInterval;
+
+    async function loadStatus() {
+        try {
+            const response = await fetch('/api/autotrader/status');
+            const data = await response.json();
+
+            if (data.success) {
+                // Update status cards
+                const risk = data.risk_status;
+                document.getElementById('botStatus').textContent = risk.emergency_stop ? '🛑 STOPPED' :
+                    (risk.can_trade ? '✓ Ready' : '⚠ Limited');
+                document.getElementById('dailyPnl').textContent = `$${risk.daily_pnl.toFixed(2)}`;
+                document.getElementById('dailyPnl').className = risk.daily_pnl >= 0 ? 'text-success' : 'text-danger';
+                document.getElementById('positions').textContent = `${risk.position_count}/${risk.max_positions}`;
+                document.getElementById('todayTrades').textContent = data.stats.total_trades;
+
+                // Update config info
+                const mode = data.config.dry_run ? '🧪 DRY RUN MODE' : '💰 LIVE TRADING';
+                const enabled = data.config.enabled ? '✓ Enabled' : '✗ Disabled';
+                document.getElementById('configInfo').innerHTML = `
+        ${mode} | ${enabled} | Symbols: ${data.config.symbols.join(', ')} | 
+        Max Loss: $${data.config.max_daily_loss}
+      `;
+
+                // Update button states
+                document.getElementById('emergencyBtn').style.display = risk.emergency_stop ? 'none' : 'inline-block';
+                document.getElementById('resumeBtn').style.display = risk.emergency_stop ? 'inline-block' : 'none';
+
+                // Update trades table
+                updateTradesTable(data.recent_trades);
+            }
+        } catch (error) {
+            console.error('Error loading status:', error);
+        }
+    }
+
+    function updateTradesTable(trades) {
+        const tbody = document.getElementById('tradesTable');
+
+        if (trades.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center">No trades yet</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = trades.map(trade => {
+            const time = new Date(trade.timestamp).toLocaleString();
+            const details = trade.details ? `${trade.details.strike || ''} ${trade.details.option_type || ''}` : '';
+            const conf = (trade.ml_confidence * 100).toFixed(0) + '%';
+            const status = trade.dry_run ? '🧪 Dry Run' : (trade.result?.success ? '✓ Success' : '✗ Failed');
+
+            return `
+      <tr>
+        <td>${time}</td>
+        <td>${trade.symbol}</td>
+        <td>${trade.strategy}</td>
+        <td>${details}</td>
+        <td>${conf}</td>
+        <td>${status}</td>
+      </tr>
+    `;
+        }).join('');
+    }
+
+    async function runBot() {
+        if (!confirm('Run the trading bot now?')) return;
+
+        const btn = document.getElementById('runBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Running...';
+
+        try {
+            const response = await fetch('/api/autotrader/run', { method: 'POST' });
+            const data = await response.json();
+
+            if (data.success) {
+                alert('Bot started! Check the logs for progress.');
+                setTimeout(loadStatus, 2000);
+            } else {
+                alert('Error: ' + data.error);
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-play me-2"></i>Run Now';
+        }
+    }
+
+    async function emergencyStop() {
+        if (!confirm('⚠️ EMERGENCY STOP - This will halt all trading. Continue?')) return;
+
+        try {
+            const response = await fetch('/api/autotrader/emergency_stop', { method: 'POST' });
+            const data = await response.json();
+
+            if (data.success) {
+                alert('Emergency stop activated!');
+                loadStatus();
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    }
+
+    async function resume() {
+        if (!confirm('Resume trading after emergency stop?')) return;
+
+        try {
+            const response = await fetch('/api/autotrader/resume', { method: 'POST' });
+            const data = await response.json();
+
+            if (data.success) {
+                alert('Trading resumed!');
+                loadStatus();
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    }
+
+    // Initial load and auto-refresh
+    loadStatus();
+    statusInterval = setInterval(loadStatus, 10000);  // Refresh every 10 seconds
+</script>
+{% endblock %}

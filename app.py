@@ -7,6 +7,7 @@ from prediction_routes import predictions
 from ml_performance_routes import ml_performance
 from ml_correction_routes import ml_correction
 from auth_routes import auth_routes, init_login_manager
+from auto_trader_routes import auto_trader_routes
 from config import get_config
 from utils.logger import logger
 from database import init_db, mongo_db, mongo_client
@@ -37,7 +38,8 @@ app.register_blueprint(spreads)
 app.register_blueprint(predictions)
 app.register_blueprint(ml_performance)
 app.register_blueprint(ml_correction)
-logger.info("All blueprints registered including ML self-correction")
+app.register_blueprint(auto_trader_routes)
+logger.info("All blueprints registered including ML self-correction and auto trader")
 
 # --- Main Page Routes ---
 

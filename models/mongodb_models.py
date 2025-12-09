@@ -5,7 +5,7 @@ Provides MongoDB collection interfaces to replace SQLAlchemy models.
 Each model class provides helper methods for CRUD operations.
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from database import get_mongo_db
 from utils.logger import logger
@@ -532,3 +532,97 @@ class UserProfileModel:
             query['pubkey'] = {'$ne': exclude_pubkey}
         
         return collection.count_documents(query) > 0
+
+
+class AutoTradeModel:
+    """Automated trade history - MongoDB collection."""
+    
+    COLLECTION_NAME = 'auto_trades'
+    
+    @staticmethod
+    def get_collection():
+        """Get the auto trades collection."""
+        db = get_mongo_db()
+        if db is None:
+            raise Exception("MongoDB not configured")
+        return db[AutoTradeModel.COLLECTION_NAME]
+    
+    @staticmethod
+    def insert(trade_data: Dict) -> str:
+        """
+        Insert automated trade record.
+        
+        Args:
+            trade_data: Trade details
+            
+        Returns:
+            Document ID
+        """
+        collection = AutoTradeModel.get_collection()
+        
+        doc = {
+            **trade_data,
+            'created_at': datetime.utcnow()
+        }
+        
+        result = collection.insert_one(doc)
+        logger.debug(f"Inserted auto trade for {trade_data.get('symbol')}")
+        return str(result.inserted_id)
+    
+    @staticmethod
+    def find_recent(days: int = 7, limit: int = 100) -> List[Dict]:
+        """
+        Find recent automated trades.
+        
+        Args:
+            days: Number of days to look back
+            limit: Maximum results
+            
+        Returns:
+            List of trade dicts
+        """
+        collection = AutoTradeModel.get_collection()
+        cutoff = datetime.utcnow() - timedelta(days=days)
+        
+        cursor = collection.find(
+            {'created_at': {'$gte': cutoff}}
+        ).sort('created_at', -1).limit(limit)
+        
+        return list(cursor)
+    
+    @staticmethod
+    def get_stats(days: int = 1) -> Dict:
+        """
+        Get trading statistics.
+        
+        Args:
+            days: Number of days to analyze
+            
+        Returns:
+            Stats dict
+        """
+        collection = AutoTradeModel.get_collection()
+        cutoff = datetime.utcnow() - timedelta(days=days)
+        
+        trades = list(collection.find({'created_at': {'$gte': cutoff}}))
+        
+        total = len(trades)
+        successful = sum(1 for t in trades if t.get('result', {}).get('success'))
+        strategies = {}
+        symbols = {}
+        
+        for trade in trades:
+            strategy = trade.get('strategy', 'unknown')
+            symbol = trade.get('symbol', 'unknown')
+            
+            strategies[strategy] = strategies.get(strategy, 0) + 1
+            symbols[symbol] = symbols.get(symbol, 0) + 1
+        
+        return {
+            'total_trades': total,
+            'successful': successful,
+            'failed': total - successful,
+            'by_strategy': strategies,
+            'by_symbol': symbols,
+            'period_days': days
+        }

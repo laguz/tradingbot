@@ -1665,3 +1665,115 @@
 2025-12-09 14:21:48 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.06, 251.05, 245.1, 248.91, 266.18]
 2025-12-09 14:23:39 - tradingbot - DEBUG - mongodb_models.py:485 - Updated profile for pubkey 8dab50cb...
 2025-12-09 14:23:39 - tradingbot - INFO - auth_routes.py:230 - Username updated to 'laguz' for pubkey 8dab50cb...
+2025-12-09 14:36:19 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 14:36:20 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:36:22 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:36:22 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 14:36:22 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:36:22 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 14:38:17 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 14:38:18 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:38:19 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:38:19 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 14:38:19 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:38:19 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 14:38:28 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 14:38:28 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:38:29 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:38:29 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 14:38:29 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:38:29 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 14:38:38 - tradingbot - INFO - app.py:21 - Starting Trading Bot in development mode
+2025-12-09 14:38:39 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:38:40 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:38:40 - tradingbot - INFO - app.py:26 - Database initialized successfully
+2025-12-09 14:38:40 - tradingbot - INFO - app.py:32 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:38:40 - tradingbot - INFO - app.py:40 - All blueprints registered including ML self-correction
+2025-12-09 14:38:43 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 14:38:44 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 14:38:44 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 14:38:55 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 14:38:56 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 14:39:53 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 14:39:54 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:39:55 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:39:55 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 14:39:55 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:39:55 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 14:45:54 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:45:55 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:45:56 - tradingbot - INFO - trading_engine.py:42 - Analyzing ML opportunity for SPY
+2025-12-09 14:45:56 - tradingbot - INFO - ml_service.py:247 - Starting prediction for SPY, days=5, version=2.0-ensemble
+2025-12-09 14:45:56 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for SPY (age: 0 days)
+2025-12-09 14:45:56 - tradingbot - DEBUG - stock_data_service.py:105 - No cached data found for SPY, fetching from API
+2025-12-09 14:45:56 - tradingbot - INFO - stock_data_service.py:110 - Fetching SPY data from Tradier API (2y)
+2025-12-09 14:45:58 - tradingbot - DEBUG - mongodb_models.py:330 - Inserted 501 OHLCV records
+2025-12-09 14:45:58 - tradingbot - INFO - stock_data_service.py:46 - Saved 501 OHLCV records for SPY
+2025-12-09 14:45:58 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for SPY to database
+2025-12-09 14:45:58 - tradingbot - INFO - ml_service.py:378 - Predictions complete for SPY: [577.47, 573.2, 572.74, 574.16, 579.81]
+2025-12-09 14:45:58 - tradingbot - INFO - trading_engine.py:84 - SPY: bearish (-15.83%), confidence: 1.00
+2025-12-09 14:55:45 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 14:55:46 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 14:55:46 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 14:55:53 - tradingbot - ERROR - auto_trader_routes.py:65 - Error getting status: name 'timedelta' is not defined
+2025-12-09 14:56:01 - tradingbot - INFO - automated_trader.py:28 - ============================================================
+2025-12-09 14:56:01 - tradingbot - INFO - automated_trader.py:29 - AUTOMATED TRADER STARTED
+2025-12-09 14:56:01 - tradingbot - INFO - automated_trader.py:30 - Time: 2025-12-09 14:56:01
+2025-12-09 14:56:01 - tradingbot - INFO - automated_trader.py:31 - Mode: DRY RUN
+2025-12-09 14:56:01 - tradingbot - INFO - automated_trader.py:32 - ============================================================
+2025-12-09 14:56:01 - tradingbot - WARNING - automated_trader.py:38 - Trading not allowed: Auto-trading is disabled in config
+2025-12-09 14:56:02 - tradingbot - INFO - automated_trader.py:156 - 
+--- Risk Status ---
+2025-12-09 14:56:02 - tradingbot - INFO - automated_trader.py:157 - Can Trade: False
+2025-12-09 14:56:02 - tradingbot - INFO - automated_trader.py:158 - Reason: Auto-trading is disabled in config
+2025-12-09 14:56:02 - tradingbot - INFO - automated_trader.py:159 - Daily P&L: $0.00
+2025-12-09 14:56:02 - tradingbot - INFO - automated_trader.py:160 - Daily Loss Limit: $500.00
+2025-12-09 14:56:02 - tradingbot - INFO - automated_trader.py:161 - Open Positions: 22/10
+2025-12-09 14:56:02 - tradingbot - INFO - automated_trader.py:162 - Emergency Stop: False
+2025-12-09 14:56:02 - tradingbot - INFO - automated_trader.py:163 - Dry Run Mode: True
+2025-12-09 14:56:06 - tradingbot - ERROR - auto_trader_routes.py:65 - Error getting status: name 'timedelta' is not defined
+2025-12-09 14:56:09 - tradingbot - ERROR - auto_trader_routes.py:65 - Error getting status: name 'timedelta' is not defined
+2025-12-09 14:56:13 - tradingbot - ERROR - auto_trader_routes.py:65 - Error getting status: name 'timedelta' is not defined
+2025-12-09 14:56:23 - tradingbot - ERROR - auto_trader_routes.py:65 - Error getting status: name 'timedelta' is not defined
+2025-12-09 14:56:28 - tradingbot - ERROR - auto_trader_routes.py:117 - Error activating emergency stop: 415 Unsupported Media Type: Did not attempt to load JSON data because the request Content-Type was not 'application/json'.
+2025-12-09 14:56:33 - tradingbot - ERROR - auto_trader_routes.py:65 - Error getting status: name 'timedelta' is not defined
+2025-12-09 14:56:43 - tradingbot - ERROR - auto_trader_routes.py:65 - Error getting status: name 'timedelta' is not defined
+2025-12-09 14:58:27 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 14:58:27 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:58:29 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:58:29 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 14:58:29 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:58:29 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 14:58:30 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 14:58:31 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:58:32 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:58:32 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 14:58:32 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:58:32 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 14:59:25 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 14:59:26 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 14:59:27 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 14:59:27 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 14:59:27 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 14:59:27 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 14:59:43 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 14:59:43 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 14:59:43 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 14:59:56 - tradingbot - INFO - automated_trader.py:28 - ============================================================
+2025-12-09 14:59:56 - tradingbot - INFO - automated_trader.py:29 - AUTOMATED TRADER STARTED
+2025-12-09 14:59:56 - tradingbot - INFO - automated_trader.py:30 - Time: 2025-12-09 14:59:56
+2025-12-09 14:59:56 - tradingbot - INFO - automated_trader.py:31 - Mode: DRY RUN
+2025-12-09 14:59:56 - tradingbot - INFO - automated_trader.py:32 - ============================================================
+2025-12-09 14:59:56 - tradingbot - WARNING - automated_trader.py:38 - Trading not allowed: Auto-trading is disabled in config
+2025-12-09 14:59:57 - tradingbot - INFO - automated_trader.py:156 - 
+--- Risk Status ---
+2025-12-09 14:59:57 - tradingbot - INFO - automated_trader.py:157 - Can Trade: False
+2025-12-09 14:59:57 - tradingbot - INFO - automated_trader.py:158 - Reason: Auto-trading is disabled in config
+2025-12-09 14:59:57 - tradingbot - INFO - automated_trader.py:159 - Daily P&L: $0.00
+2025-12-09 14:59:57 - tradingbot - INFO - automated_trader.py:160 - Daily Loss Limit: $500.00
+2025-12-09 14:59:57 - tradingbot - INFO - automated_trader.py:161 - Open Positions: 22/10
+2025-12-09 14:59:57 - tradingbot - INFO - automated_trader.py:162 - Emergency Stop: False
+2025-12-09 14:59:57 - tradingbot - INFO - automated_trader.py:163 - Dry Run Mode: True
+2025-12-09 15:01:57 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 15:01:58 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 15:02:03 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
