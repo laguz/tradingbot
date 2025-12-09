@@ -7,3 +7,7 @@ scikit-learn
 numpy
 flask-wtf
 email_validator
+sqlalchemy
+alembic
+tenacity
+tzdata

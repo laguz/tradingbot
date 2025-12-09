@@ -4,13 +4,19 @@ import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
 from datetime import date, timedelta, datetime
+from zoneinfo import ZoneInfo
+
+from config import get_config
+from utils.logger import logger
+from utils.retry import retry_api_call
 
 # --- API Configuration ---
-load_dotenv() 
+load_dotenv()
+config = get_config()
 
-TRADIER_API_KEY = os.getenv('TRADIER_API_KEY')
-TRADIER_ACCOUNT_ID = os.getenv('TRADIER_ACCOUNT_ID')
-BASE_URL = 'https://sandbox.tradier.com/v1/'
+TRADIER_API_KEY = config.TRADIER_API_KEY
+TRADIER_ACCOUNT_ID = config.TRADIER_ACCOUNT_ID
+BASE_URL = config.TRADIER_BASE_URL
 
 # --- Standard Headers for API Requests ---
 HEADERS = {
@@ -190,10 +196,15 @@ def get_current_price(symbol):
         print(f"ERROR: Could not fetch price for {symbol}. {e}")
         return {'error': str(e)}
 
-def find_support_resistance(data, window=5, tolerance=0.015):
+def find_support_resistance(data, window=None, tolerance=None):
     """
     Identifies support and resistance levels using volume-weighted clustering.
     """
+    if window is None:
+        window = config.SR_WINDOW
+    if tolerance is None:
+        tolerance = config.SR_TOLERANCE
+        
     if data.empty: return [], []
     
     supports = []
@@ -239,13 +250,14 @@ def find_support_resistance(data, window=5, tolerance=0.015):
             score = total_volume * touch_count
             scored_clusters.append({'price': avg_price, 'score': score})
             
-        # Sort by score and take top 5 significant levels
+        # Sort by score and take top N significant levels
         scored_clusters.sort(key=lambda x: x['score'], reverse=True)
-        return sorted([c['price'] for c in scored_clusters[:5]])
+        return sorted([c['price'] for c in scored_clusters[:config.SR_MAX_LEVELS]])
 
     final_supports = cluster_levels(supports)
     final_resistances = cluster_levels(resistances)
     
+    logger.debug(f"Found {len(final_supports)} support levels and {len(final_resistances)} resistance levels")
     return final_supports, final_resistances
 
 def get_historical_data(ticker, timeframe):
@@ -848,8 +860,10 @@ def check_and_close_positions():
     - ITM and DTE < 9: Close at Ask + 0.2
     - ITM for 2 consecutive days and Time >= 12:00 PM EST: Close at Ask + 0.2
     """
+    logger.info("Starting auto-close position check")
     positions = get_open_positions()
     if positions is None:
+        logger.error("Could not fetch positions for auto-close")
         return {'error': 'Could not fetch positions'}
         
     # 1. Fetch Underlying Prices for ITM check
@@ -866,16 +880,16 @@ def check_and_close_positions():
                 for q in quotes:
                     underlying_prices[q['symbol']] = q['last']
         except Exception as e:
-            print(f"Error fetching underlying prices: {e}")
+            logger.error(f"Error fetching underlying prices: {e}")
 
     # 2. Update State
     state = manage_position_state(positions, underlying_prices)
     
-    # 3. Check Time (EST)
-    from datetime import timezone
-    now_utc = datetime.now(timezone.utc)
-    # Approximate 12PM EST as 17:00 UTC for safety (or check system time if configured)
-    is_past_noon_est = now_utc.hour >= 17 
+    # 3. Check Time (EST/EDT with proper timezone handling)
+    est = ZoneInfo("America/New_York")  # Handles EDT/EST automatically
+    now_est = datetime.now(est)
+    is_past_noon_est = now_est.hour >= 12
+    logger.debug(f"Current time in EST: {now_est}, past noon: {is_past_noon_est}")
 
     results = {
         'closed': [],
@@ -921,41 +935,45 @@ def check_and_close_positions():
         itm_days = pos_state.get('itm_consecutive_days', 0)
         is_itm = itm_days > 0
         
-        # Rule 1: ITM and DTE < 9
-        if is_itm and dte < 9:
+        # Rule 1: ITM and DTE < threshold
+        if is_itm and dte < config.AUTO_CLOSE_ITM_DTE:
             should_close = True
-            reason = f"ITM and DTE {dte} < 9"
-            limit_price = round(ask_price + 0.02, 2) if ask_price else None
+            reason = f"ITM and DTE {dte} < {config.AUTO_CLOSE_ITM_DTE}"
+            limit_price = round(ask_price + config.AUTO_CLOSE_ITM_PREMIUM, 2) if ask_price else None
             
-        # Rule 2: ITM for 2 consecutive days and Time >= 12:00 PM EST (next day implies days >= 2)
-        elif is_itm and itm_days >= 2 and is_past_noon_est:
+        # Rule 2: ITM for N consecutive days and Time >= 12:00 PM EST
+        elif is_itm and itm_days >= config.AUTO_CLOSE_ITM_DAYS and is_past_noon_est:
             should_close = True
             reason = f"ITM for {itm_days} days and Time >= 12:00 PM EST"
-            limit_price = round(ask_price + 0.02, 2) if ask_price else None
+            limit_price = round(ask_price + config.AUTO_CLOSE_ITM_PREMIUM, 2) if ask_price else None
 
-        # Rule 3: Profit Taking (Existing)
-        elif dte >= 14 and pl_percent >= 60:
+        # Rule 3: Profit Taking (High DTE)
+        elif dte >= config.AUTO_CLOSE_DTE_HIGH and pl_percent >= config.AUTO_CLOSE_PROFIT_HIGH_DTE:
             should_close = True
-            reason = f"DTE {dte} >= 14 and Profit {pl_percent:.1f}% >= 60%"
+            reason = f"DTE {dte} >= {config.AUTO_CLOSE_DTE_HIGH} and Profit {pl_percent:.1f}% >= {config.AUTO_CLOSE_PROFIT_HIGH_DTE}%"
             
-        # Rule 4: Profit Taking (Existing)
-        elif dte < 14 and pl_percent >= 80:
+        # Rule 4: Profit Taking (Low DTE)
+        elif dte < config.AUTO_CLOSE_DTE_LOW and pl_percent >= config.AUTO_CLOSE_PROFIT_LOW_DTE:
             should_close = True
-            reason = f"DTE {dte} < 14 and Profit {pl_percent:.1f}% >= 80%"
+            reason = f"DTE {dte} < {config.AUTO_CLOSE_DTE_LOW} and Profit {pl_percent:.1f}% >= {config.AUTO_CLOSE_PROFIT_LOW_DTE}%"
             
         if should_close:
-            print(f"Auto-Closing {pos['symbol']}: {reason} (Limit: {limit_price})")
+            logger.info(f"Auto-Closing {pos['symbol']}: {reason} (Limit: {limit_price})")
             res = close_position(pos['id'], pos['symbol'], pos['quantity'], limit_price=limit_price)
             
             if 'error' in res:
+                logger.error(f"Error closing {pos['symbol']}: {res['error']}")
                 results['errors'].append({'symbol': pos['symbol'], 'error': res['error']})
             else:
+                order_id = res.get('order', {}).get('id')
+                logger.info(f"Successfully closed {pos['symbol']}, order ID: {order_id}")
                 results['closed'].append({
                     'symbol': pos['symbol'], 
                     'reason': reason, 
-                    'order_id': res.get('order', {}).get('id')
+                    'order_id': order_id
                 })
-                
+    
+    logger.info(f"Auto-close check complete: {results['checked']} checked, {len(results['closed'])} closed, {len(results['errors'])} errors")
     return results
 
 def place_multileg_order(legs, symbol, type, duration='day', price=None):
@@ -1119,180 +1137,6 @@ def check_and_roll_positions():
                 
                 # Submit Market Order (Net Credit/Debit handled by market)
                 res = place_multileg_order([leg1, leg2], underlying, 'market')
-                
-                if 'error' in res:
-                    results['errors'].append({'symbol': symbol, 'error': res['error']})
-                else:
-                    results['rolled'].append({
-                        'symbol': symbol,
-                        'new_symbol': new_occ,
-                        'reason': reason,
-                        'order_id': res.get('order', {}).get('id')
-                    })
-                    
-            except Exception as e:
-                results['errors'].append({'symbol': symbol, 'error': str(e)})
-                
-    return results
-
-def place_multileg_order(legs, symbol, type, duration='day', price=None):
-    """
-    Generic function to place a multileg order.
-    legs: list of dicts with 'option_symbol', 'side', 'quantity'
-    """
-    if not TRADIER_ACCOUNT_ID or not TRADIER_API_KEY:
-        return {'error': 'API Key or Account ID not set.'}
-
-    try:
-        order_payload = {
-            'class': 'multileg',
-            'symbol': symbol.upper(),
-            'type': type, # 'market', 'debit', 'credit', 'even'
-            'duration': duration,
-        }
-        
-        for i, leg in enumerate(legs):
-            order_payload[f'option_symbol[{i}]'] = leg['option_symbol']
-            order_payload[f'side[{i}]'] = leg['side']
-            order_payload[f'quantity[{i}]'] = leg['quantity']
-            
-        if price:
-            order_payload['price'] = price
-
-        endpoint = f"accounts/{TRADIER_ACCOUNT_ID}/orders"
-        response = requests.post(BASE_URL + endpoint, data=order_payload, headers=HEADERS)
-        response.raise_for_status()
-
-        return response.json()
-
-    except Exception as e:
-        print(f"ERROR: Could not place multileg order. {e}")
-        return {'error': str(e)}
-
-def check_and_roll_positions():
-    """
-    Checks for Wheel positions (single-leg) that need rolling.
-    Criteria:
-    - Single Leg
-    - DTE < 9
-    - ITM OR Option Price < 1.01
-    
-    Action:
-    - BTC current
-    - STO new (Exp > 42 days, Strike +/- 1)
-    """
-    positions = get_open_positions()
-    if positions is None:
-        return {'error': 'Could not fetch positions'}
-        
-    # Identify Spreads to EXCLUDE them
-    long_legs = set()
-    for p in positions:
-        if p['quantity'] > 0 and p.get('underlying') and p.get('expiration') and p.get('option_type'):
-            long_legs.add((p['underlying'], p['expiration'], p['option_type']))
-            
-    results = {
-        'rolled': [],
-        'errors': [],
-        'checked': 0
-    }
-    
-    for pos in positions:
-        # Filter: Must be Short (Wheel is selling options)
-        if pos['quantity'] >= 0: continue
-        
-        # Filter: Must NOT be part of a spread (no matching long leg)
-        pos_key = (pos.get('underlying'), pos.get('expiration'), pos.get('option_type'))
-        if pos_key in long_legs: continue
-        
-        results['checked'] += 1
-        
-        dte = pos.get('dte')
-        symbol = pos['symbol']
-        current_price = pos.get('current_price', 0)
-        strike = pos.get('strike')
-        option_type = pos.get('option_type')
-        underlying = pos.get('underlying')
-        
-        if dte is None or strike is None: continue
-        
-        # Check Roll Criteria
-        # 1. DTE < 9
-        if dte >= 9: continue
-        
-        # 2. ITM or Price < 1.01
-        is_itm = False
-        # Fetch underlying price if not in pos (it should be from get_open_positions)
-        # We need the underlying price for ITM check. 
-        # get_open_positions enriches with 'current_price' of the OPTION, but we need UNDERLYING price for ITM.
-        # Wait, get_open_positions does NOT return underlying price in the dict, only 'underlying' symbol.
-        # We need to fetch it.
-        
-        # Optimization: We could fetch all underlying prices at once like in check_and_close.
-        # For now, let's just fetch for the candidate to be safe/simple, or reuse the logic.
-        # Actually, let's fetch it.
-        try:
-            q_res = requests.get(BASE_URL + "markets/quotes", headers=HEADERS, params={'symbols': underlying})
-            if q_res.status_code == 200:
-                u_price = q_res.json()['quotes']['quote']['last']
-                if option_type == 'put' and u_price < strike: is_itm = True
-                elif option_type == 'call' and u_price > strike: is_itm = True
-            else:
-                print(f"Could not fetch quote for {underlying}")
-                continue
-        except:
-            continue
-            
-        should_roll = False
-        reason = ""
-        
-        if is_itm:
-            should_roll = True
-            reason = "ITM"
-            
-        if should_roll:
-            print(f"Rolling {symbol}: {reason}")
-            
-            # Find New Option
-            try:
-                expirations = get_option_expirations(underlying)
-                if 'error' in expirations: raise Exception("Could not fetch expirations")
-                
-                # Find first exp > 42 days
-                target_exp = None
-                today = date.today()
-                for exp in expirations:
-                    exp_date = datetime.strptime(exp, '%Y-%m-%d').date()
-                    if (exp_date - today).days > 42:
-                        target_exp = exp
-                        break
-                        
-                if not target_exp:
-                    results['errors'].append({'symbol': symbol, 'error': 'No expiration > 42 days found'})
-                    continue
-                    
-                # Calculate New Strike
-                new_strike = strike - 1 if option_type == 'put' else strike + 1
-                
-                # Generate New OCC Symbol
-                new_occ = _generate_occ_symbol(underlying, target_exp, option_type, new_strike)
-                
-                # Construct Order
-                # Leg 1: BTC Current
-                leg1 = {
-                    'option_symbol': symbol,
-                    'side': 'buy_to_close',
-                    'quantity': abs(pos['quantity'])
-                }
-                # Leg 2: STO New
-                leg2 = {
-                    'option_symbol': new_occ,
-                    'side': 'sell_to_open',
-                    'quantity': abs(pos['quantity'])
-                }
-                
-                # Submit Debit Limit Order
-                res = place_multileg_order([leg1, leg2], underlying, 'debit', price=0.90)
                 
                 if 'error' in res:
                     results['errors'].append({'symbol': symbol, 'error': res['error']})

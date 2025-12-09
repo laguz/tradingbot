@@ -3,10 +3,26 @@ from flask import Flask, render_template, jsonify, request
 from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data, get_option_expirations, get_current_price, check_and_close_positions
 from spread_routes import spreads
 from prediction_routes import predictions
+from config import get_config
+from utils.logger import logger
+from database import init_db
 import os
 
+config = get_config()
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', os.urandom(24))
+app.config['SECRET_KEY'] = config.SECRET_KEY
+app.config['DEBUG'] = config.DEBUG
+
+logger.info(f"Starting Trading Bot in {os.getenv('FLASK_ENV', 'development')} mode")
+
+# Initialize database
+try:
+    init_db()
+    logger.info("Database initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize database: {e}")
+
 
 app.register_blueprint(spreads)
 app.register_blueprint(predictions)
@@ -80,4 +96,4 @@ def api_price(symbol):
 # --- Main execution block ---
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=config.DEBUG, port=5000)

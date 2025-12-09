@@ -1,8 +1,18 @@
 import pandas as pd
 import numpy as np
+import os
+import pickle
+from datetime import datetime, timedelta
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import TimeSeriesSplit
 from services.tradier_service import get_raw_historical_data
+from config import get_config
+from utils.logger import logger
+
+config = get_config()
+
+# Ensure model directory exists
+os.makedirs(config.ML_MODEL_DIR, exist_ok=True)
 
 def add_technical_indicators(df):
     """
@@ -64,6 +74,7 @@ def train_model(data):
     """
     Trains a Random Forest Regressor with TimeSeriesSplit validation.
     """
+    logger.info("Training ML model with {} samples".format(len(data)))
     # Select features (exclude non-numeric or target columns)
     exclude_cols = ['Target', 'Date', 'Open', 'High', 'Low', 'Close', 'Volume']
     features = [col for col in data.columns if col not in exclude_cols]
@@ -72,34 +83,102 @@ def train_model(data):
     y = data['Target']
     
     # Time Series Split Validation
-    # We won't strictly use the validation score to stop training here, 
-    # but we'll use the split to ensure the model is robust.
-    # For now, we fit on the full dataset for the final model, 
-    # but in a real pipeline we'd log the CV scores.
-    
     model = RandomForestRegressor(n_estimators=100, random_state=42)
     model.fit(X, y)
     
+    logger.info("Model training complete")
     return model, features
 
-def predict_next_days(ticker, days=5):
+
+def get_model_path(ticker):
+    """Generate model file path for a ticker"""
+    return os.path.join(config.ML_MODEL_DIR, f"{ticker}_model.pkl")
+
+
+def save_model(ticker, model, features):
+    """Save trained model to disk"""
+    model_path = get_model_path(ticker)
+    model_data = {
+        'model': model,
+        'features': features,
+        'trained_at': datetime.now(),
+        'version': '1.0'
+    }
+    
+    with open(model_path, 'wb') as f:
+        pickle.dump(model_data, f)
+    
+    logger.info(f"Saved model for {ticker} to {model_path}")
+
+
+def load_model(ticker):
+    """
+    Load trained model from disk if it exists and is not too old.
+    Returns (model, features) or (None, None) if not available/expired.
+    """
+    model_path = get_model_path(ticker)
+    
+    if not os.path.exists(model_path):
+        logger.debug(f"No cached model found for {ticker}")
+        return None, None
+    
+    try:
+        with open(model_path, 'rb') as f:
+            model_data = pickle.load(f)
+        
+        trained_at = model_data.get('trained_at')
+        age_days = (datetime.now() - trained_at).days
+        
+        if age_days > config.ML_RETRAIN_DAYS:
+            logger.info(f"Model for {ticker} is {age_days} days old, needs retraining")
+            return None, None
+        
+        logger.info(f"Loaded cached model for {ticker} (age: {age_days} days)")
+        return model_data['model'], model_data['features']
+        
+    except Exception as e:
+        logger.error(f"Error loading model for {ticker}: {e}")
+        return None, None
+
+def predict_next_days(ticker, days=5, force_retrain=False):
     """
     Predicts the closing price for the next 'days' trading days.
+    Uses cached model if available and not expired.
     """
-    # 1. Fetch History (Need enough data for indicators)
-    df = get_raw_historical_data(ticker, '2y') 
-    if df.empty:
-        return {'error': 'Could not fetch historical data.'}
-        
-    # 2. Prepare Training Data
-    train_df = prepare_data(df)
-    if train_df.empty:
-         return {'error': 'Not enough data to train model.'}
-         
-    # 3. Train Model
-    model, feature_names = train_model(train_df)
+    logger.info(f"Starting prediction for {ticker}, days={days}")
     
-    # 4. Recursive Prediction
+    # Try to load cached model
+    model, feature_names = None, None
+    if not force_retrain:
+        model, feature_names = load_model(ticker)
+    
+    # If no cached model or force retrain, train new one
+    if model is None:
+        logger.info(f"Training new model for {ticker}")
+        # 1. Fetch History (Need enough data for indicators)
+        df = get_raw_historical_data(ticker, '2y') 
+        if df.empty:
+            logger.error(f"Could not fetch historical data for {ticker}")
+            return {'error': 'Could not fetch historical data.'}
+            
+        # 2. Prepare Training Data
+        train_df = prepare_data(df)
+        if train_df.empty:
+            logger.error(f"Not enough data to train model for {ticker}")
+            return {'error': 'Not enough data to train model.'}
+            
+        # 3. Train Model
+        model, feature_names = train_model(train_df)
+        
+        # 4. Save model for future use
+        save_model(ticker, model, feature_names)
+    else:
+        # Still need raw data for prediction base
+        df = get_raw_historical_data(ticker, '2y')
+        if df.empty:
+            return {'error': 'Could not fetch historical data.'}
+    
+    # 5. Recursive Prediction
     current_df = df.copy()
     predictions = []
     
@@ -129,7 +208,6 @@ def predict_next_days(ticker, days=5):
         
         # Append to current_df for next iteration
         # Assumption: Future candles are flat (Open=High=Low=Close) and Volume is constant
-        # This is a necessary simplification for recursive prediction without a separate model for each feature
         last_date = current_df.index[-1]
         next_date = last_date + pd.Timedelta(days=1)
         while next_date.weekday() > 4: # Skip weekends
@@ -144,7 +222,8 @@ def predict_next_days(ticker, days=5):
         }, index=[next_date])
         
         current_df = pd.concat([current_df, new_row])
-        
+    
+    logger.info(f"Predictions complete for {ticker}: {predictions}")
     return {
         'ticker': ticker,
         'predictions': predictions,
