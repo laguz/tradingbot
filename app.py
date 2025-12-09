@@ -49,9 +49,15 @@ def index():
     """
     Renders the main dashboard page with live account data.
     """
+    from services.position_display import group_spread_positions
+    
     summary_data = get_account_summary()
     positions_data = get_open_positions()
     yearly_pl_data = get_yearly_pl()
+    
+    # Group spread positions for better display
+    if positions_data and isinstance(positions_data, list):
+        positions_data = group_spread_positions(positions_data)
     
     return render_template('dashboard.html', 
                            summary=summary_data or {},

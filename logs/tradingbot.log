@@ -1777,3 +1777,182 @@
 2025-12-09 15:01:57 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
 2025-12-09 15:01:58 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
 2025-12-09 15:02:03 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 5 resistance levels
+2025-12-09 15:17:21 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:17:22 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:17:23 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:17:23 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:17:23 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:17:23 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:18:05 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:18:05 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:18:05 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:19:53 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 15:19:54 - tradingbot - DEBUG - tradier_service.py:260 - Found 5 support levels and 4 resistance levels
+2025-12-09 15:21:34 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:21:35 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:21:36 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:21:36 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:21:36 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:21:36 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:22:05 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:22:06 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:22:06 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:24:05 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:24:05 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:24:07 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:24:07 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:24:07 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:24:07 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:24:31 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:24:31 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:24:31 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:28:02 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:28:03 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:28:04 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:28:04 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:28:04 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:28:04 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:29:33 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:29:33 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:29:35 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:29:35 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:29:35 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:29:35 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:29:55 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:29:56 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:29:56 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:31:01 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:31:02 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:31:03 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:31:03 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:31:03 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:31:03 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:34:03 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:34:04 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:34:04 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:38:27 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:38:28 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:38:29 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:38:29 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:38:29 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:38:29 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:39:31 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:39:31 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:39:32 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:40:18 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:40:19 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:40:20 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:40:20 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:40:20 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:40:20 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:40:22 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:40:22 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:40:23 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:40:23 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:40:23 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:40:23 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:40:25 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:40:25 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:40:25 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:42:39 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:42:40 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:42:41 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:42:41 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:42:41 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:42:41 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:43:31 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:43:32 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:43:32 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:46:55 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:46:56 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:46:57 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:46:57 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:46:57 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:46:57 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:49:29 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:49:29 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:49:29 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:52:19 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:52:20 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:52:21 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:52:21 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:52:21 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:52:21 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:52:43 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:52:44 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:52:44 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 15:53:12 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:53:12 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:53:14 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:53:14 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:53:14 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:53:14 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:53:15 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 15:53:15 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 15:53:17 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 15:53:17 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 15:53:17 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 15:53:17 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 15:53:18 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 15:53:19 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 15:53:19 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 16:03:07 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 16:03:07 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 16:03:08 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 16:03:08 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 16:03:08 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 16:03:08 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 16:04:18 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 16:04:18 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 16:04:18 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 16:05:30 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 16:05:30 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 16:05:32 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 16:05:32 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 16:05:32 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 16:05:32 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 16:06:00 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 16:06:00 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 16:06:00 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 16:20:51 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 16:20:52 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 16:20:53 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 16:20:53 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 16:20:53 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 16:20:53 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 16:20:54 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 16:20:55 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 16:20:56 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 16:20:56 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 16:20:56 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 16:20:56 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 16:21:01 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 16:21:01 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 16:21:01 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 16:38:58 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 16:38:59 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 16:39:00 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 16:39:00 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 16:39:00 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 16:39:00 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 16:39:52 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 16:39:52 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 16:39:52 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 16:41:37 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 16:41:38 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 16:41:39 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 16:41:39 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 16:41:39 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 16:41:39 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 16:41:48 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 16:41:49 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 16:41:49 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)
+2025-12-09 16:44:14 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 16:44:14 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 16:44:15 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 16:44:15 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 16:44:15 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 16:44:15 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 16:44:27 - tradingbot - INFO - nostr_auth.py:90 - Generated challenge for pubkey 8dab50cb...
+2025-12-09 16:44:28 - tradingbot - INFO - nostr_auth.py:132 - Signature verified for pubkey 8dab50cb...
+2025-12-09 16:44:28 - tradingbot - INFO - auth_routes.py:126 - User logged in: laguz (8dab50cb...)

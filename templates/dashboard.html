@@ -94,17 +94,49 @@
                     <table class="table align-middle mb-0">
                         <thead>
                             <tr>
-                                <th>Ticker</th>
+                                <th>Position</th>
                                 <th>Quantity</th>
-                                <th>Entry Price</th>
-                                <th>Current Price</th>
+                                <th>Entry/Credit</th>
+                                <th>Current Value</th>
                                 <th>P/L ($)</th>
                                 <th>P/L (%)</th>
+                                <th>Details</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for pos in positions %}
                             <tr>
+                                {% if pos.is_spread %}
+                                <td>
+                                    <strong>{{ pos.underlying }}</strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        {{ pos.short_strike }}/{{ pos.long_strike }} {{ pos.option_type|upper }} Spread
+                                        {% if pos.expiration %}<br>Exp: {{ pos.expiration }}{% endif %}
+                                    </small>
+                                </td>
+                                <td>{{ pos.quantity|round(0) }}</td>
+                                <td>
+                                    <span class="text-success">${{ "{:,.2f}".format(pos.net_credit) }}</span>
+                                    <br>
+                                    <small class="text-muted">credit</small>
+                                </td>
+                                <td>${{ "{:,.2f}".format(pos.current_price * 100 * pos.quantity) }}</td>
+                                {% if pos.pl_dollars >= 0 %}
+                                <td class="text-success">${{ "{:,.2f}".format(pos.pl_dollars) }}</td>
+                                <td class="text-success">+{{ pos.pl_percent|round(2) }}%</td>
+                                {% else %}
+                                <td class="text-danger">-${{ "{:,.2f}".format(pos.pl_dollars|abs) }}</td>
+                                <td class="text-danger">{{ pos.pl_percent|round(2) }}%</td>
+                                {% endif %}
+                                <td>
+                                    <small>
+                                        Max Profit: ${{ "{:,.2f}".format(pos.max_profit) }}<br>
+                                        Max Loss: ${{ "{:,.2f}".format(pos.max_loss) }}<br>
+                                        {% if pos.dte %}DTE: {{ pos.dte }}{% endif %}
+                                    </small>
+                                </td>
+                                {% else %}
                                 <td>{{ pos.symbol }}</td>
                                 <td>{{ pos.quantity|round(0) }}</td>
                                 <td>${{ "{:,.2f}".format(pos.entry_price) }}</td>
@@ -116,10 +148,14 @@
                                 <td class="text-danger">-${{ "{:,.2f}".format(pos.pl_dollars|abs) }}</td>
                                 <td class="text-danger">{{ pos.pl_percent|round(2) }}%</td>
                                 {% endif %}
+                                <td>
+                                    {% if pos.dte %}<small>DTE: {{ pos.dte }}</small>{% endif %}
+                                </td>
+                                {% endif %}
                             </tr>
                             {% else %}
                             <tr>
-                                <td colspan="6" class="text-center">No open positions found.</td>
+                                <td colspan="7" class="text-center">No open positions found.</td>
                             </tr>
                             {% endfor %}
                         </tbody>

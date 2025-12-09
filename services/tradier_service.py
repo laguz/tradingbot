@@ -112,6 +112,10 @@ def get_open_positions():
             ask_price = quote.get('ask')
             if ask_price is None:
                 ask_price = current_price
+            
+            bid_price = quote.get('bid')
+            if bid_price is None:
+                bid_price = current_price
 
             pl_dollars = (current_price - cost_basis_per_share) * pos['quantity']
             pl_percent = (pl_dollars / pos['cost_basis']) * 100 if pos['cost_basis'] != 0 else 0
@@ -151,6 +155,7 @@ def get_open_positions():
                 'entry_price': cost_basis_per_share,
                 'current_price': current_price, 
                 'ask_price': ask_price,
+                'bid_price': bid_price,
                 'pl_dollars': pl_dollars, 
                 'pl_percent': pl_percent,
                 'dte': dte,
