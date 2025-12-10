@@ -31,7 +31,7 @@ config = get_config()
 os.makedirs(config.ML_MODEL_DIR, exist_ok=True)
 
 # Model version for tracking
-MODEL_VERSION = "2.0-ensemble"
+MODEL_VERSION = "2.1-single"
 
 
 def create_model():
@@ -75,18 +75,15 @@ def create_model():
                 )
                 estimators.append(('xgb', xgb))
                 logger.info("XGBoost included in ensemble")
-            except ImportError:
-                logger.warning("XGBoost not available, using RF + GBM only")
+            except Exception as e:
+                logger.warning(f"XGBoost not available ({e}), using RF + GBM only")
         
         # Create voting ensemble
-        base_ensemble = VotingRegressor(estimators=estimators)
-        
-        # Wrap in MultiOutputRegressor for multi-day predictions
-        model = MultiOutputRegressor(base_ensemble)
+        model = VotingRegressor(estimators=estimators)
         
     else:
         logger.info("Creating single RandomForest model")
-        rf = RandomForestRegressor(
+        model = RandomForestRegressor(
             n_estimators=config.ML_N_ESTIMATORS,
             max_depth=config.ML_MAX_DEPTH,
             min_samples_split=config.ML_MIN_SAMPLES_SPLIT,
@@ -94,7 +91,6 @@ def create_model():
             random_state=42,
             n_jobs=-1
         )
-        model = MultiOutputRegressor(rf)
     
     return model
 
@@ -180,8 +176,13 @@ def load_model(ticker):
         if age_days > config.ML_RETRAIN_DAYS:
             logger.info(f"Model for {ticker} is {age_days} days old, needs retraining")
             return None, None, None
+            
+        saved_version = model_data.get('version', '1.0')
+        if saved_version != MODEL_VERSION:
+            logger.info(f"Model version mismatch (saved: {saved_version}, current: {MODEL_VERSION}), needs retraining")
+            return None, None, None
         
-        logger.info(f"Loaded cached model v{model_data.get('version', '1.0')} for {ticker} (age: {age_days} days)")
+        logger.info(f"Loaded cached model v{saved_version} for {ticker} (age: {age_days} days)")
         return model_data['model'], model_data['features'], model_data.get('scaler')
         
     except Exception as e:
@@ -192,39 +193,53 @@ def load_model(ticker):
 def calculate_prediction_intervals(model, X, percentiles=[10, 50, 90]):
     """
     Calculate prediction intervals using individual estimators in ensemble.
-    
-    Args:
-        model: Trained MultiOutputRegressor with tree-based estimators
-        X: Features to predict (single row)
-        percentiles: List of percentiles to calculate
-        
-    Returns:
-        Dict mapping percentile to predictions array
     """
-    # For MultiOutputRegressor, each estimator predicts all 5 days
-    # We want to get variation across the estimators to compute intervals
+    # For single target VotingRegressor, estimators_ are the base regressors
     all_predictions = []
     
-    for estimator in model.estimators_:
-        # Each estimator (for each output day) makes a prediction
-        if hasattr(estimator, 'predict'):
-            pred = estimator.predict(X if isinstance(X, pd.DataFrame) else X)
-            # pred is a single value (prediction for one day)
-            all_predictions.append(pred[0] if isinstance(pred, np.ndarray) else pred)
+    if hasattr(model, 'estimators_'):
+        for estimator in model.estimators_:
+            if hasattr(estimator, 'predict'):
+                pred = estimator.predict(X if isinstance(X, pd.DataFrame) else X)
+                # pred is a single value or array of single values
+                all_predictions.append(pred[0] if isinstance(pred, np.ndarray) and pred.ndim > 0 else pred)
+    elif hasattr(model, 'estimators'): # RandomForest
+        for estimator in model.estimators:
+             pred = estimator.predict(X if isinstance(X, pd.DataFrame) else X)
+             all_predictions.append(pred[0] if isinstance(pred, np.ndarray) and pred.ndim > 0 else pred)
+    else:
+        # Single estimator without sub-estimators
+        pred = model.predict(X)
+        all_predictions = [pred[0] if isinstance(pred, np.ndarray) else pred]
+
+    # Calculate intervals from variance of estimators if possible
+    if len(all_predictions) > 1:
+        # We have multiple estimator predictions
+        # For a single day, we can use these to estimate uncertainty
+        preds = np.array(all_predictions)
+        # However, these are just point estimates from different models
+        # Use a simple specific heuristic:
+        # Interval is mean +/- std * 2 (approx 95%) or hardcoded percent
+        
+        mean_pred = np.mean(preds)
+        
+        intervals = {}
+        # Mocking intervals for now based on mean prediction as base
+        # In a real expanded system we'd use QuantileRegression or similar
+        intervals[10] = np.array([mean_pred * 0.98]) # 2% down
+        intervals[50] = np.array([mean_pred])
+        intervals[90] = np.array([mean_pred * 1.02]) # 2% up
+        
+        return intervals
+
+    # Fallback if no variance available
+    predictions = model.predict(X)
+    pred_val = predictions[0] if isinstance(predictions, np.ndarray) else predictions
     
-    # all_predictions is now a list of 5 values (one per day)
-    # To get intervals, we'd need multiple predictions per day
-    # Since MultiOutputRegressor has one estimator per output, we can't get intervals this way
-    
-    # Alternative: use the point predictions and create intervals based on variance
-    # For now, return the point predictions with artificial intervals
-    predictions = np.array(all_predictions)
-    
-    # Create simple intervals (±5% and ±10%)
     intervals = {}
-    intervals[10] = predictions * 0.95  # 5% below
-    intervals[50] = predictions          # Median = point prediction
-    intervals[90] = predictions * 1.05  # 5% above
+    intervals[10] = np.array([pred_val * 0.98])
+    intervals[50] = np.array([pred_val])
+    intervals[90] = np.array([pred_val * 1.02])
     
     return intervals
 
@@ -246,9 +261,7 @@ def predict_next_days(ticker, days=5, force_retrain=False):
     """
     logger.info(f"Starting prediction for {ticker}, days={days}, version={MODEL_VERSION}")
     
-    if days > 5:
-        logger.warning(f"Maximum 5 days supported, using 5 instead of {days}")
-        days = 5
+    days = 1 # Force single day prediction
     
     # Try to load cached model
     model, feature_names, scaler = None, None, None
@@ -267,7 +280,7 @@ def predict_next_days(ticker, days=5, force_retrain=False):
         
         # Prepare features and targets
         try:
-            X, y, feature_names, scaler = prepare_features(df, for_training=True)
+            X, y, feature_names, scaler = prepare_features(df, for_training=True, prediction_horizon=1)
         except ValueError as e:
             logger.error(f"Feature preparation failed: {e}")
             return {'error': str(e)}
@@ -285,11 +298,14 @@ def predict_next_days(ticker, days=5, force_retrain=False):
         # Log feature importance
         try:
             # Get first estimator for feature importance
-            first_estimator = model.estimators_[0]
-            if hasattr(first_estimator, 'estimators_'):  # VotingRegressor
-                first_base = first_estimator.estimators_[0]  # Get RF from voting
-            else:
-                first_base = first_estimator
+            # Get first estimator for feature importance
+            first_base = model
+            if hasattr(model, 'estimators_'):  # VotingRegressor
+                first_base = model.estimators_[0]
+            
+            # Unwrap if it's still a pipeline or wrapper
+            if hasattr(first_base, 'estimators_'): # Double wrapped?
+                 first_base = first_base.estimators_[0]
             
             importance_df = get_feature_importance(first_base, feature_names, top_n=10)
             logger.info(f"Top 10 features:\n{importance_df.to_string()}")
@@ -323,13 +339,15 @@ def predict_next_days(ticker, days=5, force_retrain=False):
     
     # Make predictions
     try:
-        predictions = model.predict(X_last)[0]  # Returns array of 5 values
+        prediction_val = model.predict(X_last)
+        # Extract scalar if array
+        if isinstance(prediction_val, (np.ndarray, list)):
+             prediction_val = prediction_val[0]
+        
+        predictions = [prediction_val]
         
         # Calculate prediction intervals
         intervals = calculate_prediction_intervals(model, X_last)
-        
-        # Extract only the requested days
-        predictions = predictions[:days]
         
         # Generate target dates (next trading days)
         last_date = df.index[-1]
@@ -350,9 +368,9 @@ def predict_next_days(ticker, days=5, force_retrain=False):
             'predictions': [round(float(p), 2) for p in predictions],
             'target_dates': [d.strftime('%Y-%m-%d') for d in target_dates],
             'confidence_intervals': {
-                'low': [round(float(intervals[10][i]), 2) for i in range(days)],
-                'median': [round(float(intervals[50][i]), 2) for i in range(days)],
-                'high': [round(float(intervals[90][i]), 2) for i in range(days)]
+                'low': [round(float(intervals[10][0]), 2)],
+                'median': [round(float(intervals[50][0]), 2)],
+                'high': [round(float(intervals[90][0]), 2)]
             },
             'model_version': MODEL_VERSION,
             'feature_count': len(feature_names)
@@ -361,8 +379,7 @@ def predict_next_days(ticker, days=5, force_retrain=False):
         # Save to database
         try:
             confidence_scores = [
-                (intervals[90][i] - intervals[10][i]) / result['last_close']
-                for i in range(days)
+                (result['confidence_intervals']['high'][0] - result['confidence_intervals']['low'][0]) / result['last_close']
             ]
             save_prediction_to_db(
                 ticker=ticker,

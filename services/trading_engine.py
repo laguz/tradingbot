@@ -42,7 +42,7 @@ class TradingEngine:
         try:
             # Get ML prediction
             logger.info(f"Analyzing ML opportunity for {symbol}")
-            prediction = predict_next_days(symbol, days=5)
+            prediction = predict_next_days(symbol, days=1)
             
             if 'error' in prediction:
                 logger.warning(f"ML prediction error for {symbol}: {prediction['error']}")

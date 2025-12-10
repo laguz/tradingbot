@@ -2125,3 +2125,500 @@
 2025-12-09 18:59:34 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
 2025-12-09 18:59:34 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for TSLA to database
 2025-12-09 18:59:34 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.06, 251.05, 245.1, 248.91, 266.18]
+2025-12-09 19:31:29 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 19:31:30 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 19:31:31 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 19:31:31 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 19:31:31 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 19:31:31 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 19:31:35 - tradingbot - INFO - ml_service.py:247 - Starting prediction for TSLA, days=5, version=2.0-ensemble
+2025-12-09 19:31:35 - tradingbot - INFO - ml_service.py:184 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 19:31:35 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 19:31:35 - tradingbot - INFO - ml_evaluation.py:220 - Saved 5 predictions for TSLA to database
+2025-12-09 19:31:35 - tradingbot - INFO - ml_service.py:378 - Predictions complete for TSLA: [260.06, 251.05, 245.1, 248.91, 266.18]
+2025-12-09 19:47:02 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 19:47:03 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 19:47:04 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 19:47:04 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 19:47:04 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 19:47:04 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 19:54:49 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 19:54:50 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 19:54:51 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 19:54:51 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 19:54:51 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 19:54:51 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 19:54:55 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 19:54:56 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 19:54:57 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 19:54:57 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 19:54:57 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 19:54:57 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 19:55:06 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 19:55:07 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 19:55:08 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 19:55:08 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 19:55:08 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 19:55:08 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 19:55:17 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 19:55:18 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 19:55:19 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 19:55:19 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 19:55:19 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 19:55:19 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 20:01:39 - tradingbot - INFO - ml_service.py:257 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 20:01:39 - tradingbot - INFO - ml_service.py:268 - Training new model for SPY
+2025-12-09 20:01:40 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 20:01:40 - tradingbot - INFO - ml_service.py:109 - Training model on 301 samples with 39 features
+2025-12-09 20:01:40 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 20:01:40 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available (
+XGBoost Library (libxgboost.dylib) could not be loaded.
+Likely causes:
+  * OpenMP runtime is not installed
+    - vcomp140.dll or libgomp-1.dll for Windows
+    - libomp.dylib for Mac OSX
+    - libgomp.so for Linux and other UNIX-like OSes
+    Mac OSX users: Run `brew install libomp` to install OpenMP runtime.
+
+  * You are running 32-bit Python on a 64-bit OS
+
+Error message(s): ["dlopen(/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/xgboost/lib/libxgboost.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\n  Referenced from: <636BF463-1886-392D-B8B3-6011C44DCEE9> /Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/xgboost/lib/libxgboost.dylib\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file)"]
+), using RF + GBM only
+2025-12-09 20:01:41 - tradingbot - INFO - ml_service.py:114 - Model training complete
+2025-12-09 20:01:41 - tradingbot - INFO - ml_service.py:150 - Saved model v2.1-single for SPY to models/SPY_model_v2.pkl
+2025-12-09 20:01:41 - tradingbot - INFO - ml_service.py:306 - Top 10 features:
+             feature  importance
+36             Lag_3    0.737459
+27  Distance_SMA_200    0.108059
+38             Lag_5    0.065019
+34             Lag_1    0.036711
+7        BB_Position    0.010596
+19               OBV    0.009380
+14     Parkinson_Vol    0.007650
+6           BB_Width    0.005359
+4           BB_Upper    0.004641
+1               MACD    0.002465
+2025-12-09 20:01:41 - tradingbot - INFO - ml_evaluation.py:220 - Saved 1 predictions for SPY to database
+2025-12-09 20:01:41 - tradingbot - INFO - ml_service.py:390 - Predictions complete for SPY: [578.23]
+2025-12-09 20:01:49 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 20:01:50 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 20:01:51 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 20:01:51 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 20:01:51 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 20:01:51 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 20:01:52 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 20:01:53 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 20:01:54 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 20:01:54 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 20:01:54 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 20:01:54 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 20:02:18 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 20:02:19 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 20:02:20 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 20:02:20 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 20:02:20 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 20:02:20 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 20:03:25 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 20:03:25 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 20:03:27 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 20:03:27 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 20:03:27 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 20:03:27 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 20:03:28 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 20:03:29 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 20:03:30 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 20:03:30 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 20:03:30 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 20:03:30 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 20:03:42 - tradingbot - INFO - ml_service.py:257 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 20:03:42 - tradingbot - INFO - ml_service.py:180 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 20:03:42 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 20:03:42 - tradingbot - ERROR - ml_service.py:394 - Prediction failed: only length-1 arrays can be converted to Python scalars
+2025-12-09 20:03:44 - tradingbot - INFO - ml_service.py:257 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 20:03:44 - tradingbot - INFO - ml_service.py:180 - Loaded cached model v2.0-ensemble for TSLA (age: 0 days)
+2025-12-09 20:03:44 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 20:03:44 - tradingbot - ERROR - ml_service.py:394 - Prediction failed: only length-1 arrays can be converted to Python scalars
+2025-12-09 20:10:05 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 20:10:06 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 20:10:07 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 20:10:07 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 20:10:07 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 20:10:07 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 20:11:12 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 20:11:12 - tradingbot - INFO - ml_service.py:182 - Model version mismatch (saved: 2.0-ensemble, current: 2.1-single), needs retraining
+2025-12-09 20:11:12 - tradingbot - INFO - ml_service.py:273 - Training new model for TSLA
+2025-12-09 20:11:12 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 20:11:12 - tradingbot - INFO - ml_service.py:109 - Training model on 301 samples with 39 features
+2025-12-09 20:11:12 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 20:11:13 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available (
+XGBoost Library (libxgboost.dylib) could not be loaded.
+Likely causes:
+  * OpenMP runtime is not installed
+    - vcomp140.dll or libgomp-1.dll for Windows
+    - libomp.dylib for Mac OSX
+    - libgomp.so for Linux and other UNIX-like OSes
+    Mac OSX users: Run `brew install libomp` to install OpenMP runtime.
+
+  * You are running 32-bit Python on a 64-bit OS
+
+Error message(s): ["dlopen(/Users/laguz/Git/tradingbot/venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\n  Referenced from: <636BF463-1886-392D-B8B3-6011C44DCEE9> /Users/laguz/Git/tradingbot/venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file)"]
+), using RF + GBM only
+2025-12-09 20:11:14 - tradingbot - INFO - ml_service.py:114 - Model training complete
+2025-12-09 20:11:14 - tradingbot - INFO - ml_service.py:150 - Saved model v2.1-single for TSLA to models/TSLA_model_v2.pkl
+2025-12-09 20:11:14 - tradingbot - INFO - ml_service.py:311 - Top 10 features:
+             feature  importance
+34             Lag_1    0.724848
+35             Lag_2    0.207228
+28   Distance_EMA_12    0.025966
+12             HV_50    0.007842
+19               OBV    0.005174
+33         HL_Spread    0.003911
+27  Distance_SMA_200    0.003349
+15     Volume_Change    0.002863
+21             Month    0.002845
+6           BB_Width    0.002439
+2025-12-09 20:11:14 - tradingbot - INFO - ml_evaluation.py:220 - Saved 1 predictions for TSLA to database
+2025-12-09 20:11:14 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 21:36:21 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 21:36:21 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 21:36:23 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 21:36:23 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 21:36:23 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 21:36:23 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 21:36:28 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 21:36:28 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 21:36:29 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 21:36:29 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 21:36:29 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 21:36:29 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 21:37:46 - tradingbot - DEBUG - mongodb_models.py:97 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 21:37:46 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TEST_UPSERT to database
+2025-12-09 21:37:46 - tradingbot - DEBUG - mongodb_models.py:97 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 21:37:46 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TEST_UPSERT to database
+2025-12-09 22:08:40 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 22:08:40 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for TSLA (age: 0 days)
+2025-12-09 22:08:40 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 22:08:40 - tradingbot - DEBUG - mongodb_models.py:97 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:08:40 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-09 22:08:40 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 22:08:58 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 22:08:58 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for TSLA (age: 0 days)
+2025-12-09 22:08:58 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 22:08:59 - tradingbot - DEBUG - mongodb_models.py:97 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:08:59 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-09 22:08:59 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 22:11:21 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 22:11:21 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for TSLA (age: 0 days)
+2025-12-09 22:11:22 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 22:11:22 - tradingbot - DEBUG - mongodb_models.py:97 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:11:22 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-09 22:11:22 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 22:11:39 - tradingbot - INFO - ml_service.py:262 - Starting prediction for RIOT, days=1, version=2.1-single
+2025-12-09 22:11:39 - tradingbot - INFO - ml_service.py:182 - Model version mismatch (saved: 2.0-ensemble, current: 2.1-single), needs retraining
+2025-12-09 22:11:39 - tradingbot - INFO - ml_service.py:273 - Training new model for RIOT
+2025-12-09 22:11:39 - tradingbot - DEBUG - stock_data_service.py:105 - No cached data found for RIOT, fetching from API
+2025-12-09 22:11:39 - tradingbot - INFO - stock_data_service.py:110 - Fetching RIOT data from Tradier API (2y)
+2025-12-09 22:11:42 - tradingbot - DEBUG - mongodb_models.py:362 - Inserted 501 OHLCV records
+2025-12-09 22:11:42 - tradingbot - INFO - stock_data_service.py:46 - Saved 501 OHLCV records for RIOT
+2025-12-09 22:11:42 - tradingbot - INFO - ml_service.py:109 - Training model on 301 samples with 39 features
+2025-12-09 22:11:42 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 22:11:42 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available (
+XGBoost Library (libxgboost.dylib) could not be loaded.
+Likely causes:
+  * OpenMP runtime is not installed
+    - vcomp140.dll or libgomp-1.dll for Windows
+    - libomp.dylib for Mac OSX
+    - libgomp.so for Linux and other UNIX-like OSes
+    Mac OSX users: Run `brew install libomp` to install OpenMP runtime.
+
+  * You are running 32-bit Python on a 64-bit OS
+
+Error message(s): ["dlopen(/Users/laguz/Git/tradingbot/venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\n  Referenced from: <636BF463-1886-392D-B8B3-6011C44DCEE9> /Users/laguz/Git/tradingbot/venv/lib/python3.13/site-packages/xgboost/lib/libxgboost.dylib\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file)"]
+), using RF + GBM only
+2025-12-09 22:11:44 - tradingbot - INFO - ml_service.py:114 - Model training complete
+2025-12-09 22:11:44 - tradingbot - INFO - ml_service.py:150 - Saved model v2.1-single for RIOT to models/RIOT_model_v2.pkl
+2025-12-09 22:11:44 - tradingbot - INFO - ml_service.py:311 - Top 10 features:
+             feature  importance
+35             Lag_2    0.636172
+27  Distance_SMA_200    0.248607
+2        Signal_Line    0.056142
+19               OBV    0.033872
+14     Parkinson_Vol    0.004557
+6           BB_Width    0.004518
+38             Lag_5    0.003633
+37             Lag_4    0.002788
+5           BB_Lower    0.001823
+11             HV_10    0.001286
+2025-12-09 22:11:44 - tradingbot - DEBUG - mongodb_models.py:97 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:11:44 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for RIOT to database
+2025-12-09 22:11:44 - tradingbot - INFO - ml_service.py:395 - Predictions complete for RIOT: [12.85]
+2025-12-09 22:11:56 - tradingbot - INFO - ml_service.py:262 - Starting prediction for RIOT, days=1, version=2.1-single
+2025-12-09 22:11:56 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for RIOT (age: 0 days)
+2025-12-09 22:11:56 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for RIOT from database cache
+2025-12-09 22:11:56 - tradingbot - DEBUG - mongodb_models.py:97 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:11:56 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for RIOT to database
+2025-12-09 22:11:56 - tradingbot - INFO - ml_service.py:395 - Predictions complete for RIOT: [12.85]
+2025-12-09 22:16:03 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:16:05 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:16:07 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:16:07 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:16:07 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:16:07 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:16:15 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:16:15 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:16:16 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:16:16 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:16:16 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:16:16 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:18:30 - tradingbot - INFO - ml_service.py:262 - Starting prediction for RIOT, days=1, version=2.1-single
+2025-12-09 22:18:30 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for RIOT (age: 0 days)
+2025-12-09 22:18:31 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for RIOT from database cache
+2025-12-09 22:18:31 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:18:31 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for RIOT to database
+2025-12-09 22:18:31 - tradingbot - INFO - ml_service.py:395 - Predictions complete for RIOT: [12.85]
+2025-12-09 22:18:44 - tradingbot - INFO - ml_service.py:262 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 22:18:44 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for SPY (age: 0 days)
+2025-12-09 22:18:44 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 22:18:44 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:18:44 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for SPY to database
+2025-12-09 22:18:44 - tradingbot - INFO - ml_service.py:395 - Predictions complete for SPY: [578.23]
+2025-12-09 22:23:14 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:23:14 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TEST_SAVE_FINAL to database
+2025-12-09 22:23:41 - tradingbot - INFO - ml_service.py:262 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 22:23:41 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for SPY (age: 0 days)
+2025-12-09 22:23:41 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 22:23:41 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:23:41 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for SPY to database
+2025-12-09 22:23:41 - tradingbot - INFO - ml_service.py:395 - Predictions complete for SPY: [578.23]
+2025-12-09 22:24:13 - tradingbot - INFO - ml_service.py:262 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 22:24:13 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for SPY (age: 0 days)
+2025-12-09 22:24:14 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 22:24:14 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:24:14 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for SPY to database
+2025-12-09 22:24:14 - tradingbot - INFO - ml_service.py:395 - Predictions complete for SPY: [578.23]
+2025-12-09 22:24:26 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 22:24:26 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for TSLA (age: 0 days)
+2025-12-09 22:24:27 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 22:24:27 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:24:27 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-09 22:24:27 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 22:25:16 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:25:17 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:25:18 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:25:18 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:25:18 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:25:18 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:25:19 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:25:20 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:25:21 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:25:21 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:25:21 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:25:21 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:25:24 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 22:25:24 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for TSLA (age: 0 days)
+2025-12-09 22:25:24 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 22:25:24 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:25:24 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-09 22:25:24 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 22:25:26 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 22:25:26 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for TSLA (age: 0 days)
+2025-12-09 22:25:26 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 22:25:27 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:25:27 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-09 22:25:27 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 22:25:51 - tradingbot - INFO - ml_service.py:262 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 22:25:51 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for SPY (age: 0 days)
+2025-12-09 22:25:51 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 22:25:51 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:25:51 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for SPY to database
+2025-12-09 22:25:51 - tradingbot - INFO - ml_service.py:395 - Predictions complete for SPY: [578.23]
+2025-12-09 22:28:07 - tradingbot - INFO - ml_service.py:262 - Starting prediction for AAPL, days=1, version=2.1-single
+2025-12-09 22:28:07 - tradingbot - INFO - ml_service.py:182 - Model version mismatch (saved: 2.0-ensemble, current: 2.1-single), needs retraining
+2025-12-09 22:28:07 - tradingbot - INFO - ml_service.py:273 - Training new model for AAPL
+2025-12-09 22:28:08 - tradingbot - DEBUG - stock_data_service.py:105 - No cached data found for AAPL, fetching from API
+2025-12-09 22:28:08 - tradingbot - INFO - stock_data_service.py:110 - Fetching AAPL data from Tradier API (2y)
+2025-12-09 22:28:11 - tradingbot - DEBUG - mongodb_models.py:356 - Inserted 501 OHLCV records
+2025-12-09 22:28:11 - tradingbot - INFO - stock_data_service.py:46 - Saved 501 OHLCV records for AAPL
+2025-12-09 22:28:11 - tradingbot - INFO - ml_service.py:109 - Training model on 301 samples with 39 features
+2025-12-09 22:28:11 - tradingbot - INFO - ml_service.py:43 - Creating ensemble model (RF + GBM + XGB)
+2025-12-09 22:28:11 - tradingbot - WARNING - ml_service.py:79 - XGBoost not available (
+XGBoost Library (libxgboost.dylib) could not be loaded.
+Likely causes:
+  * OpenMP runtime is not installed
+    - vcomp140.dll or libgomp-1.dll for Windows
+    - libomp.dylib for Mac OSX
+    - libgomp.so for Linux and other UNIX-like OSes
+    Mac OSX users: Run `brew install libomp` to install OpenMP runtime.
+
+  * You are running 32-bit Python on a 64-bit OS
+
+Error message(s): ["dlopen(/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/xgboost/lib/libxgboost.dylib, 0x0006): Library not loaded: @rpath/libomp.dylib\n  Referenced from: <636BF463-1886-392D-B8B3-6011C44DCEE9> /Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/xgboost/lib/libxgboost.dylib\n  Reason: tried: '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/homebrew/opt/libomp/lib/libomp.dylib' (no such file)"]
+), using RF + GBM only
+2025-12-09 22:28:12 - tradingbot - INFO - ml_service.py:114 - Model training complete
+2025-12-09 22:28:12 - tradingbot - INFO - ml_service.py:150 - Saved model v2.1-single for AAPL to models/AAPL_model_v2.pkl
+2025-12-09 22:28:12 - tradingbot - INFO - ml_service.py:311 - Top 10 features:
+             feature  importance
+34             Lag_1    0.596523
+27  Distance_SMA_200    0.230717
+19               OBV    0.139473
+36             Lag_3    0.008884
+31       Momentum_20    0.005690
+13         Vol_Ratio    0.003164
+26   Distance_SMA_50    0.002480
+29        Momentum_5    0.002292
+5           BB_Lower    0.001412
+6           BB_Width    0.001343
+2025-12-09 22:28:12 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:28:12 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for AAPL to database
+2025-12-09 22:28:12 - tradingbot - INFO - ml_service.py:395 - Predictions complete for AAPL: [226.29]
+2025-12-09 22:29:27 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:29:28 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:29:29 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:29:29 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:29:29 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:29:29 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:29:30 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:29:31 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:29:32 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:29:32 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:29:32 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:29:32 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:29:34 - tradingbot - INFO - ml_service.py:262 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 22:29:34 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for SPY (age: 0 days)
+2025-12-09 22:29:34 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 22:29:34 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:29:34 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for SPY to database
+2025-12-09 22:29:34 - tradingbot - INFO - ml_service.py:395 - Predictions complete for SPY: [578.23]
+2025-12-09 22:29:35 - tradingbot - INFO - ml_service.py:262 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 22:29:35 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for SPY (age: 0 days)
+2025-12-09 22:29:35 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 22:29:36 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:29:36 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for SPY to database
+2025-12-09 22:29:36 - tradingbot - INFO - ml_service.py:395 - Predictions complete for SPY: [578.23]
+2025-12-09 22:29:59 - tradingbot - INFO - ml_service.py:262 - Starting prediction for RIOT, days=1, version=2.1-single
+2025-12-09 22:29:59 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for RIOT (age: 0 days)
+2025-12-09 22:30:00 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for RIOT from database cache
+2025-12-09 22:30:00 - tradingbot - DEBUG - mongodb_models.py:91 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:30:00 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for RIOT to database
+2025-12-09 22:30:00 - tradingbot - INFO - ml_service.py:395 - Predictions complete for RIOT: [12.85]
+2025-12-09 22:32:31 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:32:31 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:32:33 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:32:33 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:32:33 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:32:33 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:33:04 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:33:04 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:33:04 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TEST_PRICE_PRESERVE to database
+2025-12-09 22:33:49 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:33:49 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:33:51 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:33:51 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:33:51 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:33:51 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:33:52 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:33:52 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:33:54 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:33:54 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:33:54 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:33:54 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:34:28 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 22:34:29 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for TSLA (age: 0 days)
+2025-12-09 22:34:29 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 22:34:29 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:34:29 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-09 22:34:29 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 22:35:05 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 22:35:05 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for TSLA (age: 0 days)
+2025-12-09 22:35:05 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 22:35:05 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:35:05 - tradingbot - INFO - ml_evaluation.py:220 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-09 22:35:05 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 22:36:48 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:36:49 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:36:50 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:36:50 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:36:50 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:36:50 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:36:58 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:36:59 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:37:00 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:37:00 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:37:00 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:37:00 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:38:24 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:38:24 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TEST_IMMEDIATE_ACTUAL to database
+2025-12-09 22:40:20 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:40:21 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:40:22 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:40:22 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:40:22 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:40:22 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:40:24 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:40:24 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:40:25 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:40:25 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:40:25 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:40:25 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:41:28 - tradingbot - INFO - ml_service.py:262 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 22:41:29 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for SPY (age: 0 days)
+2025-12-09 22:41:29 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 22:41:29 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:41:29 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for SPY to database
+2025-12-09 22:41:29 - tradingbot - INFO - ml_service.py:395 - Predictions complete for SPY: [578.23]
+2025-12-09 22:42:55 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:42:56 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:42:57 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:42:57 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:42:57 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:42:57 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:42:58 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:42:59 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:43:00 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:43:00 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:43:00 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:43:00 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:43:00 - tradingbot - INFO - ml_service.py:262 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 22:43:00 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for SPY (age: 0 days)
+2025-12-09 22:43:01 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 22:43:01 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:43:01 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for SPY to database
+2025-12-09 22:43:01 - tradingbot - INFO - ml_service.py:395 - Predictions complete for SPY: [578.23]
+2025-12-09 22:43:04 - tradingbot - INFO - ml_service.py:262 - Starting prediction for SPY, days=1, version=2.1-single
+2025-12-09 22:43:04 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for SPY (age: 0 days)
+2025-12-09 22:43:04 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for SPY from database cache
+2025-12-09 22:43:04 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:43:04 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for SPY to database
+2025-12-09 22:43:04 - tradingbot - INFO - ml_service.py:395 - Predictions complete for SPY: [578.23]
+2025-12-09 22:43:18 - tradingbot - INFO - ml_service.py:262 - Starting prediction for RIOT, days=1, version=2.1-single
+2025-12-09 22:43:18 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for RIOT (age: 0 days)
+2025-12-09 22:43:19 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for RIOT from database cache
+2025-12-09 22:43:19 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-09 22:43:19 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for RIOT to database
+2025-12-09 22:43:19 - tradingbot - INFO - ml_service.py:395 - Predictions complete for RIOT: [12.85]
+2025-12-09 22:48:12 - tradingbot - INFO - ml_service.py:262 - Starting prediction for TSLA, days=1, version=2.1-single
+2025-12-09 22:48:12 - tradingbot - INFO - ml_service.py:185 - Loaded cached model v2.1-single for TSLA (age: 0 days)
+2025-12-09 22:48:12 - tradingbot - INFO - stock_data_service.py:100 - Loaded 501 records for TSLA from database cache
+2025-12-09 22:48:12 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-09 22:48:12 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-09 22:48:12 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-09 22:54:36 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:54:37 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:54:38 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:54:38 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:54:38 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:54:38 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:55:19 - tradingbot - INFO - ml_evaluation.py:255 - Found 1 predictions to backfill
+2025-12-09 22:55:19 - tradingbot - INFO - ml_evaluation.py:315 - Backfilled 1 predictions with actual prices
+2025-12-09 22:55:55 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:55:56 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:55:57 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:55:57 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:55:57 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:55:57 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-09 22:55:58 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-09 22:55:59 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-09 22:56:00 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-09 22:56:00 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-09 22:56:00 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-09 22:56:00 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader

@@ -34,9 +34,7 @@ class MLPredictionModel:
         Returns:
             Inserted document ID as string
         """
-        collection = MLPredictionModel.get_collection()
-        
-        doc = {
+        return MLPredictionModel.upsert_many([{
             'symbol': symbol,
             'prediction_date': prediction_date,
             'target_date': target_date,
@@ -46,24 +44,56 @@ class MLPredictionModel:
             'features_used': features_used,
             'confidence': confidence,
             'created_at': datetime.utcnow()
-        }
-        
-        result = collection.insert_one(doc)
-        logger.debug(f"Inserted ML prediction for {symbol}: {result.inserted_id}")
-        return str(result.inserted_id)
+        }])
     
     @staticmethod
-    def insert_many(predictions: List[Dict]) -> List[str]:
-        """Insert multiple predictions at once."""
-        collection = MLPredictionModel.get_collection()
+    def upsert_many(predictions: List[Dict]) -> int:
+        """
+        Upsert multiple predictions (overwrite if exists for symbol+target_date).
         
-        # Add created_at to all
+        Args:
+            predictions: List of prediction dictionaries
+            
+        Returns:
+            Number of documents modified/upserted
+        """
+        collection = MLPredictionModel.get_collection()
+        from pymongo import UpdateOne
+        
+        operations = []
         for pred in predictions:
+            # Add created_at if missing
             if 'created_at' not in pred:
                 pred['created_at'] = datetime.utcnow()
+                
+            # Filter by symbol and target_date to ensure uniqueness per day
+            filter_query = {
+                'symbol': pred['symbol'],
+                'target_date': pred['target_date']
+            }
+            
+            # Update with all fields, set created_at only on insert
+            update_query = {
+                '$set': {k: v for k, v in pred.items() if k != 'actual_price' or v is not None},
+                '$setOnInsert': {'created_at': pred['created_at']}
+            }
+            
+            # If actual_price is None, ensure it's set to None on insert but not overwritten on update
+            if pred.get('actual_price') is None:
+                update_query['$setOnInsert']['actual_price'] = None
+
+            # Remove created_at from $set to avoid overwriting original creation time
+            if 'created_at' in update_query['$set']:
+                del update_query['$set']['created_at']
+            
+            operations.append(UpdateOne(filter_query, update_query, upsert=True))
         
-        result = collection.insert_many(predictions)
-        return [str(id) for id in result.inserted_ids]
+        if not operations:
+            return 0
+            
+        result = collection.bulk_write(operations)
+        logger.debug(f"Upserted {len(predictions)} predictions: {result.upserted_count} inserts, {result.modified_count} updates")
+        return result.upserted_count + result.modified_count
     
     @staticmethod
     def find_by_symbol(symbol: str, limit: int = 100) -> List[Dict]:
@@ -429,6 +459,31 @@ class StockDataModel:
         collection = StockDataModel.get_collection()
         return collection.count_documents({'symbol': symbol})
     
+    @staticmethod
+    def get_close_price(symbol: str, date: datetime) -> Optional[float]:
+        """
+        Get closing price for a specific date.
+        
+        Args:
+            symbol: Stock ticker
+            date: Date to check (will check the full day 00:00:00 to 23:59:59)
+            
+        Returns:
+            Closing price or None
+        """
+        collection = StockDataModel.get_collection()
+        
+        # Create range for the day
+        start_date = date.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = start_date + timedelta(days=1)
+        
+        result = collection.find_one({
+            'symbol': symbol,
+            'date': {'$gte': start_date, '$lt': end_date}
+        })
+        
+        return result['close'] if result else None
+
     @staticmethod
     def delete_by_symbol(symbol: str) -> int:
         """Delete all records for a symbol. Returns count deleted."""

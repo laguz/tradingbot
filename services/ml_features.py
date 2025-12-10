@@ -224,7 +224,7 @@ def add_lag_features(df, lags=5):
     return data
 
 
-def prepare_features(df, for_training=True):
+def prepare_features(df, for_training=True, prediction_horizon=1):
     """
     Main feature preparation pipeline.
     Applies all feature engineering and normalization.
@@ -232,6 +232,7 @@ def prepare_features(df, for_training=True):
     Args:
         df: Raw DataFrame with OHLCV data
         for_training: If True, creates target variable
+        prediction_horizon: The number of days ahead to predict (e.g., 1 for next day, 5 for 5 days ahead).
         
     Returns:
         Tuple of (features_df, target, feature_names, scaler)
@@ -266,9 +267,9 @@ def prepare_features(df, for_training=True):
             # Continue without market context if it fails
             pass
     
-    # Create targets for multi-day prediction (1 to 5 days ahead)
+    # Create targets for multi-day prediction (1 to N days ahead)
     if for_training:
-        for day in range(1, 6):
+        for day in range(1, prediction_horizon + 1):
             data[f'Target_Day{day}'] = data['Close'].shift(-day)
     
     # Drop NaNs created by rolling windows and shifts
@@ -278,9 +279,9 @@ def prepare_features(df, for_training=True):
         raise ValueError("Not enough data after feature engineering. Need more historical data.")
     
     # Select feature columns (exclude OHLCV and targets)
-    exclude_cols = ['Open', 'High', 'Low', 'Close', 'Volume', 'Date',
-                    'Target_Day1', 'Target_Day2', 'Target_Day3', 'Target_Day4', 'Target_Day5',
-                    'SMA_20', 'SMA_50', 'SMA_200', 'EMA_12', 'EMA_26',  # Keep only derivatives
+    target_cols = [f'Target_Day{day}' for day in range(1, prediction_horizon + 1)]
+    exclude_cols = ['Open', 'High', 'Low', 'Close', 'Volume', 'Date'] + target_cols + \
+                   ['SMA_20', 'SMA_50', 'SMA_200', 'EMA_12', 'EMA_26',  # Keep only derivatives
                     'Volume_MA_20', 'Volume_MA_50', 'OBV_MA']  # Keep only derivatives
     
     feature_names = [col for col in data.columns if col not in exclude_cols]
@@ -290,7 +291,7 @@ def prepare_features(df, for_training=True):
     # Extract targets if training
     y = None
     if for_training:
-        target_cols = [f'Target_Day{day}' for day in range(1, 6)]
+        target_cols = [f'Target_Day{day}' for day in range(1, prediction_horizon + 1)]
         y = data[target_cols]
     
     # Normalize features if enabled

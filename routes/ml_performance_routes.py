@@ -368,7 +368,7 @@ def api_batch_predict():
     try:
         data = request.get_json()
         tickers = data.get('tickers', [])
-        days = data.get('days', 5)
+        days = 1 # Force 1 day prediction
         
         if not tickers:
             return jsonify({'error': 'No tickers provided'}), 400
@@ -377,6 +377,14 @@ def api_batch_predict():
         for ticker in tickers:
             try:
                 result = predict_next_days(ticker, days=days)
+                # If days=days but system enforces 1, result will warn but return 1.
+                # Since api_batch_predict allows user input for 'days' via JSON, 
+                # we should let predict_next_days handle the clamping/warning logic.
+                # But to be safe and consistent with the new policy "only predict next trading":
+                if days > 1:
+                     # Warn or clamp? predict_next_days already clamps to 1.
+                     pass
+                result = predict_next_days(ticker, days=1)
                 results[ticker] = result
             except Exception as e:
                 results[ticker] = {'error': str(e)}

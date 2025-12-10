@@ -208,7 +208,7 @@ def get_smart_predictions(ticker, support_levels, resistance_levels):
     from services.ml_service import predict_next_days
     
     # Get ML predictions
-    ml_result = predict_next_days(ticker, days=5)
+    ml_result = predict_next_days(ticker, days=1)
     
     if 'error' in ml_result:
         return ml_result
@@ -226,42 +226,42 @@ def get_smart_predictions(ticker, support_levels, resistance_levels):
     # Analyze predictions relative to S/R levels
     recommendations = []
     
-    # Check 5-day prediction
-    day5_pred = predictions[4]
+    # Check 1-day prediction
+    day1_pred = predictions[0]
     
-    if nearest_resistance and day5_pred < nearest_resistance:
+    if nearest_resistance and day1_pred < nearest_resistance:
         # Predict won't reach resistance - good for call credit spreads
         prob_result = predict_strike_probability(ticker, nearest_resistance, 5)
         recommendations.append({
             'strategy': 'Call Credit Spread',
             'short_strike': round(nearest_resistance, 2),
-            'reasoning': f"Prediction (${day5_pred:.2f}) below resistance (${nearest_resistance:.2f})",
+            'reasoning': f"Prediction (${day1_pred:.2f}) below resistance (${nearest_resistance:.2f})",
             'probability_safe': prob_result['probability_percent'] if 'probability_percent' in prob_result else None
         })
     
-    if nearest_support and day5_pred > nearest_support:
+    if nearest_support and day1_pred > nearest_support:
         # Predict won't fall to support - good for put credit spreads
         prob_result = predict_strike_probability(ticker, nearest_support, 5)
         recommendations.append({
             'strategy': 'Put Credit Spread',
             'short_strike': round(nearest_support, 2),
-            'reasoning': f"Prediction (${day5_pred:.2f}) above support (${nearest_support:.2f})",
+            'reasoning': f"Prediction (${day1_pred:.2f}) above support (${nearest_support:.2f})",
             'probability_safe': prob_result['probability_percent'] if 'probability_percent' in prob_result else None
         })
     
     # If prediction crosses resistance - directional play
-    if nearest_resistance and day5_pred > nearest_resistance:
+    if nearest_resistance and day1_pred > nearest_resistance:
         recommendations.append({
             'strategy': 'Call Debit Spread or Long Call',
             'target_strike': round(nearest_resistance, 2),
-            'reasoning': f"Prediction (${day5_pred:.2f}) above resistance - bullish breakout expected"
+            'reasoning': f"Prediction (${day1_pred:.2f}) above resistance - bullish breakout expected"
         })
     
-    if nearest_support and day5_pred < nearest_support:
+    if nearest_support and day1_pred < nearest_support:
         recommendations.append({
             'strategy': 'Put Debit Spread or Long Put',
             'target_strike': round(nearest_support, 2),
-            'reasoning': f"Prediction (${day5_pred:.2f}) below support - bearish breakdown expected"
+            'reasoning': f"Prediction (${day1_pred:.2f}) below support - bearish breakdown expected"
         })
     
     return {

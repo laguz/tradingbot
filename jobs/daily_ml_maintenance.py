@@ -104,7 +104,7 @@ def auto_retrain_models(retrain_list, max_retrains=3):
         
         try:
             # Force retrain by making a prediction
-            result = predict_next_days(ticker, days=5, force_retrain=True)
+            result = predict_next_days(ticker, days=1, force_retrain=True)
             
             if 'error' in result:
                 logger.error(f"    ✗ Retraining failed: {result['error']}")

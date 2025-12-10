@@ -205,19 +205,27 @@ def save_prediction_to_db(ticker, target_dates, predicted_prices, model_version,
         for i, (target_date, predicted_price) in enumerate(zip(target_dates, predicted_prices)):
             confidence = confidence_scores[i] if confidence_scores else None
             
+            # Check if we have an actual price for this date (e.g. running on past data)
+            actual_price = None
+            try:
+                from models.mongodb_models import StockDataModel
+                actual_price = StockDataModel.get_close_price(ticker, target_date)
+            except Exception:
+                pass
+
             predictions.append({
                 'symbol': ticker,
                 'prediction_date': datetime.now(),
-                'target_date': target_date,
+                'target_date': target_date.replace(hour=0, minute=0, second=0, microsecond=0),
                 'predicted_price': predicted_price,
-                'actual_price': None,  # Will be filled later
+                'actual_price': actual_price, 
                 'model_version': model_version,
                 'features_used': features_used,
                 'confidence': confidence
             })
         
-        MLPredictionModel.insert_many(predictions)
-        logger.info(f"Saved {len(predicted_prices)} predictions for {ticker} to database")
+        MLPredictionModel.upsert_many(predictions)
+        logger.info(f"Saved (upserted) {len(predicted_prices)} predictions for {ticker} to database")
         
     except Exception as e:
         logger.error(f"Error saving predictions to database: {e}")
@@ -259,25 +267,42 @@ def backfill_actual_prices():
         
         for symbol, predictions in by_symbol.items():
             try:
-                # Get historical data for this symbol
-                df = get_historical_data(symbol, '3m', use_cache=True)
+                # 1. Try to get data from local DB first (faster)
+                from models.mongodb_models import StockDataModel
                 
-                if df.empty:
-                    logger.warning(f"No historical data for {symbol}")
-                    continue
-                
+                # Check if we need to fetch API data for any missing dates
+                missing_data = False
                 for pred in predictions:
-                    # Find the closing price on target date
-                    target_date_str = pred['target_date'].strftime('%Y-%m-%d')
+                    target_date = pred['target_date']
+                    price = StockDataModel.get_close_price(symbol, target_date)
                     
-                    if target_date_str in df.index:
-                        actual_price = float(df.loc[target_date_str, 'Close'])
+                    if price is not None:
                         updates.append({
                             'id': str(pred['_id']),
-                            'actual_price': actual_price
+                            'actual_price': price
                         })
                     else:
-                        logger.debug(f"No data for {symbol} on {target_date_str}")
+                        missing_data = True
+                
+                # 2. If data missing, fetch from API
+                if missing_data:
+                    df = get_historical_data(symbol, '3m', use_cache=True) 
+                    
+                    if not df.empty:
+                        for pred in predictions:
+                            # Skip if we already found it in DB
+                            if any(u['id'] == str(pred['_id']) for u in updates):
+                                continue
+                                
+                            target_date_str = pred['target_date'].strftime('%Y-%m-%d')
+                            if target_date_str in df.index:
+                                actual_price = float(df.loc[target_date_str, 'Close'])
+                                updates.append({
+                                    'id': str(pred['_id']),
+                                    'actual_price': actual_price
+                                })
+                            else:
+                                logger.debug(f"Still no data for {symbol} on {target_date_str}")
                 
             except Exception as e:
                 logger.error(f"Error fetching data for {symbol}: {e}")

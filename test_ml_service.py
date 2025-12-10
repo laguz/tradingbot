@@ -17,7 +17,7 @@ ticker = 'SPY'
 print(f"\nTesting predict_next_days for {ticker}...")
 
 try:
-    result = predict_next_days(ticker, 5, force_retrain=True)
+    result = predict_next_days(ticker, 1, force_retrain=True)
     
     if 'error' in result:
         print(f"\n❌ FAILED: {result['error']}")
@@ -28,7 +28,7 @@ try:
         print(f"Features Used: {result['feature_count']}")
         print(f"Last Close ({result['last_date']}): ${result['last_close']:.2f}")
         
-        print(f"\n5-Day Predictions:")
+        print(f"\n1-Day Prediction:")
         print("-" * 80)
         for i, (date, pred, low, med, high) in enumerate(zip(
             result['target_dates'],
@@ -43,12 +43,12 @@ try:
             print(f"  └─ Interval: ${low:.2f} - ${med:.2f} - ${high:.2f} (width: {interval_width:.1f}%)")
         
         # Summary
-        day5_pred = result['predictions'][4]
-        day5_change = ((day5_pred - result['last_close']) / result['last_close']) * 100
+        day1_pred = result['predictions'][0]
+        day1_change = ((day1_pred - result['last_close']) / result['last_close']) * 100
         print(f"\n📊 Summary:")
-        print(f"  5-day forecast: ${day5_pred:.2f} ({day5_change:+.1f}%)")
-        print(f"  95th percentile (optimistic): ${result['confidence_intervals']['high'][4]:.2f}")
-        print(f"  5th percentile (pessimistic): ${result['confidence_intervals']['low'][4]:.2f}")
+        print(f"  Forecast: ${day1_pred:.2f} ({day1_change:+.1f}%)")
+        print(f"  95th percentile (optimistic): ${result['confidence_intervals']['high'][0]:.2f}")
+        print(f"  5th percentile (pessimistic): ${result['confidence_intervals']['low'][0]:.2f}")
         
 except Exception as e:
     print(f"\n❌ CRASHED: {e}")

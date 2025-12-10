@@ -77,7 +77,7 @@ def test_database_integration():
     # Test 4: Test ML prediction with cached data
     print("5. Testing ML prediction with database data...")
     try:
-        result = predict_next_days(ticker, days=5, force_retrain=False)
+        result = predict_next_days(ticker, days=1, force_retrain=False)
         
         if 'error' not in result:
             print(f"   ✓ ML prediction successful!")
