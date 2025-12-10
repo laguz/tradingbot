@@ -18,6 +18,9 @@ config = get_config()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config.SECRET_KEY
 app.config['DEBUG'] = config.DEBUG
+app.config['PERMANENT_SESSION_LIFETIME'] = config.PERMANENT_SESSION_LIFETIME
+app.config['SESSION_COOKIE_HTTPONLY'] = config.SESSION_COOKIE_HTTPONLY
+app.config['SESSION_COOKIE_SAMESITE'] = config.SESSION_COOKIE_SAMESITE
 
 logger.info(f"Starting Trading Bot in {os.getenv('FLASK_ENV', 'development')} mode")
 

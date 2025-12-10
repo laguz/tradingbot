@@ -8,8 +8,15 @@ class Config:
     """Base configuration class"""
     
     # Flask Configuration
-    SECRET_KEY = os.getenv('SECRET_KEY', os.urandom(24))
+    # Use a stable key for dev to allow session persistence across restarts
+    SECRET_KEY = os.getenv('SECRET_KEY', 'dev-stable-secret-key-change-in-prod')
     DEBUG = False
+    
+    # Session Configuration
+    from datetime import timedelta
+    PERMANENT_SESSION_LIFETIME = timedelta(days=7)
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
     
     # Tradier API Configuration
     TRADIER_API_KEY = os.getenv('TRADIER_API_KEY')
