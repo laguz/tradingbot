@@ -3162,3 +3162,88 @@ Error message(s): ["dlopen(/Library/Frameworks/Python.framework/Versions/3.14/li
 2025-12-10 00:40:07 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
 2025-12-10 00:40:07 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
 2025-12-10 00:40:07 - tradingbot - INFO - ml_service.py:437 - Predictions complete for TSLA: [134.56]
+2025-12-10 00:46:44 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 00:46:44 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:46:46 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:46:46 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 00:46:46 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:46:46 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:47:59 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 00:47:59 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:48:00 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:48:00 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 00:48:00 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:48:00 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:48:08 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 00:48:08 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:48:09 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:48:09 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 00:48:09 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:48:09 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:48:15 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-10 00:48:15 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:48:15 - tradingbot - DEBUG - mongodb_models.py:382 - Inserted 2 OHLCV records
+2025-12-10 00:48:15 - tradingbot - DEBUG - mongodb_models.py:389 - Inserted 1 records, 2 duplicates skipped
+2025-12-10 00:48:34 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 00:48:34 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:48:35 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:48:35 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 00:48:35 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:48:35 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:48:45 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-10 00:48:45 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:48:45 - tradingbot - DEBUG - mongodb_models.py:382 - Inserted 2 OHLCV records
+2025-12-10 00:48:46 - tradingbot - DEBUG - mongodb_models.py:389 - Inserted 1 records, 2 duplicates skipped
+2025-12-10 00:49:28 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 00:49:29 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:49:30 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:49:30 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 00:49:30 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:49:30 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:50:25 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-10 00:50:25 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:50:25 - tradingbot - DEBUG - mongodb_models.py:382 - Inserted 2 OHLCV records
+2025-12-10 00:50:25 - tradingbot - DEBUG - mongodb_models.py:389 - Inserted 1 records, 2 duplicates skipped
+2025-12-10 00:50:39 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 00:50:40 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:50:41 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:50:41 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 00:50:41 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:50:41 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:51:06 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-10 00:51:06 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:51:06 - tradingbot - DEBUG - mongodb_models.py:382 - Inserted 2 OHLCV records
+2025-12-10 00:51:06 - tradingbot - DEBUG - mongodb_models.py:389 - Inserted 1 records, 2 duplicates skipped
+2025-12-10 00:51:06 - tradingbot - DEBUG - test_mongodb_improvements.py:131 - Received 0 IDs from duplicate insert
+2025-12-10 00:51:07 - tradingbot - WARNING - mongodb_models.py:546 - ⚠️ DELETING ALL OHLCV DATA FOR TEST_DELETE
+2025-12-10 00:51:07 - tradingbot - WARNING - mongodb_models.py:548 - Deleted 1 records for TEST_DELETE
+2025-12-10 00:52:56 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 00:52:56 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:52:58 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:52:58 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 00:52:58 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:52:58 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:53:00 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 00:53:00 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:53:01 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:53:01 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 00:53:01 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:53:01 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:53:08 - tradingbot - INFO - ml_service.py:289 - Starting prediction for TSLA, days=1, version=2.2-lstm
+2025-12-10 00:53:09 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:53:09 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-10 00:53:09 - tradingbot - INFO - ml_service.py:212 - Loaded models for TSLA (age: 0 days)
+2025-12-10 00:53:09 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-10 00:53:09 - tradingbot - INFO - ml_service.py:383 - Ensemble: 264.44, LSTM: 4.67
+2025-12-10 00:53:09 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:53:09 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-10 00:53:09 - tradingbot - INFO - ml_service.py:437 - Predictions complete for TSLA: [134.56]
+2025-12-10 00:53:11 - tradingbot - INFO - ml_service.py:289 - Starting prediction for TSLA, days=1, version=2.2-lstm
+2025-12-10 00:53:11 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:53:11 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-10 00:53:11 - tradingbot - INFO - ml_service.py:212 - Loaded models for TSLA (age: 0 days)
+2025-12-10 00:53:12 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-10 00:53:12 - tradingbot - INFO - ml_service.py:383 - Ensemble: 264.44, LSTM: 4.67
+2025-12-10 00:53:12 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:53:12 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-10 00:53:12 - tradingbot - INFO - ml_service.py:437 - Predictions complete for TSLA: [134.56]

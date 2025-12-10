@@ -56,6 +56,10 @@ class MLPredictionModel:
             
         Returns:
             Number of documents modified/upserted
+            
+        Note:
+            - actual_price will NOT be overwritten if already set in the DB.
+            - Use update_actual_prices_bulk() to backfill actual prices.
         """
         collection = MLPredictionModel.get_collection()
         from pymongo import UpdateOne
@@ -72,19 +76,23 @@ class MLPredictionModel:
                 'target_date': pred['target_date']
             }
             
-            # Update with all fields, set created_at only on insert
-            update_query = {
-                '$set': {k: v for k, v in pred.items() if k != 'actual_price' or v is not None},
-                '$setOnInsert': {'created_at': pred['created_at']}
-            }
+            # Build $set - exclude actual_price entirely to prevent overwrites
+            set_fields = {k: v for k, v in pred.items() 
+                         if k not in ['actual_price', 'created_at']}
             
-            # If actual_price is None, ensure it's set to None on insert but not overwritten on update
-            if pred.get('actual_price') is None:
-                update_query['$setOnInsert']['actual_price'] = None
-
-            # Remove created_at from $set to avoid overwriting original creation time
-            if 'created_at' in update_query['$set']:
-                del update_query['$set']['created_at']
+            # Build $setOnInsert - set these only on new documents
+            set_on_insert = {'created_at': pred['created_at']}
+            
+            # Only set actual_price on insert, never on update
+            if 'actual_price' in pred:
+                set_on_insert['actual_price'] = pred['actual_price']
+            else:
+                set_on_insert['actual_price'] = None
+            
+            update_query = {
+                '$set': set_fields,
+                '$setOnInsert': set_on_insert
+            }
             
             operations.append(UpdateOne(filter_query, update_query, upsert=True))
         
@@ -109,7 +117,6 @@ class MLPredictionModel:
         """Find predictions from the last N days."""
         collection = MLPredictionModel.get_collection()
         cutoff_date = datetime.utcnow()
-        from datetime import timedelta
         cutoff_date = cutoff_date - timedelta(days=days)
         
         cursor = collection.find(
@@ -132,10 +139,16 @@ class MLPredictionModel:
     def update_actual_price(prediction_id: str, actual_price: float) -> bool:
         """Update the actual price for a prediction."""
         from bson import ObjectId
+        from bson.errors import InvalidId
         collection = MLPredictionModel.get_collection()
         
+        try:
+            oid = ObjectId(prediction_id)
+        except (InvalidId, TypeError, ValueError):
+            raise ValueError(f"Invalid prediction_id: {prediction_id}")
+        
         result = collection.update_one(
-            {'_id': ObjectId(prediction_id)},
+            {'_id': oid},
             {'$set': {'actual_price': actual_price}}
         )
         return result.modified_count > 0
@@ -144,16 +157,24 @@ class MLPredictionModel:
     def update_actual_prices_bulk(updates: List[Dict]) -> int:
         """Bulk update actual prices. Updates dict: {id, actual_price}"""
         from bson import ObjectId
+        from bson.errors import InvalidId
         collection = MLPredictionModel.get_collection()
         
         from pymongo import UpdateOne
-        operations = [
-            UpdateOne(
-                {'_id': ObjectId(update['id'])},
-                {'$set': {'actual_price': update['actual_price']}}
-            )
-            for update in updates
-        ]
+        operations = []
+        
+        for update in updates:
+            try:
+                oid = ObjectId(update['id'])
+                operations.append(
+                    UpdateOne(
+                        {'_id': oid},
+                        {'$set': {'actual_price': update['actual_price']}}
+                    )
+                )
+            except (InvalidId, TypeError, ValueError, KeyError) as e:
+                logger.warning(f"Skipping invalid update: {update} - {e}")
+                continue
         
         if not operations:
             return 0
@@ -346,8 +367,9 @@ class StockDataModel:
             records: List of dicts with keys: symbol, date, open, high, low, close, volume
             
         Returns:
-            List of inserted document IDs
+            List of inserted document IDs (empty list if all duplicates)
         """
+        from pymongo.errors import BulkWriteError
         collection = StockDataModel.get_collection()
         
         # Add last_updated timestamp to all records
@@ -359,11 +381,16 @@ class StockDataModel:
             result = collection.insert_many(records, ordered=False)
             logger.debug(f"Inserted {len(result.inserted_ids)} OHLCV records")
             return [str(id) for id in result.inserted_ids]
-        except Exception as e:
-            # Handle duplicate key errors gracefully
-            if 'duplicate key error' in str(e).lower():
-                logger.debug(f"Some records already exist, skipping duplicates")
-                return []
+        except BulkWriteError as e:
+            # Check if errors are only duplicate key violations (code 11000)
+            write_errors = e.details.get('writeErrors', [])
+            if write_errors and all(err.get('code') == 11000 for err in write_errors):
+                inserted_count = e.details.get('nInserted', 0)
+                logger.debug(f"Inserted {inserted_count} records, {len(write_errors)} duplicates skipped")
+                # Get IDs of successfully inserted documents from write result
+                # Note: insertedIds may not be available in error case, use nInserted as indicator
+                return []  # Return empty list when duplicates encountered
+            # Re-raise if there are other types of errors
             raise
     
     @staticmethod
@@ -464,29 +491,61 @@ class StockDataModel:
         
         Args:
             symbol: Stock ticker
-            date: Date to check (will check the full day 00:00:00 to 23:59:59)
+            date: Date to check (normalized to midnight for exact match)
             
         Returns:
             Closing price or None
         """
         collection = StockDataModel.get_collection()
         
-        # Create range for the day
-        start_date = date.replace(hour=0, minute=0, second=0, microsecond=0)
-        end_date = start_date + timedelta(days=1)
+        # Normalize date to midnight for exact match (faster than range query)
+        normalized_date = date.replace(hour=0, minute=0, second=0, microsecond=0)
         
+        # Try exact match first (uses compound index)
         result = collection.find_one({
             'symbol': symbol,
-            'date': {'$gte': start_date, '$lt': end_date}
+            'date': normalized_date
         })
+        
+        # Fallback to range query if exact match fails (handles non-normalized dates)
+        if not result:
+            end_date = normalized_date + timedelta(days=1)
+            result = collection.find_one({
+                'symbol': symbol,
+                'date': {'$gte': normalized_date, '$lt': end_date}
+            })
         
         return result['close'] if result else None
 
     @staticmethod
-    def delete_by_symbol(symbol: str) -> int:
-        """Delete all records for a symbol. Returns count deleted."""
+    def _DANGEROUS_delete_all_data(symbol: str, confirm: str = None) -> int:
+        """
+        ⚠️ DANGEROUS: Delete ALL OHLCV records for a symbol.
+        
+        This method permanently deletes historical data. Only use for:
+        - Testing/development data cleanup
+        - Fixing corrupt data that needs complete refresh
+        
+        Args:
+            symbol: Stock ticker
+            confirm: Must be exactly 'DELETE_ALL_DATA' to proceed
+            
+        Returns:
+            Count of deleted records
+            
+        Raises:
+            ValueError: If confirmation string is incorrect
+        """
+        if confirm != 'DELETE_ALL_DATA':
+            raise ValueError(
+                "Dangerous operation requires confirm='DELETE_ALL_DATA'. "
+                "This will permanently delete all historical data for the symbol."
+            )
+        
         collection = StockDataModel.get_collection()
+        logger.warning(f"⚠️ DELETING ALL OHLCV DATA FOR {symbol}")
         result = collection.delete_many({'symbol': symbol})
+        logger.warning(f"Deleted {result.deleted_count} records for {symbol}")
         return result.deleted_count
 
 
