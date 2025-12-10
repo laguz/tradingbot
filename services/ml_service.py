@@ -22,6 +22,7 @@ from sklearn.multioutput import MultiOutputRegressor
 from services.stock_data_service import get_historical_data
 from services.ml_features import prepare_features, get_feature_count
 from services.ml_evaluation import save_prediction_to_db, get_feature_importance
+from services.models.lstm_model import LSTMModel
 from config import get_config
 from utils.logger import logger
 
@@ -31,7 +32,7 @@ config = get_config()
 os.makedirs(config.ML_MODEL_DIR, exist_ok=True)
 
 # Model version for tracking
-MODEL_VERSION = "2.1-single"
+MODEL_VERSION = "2.2-lstm"
 
 
 def create_model():
@@ -108,82 +109,108 @@ def train_model(X, y):
     """
     logger.info(f"Training model on {len(X)} samples with {X.shape[1]} features")
     
-    model = create_model()
-    model.fit(X, y)
+    # Train ensemble
+    ensemble_model = create_model()
+    ensemble_model.fit(X, y)
+    
+    # Train LSTM
+    lstm_model = LSTMModel(input_size=X.shape[1])
+    try:
+        logger.info("Training LSTM model...")
+        lstm_model.train(X, y)
+    except Exception as e:
+        logger.error(f"LSTM training failed: {e}")
+        lstm_model = None
     
     logger.info("Model training complete")
-    return model
+    return {'ensemble': ensemble_model, 'lstm': lstm_model}
 
 
 def get_model_path(ticker):
     """Generate model file path for a ticker"""
-    return os.path.join(config.ML_MODEL_DIR, f"{ticker}_model_v2.pkl")
+    base_path = os.path.join(config.ML_MODEL_DIR, f"{ticker}_model_v2")
+    return f"{base_path}.pkl", f"{base_path}_lstm.pt"
 
 
-def save_model(ticker, model, feature_names, scaler):
+def save_model(ticker, models, feature_names, scaler):
     """
-    Save trained model to disk.
+    Save trained models to disk.
     
     Args:
         ticker: Stock ticker
-        model: Trained model
+        models: Dict containing 'ensemble' and 'lstm' models
         feature_names: List of feature names
-        scaler: Fitted StandardScaler (or None)
+        scaler: Fitted StandardScaler
     """
-    model_path = get_model_path(ticker)
+    pkl_path, lstm_path = get_model_path(ticker)
+    
+    ensemble_model = models.get('ensemble')
+    lstm_model = models.get('lstm')
+    
+    # Save ensemble (sklearn) model
     model_data = {
-        'model': model,
+        'model': ensemble_model,
         'features': feature_names,
         'scaler': scaler,
         'trained_at': datetime.now(),
         'version': MODEL_VERSION,
         'config': {
             'ensemble': config.ML_ENABLE_ENSEMBLE,
-            'normalization': config.ML_ENABLE_NORMALIZATION,
-            'n_estimators': config.ML_N_ESTIMATORS
+            'normalization': config.ML_ENABLE_NORMALIZATION
         }
     }
     
-    with open(model_path, 'wb') as f:
+    with open(pkl_path, 'wb') as f:
         pickle.dump(model_data, f)
+        
+    # Save LSTM model
+    if lstm_model:
+        lstm_model.save(lstm_path)
     
-    logger.info(f"Saved model v{MODEL_VERSION} for {ticker} to {model_path}")
+    logger.info(f"Saved model v{MODEL_VERSION} for {ticker}")
 
 
 def load_model(ticker):
     """
-    Load trained model from disk if it exists and is not too old.
+    Load trained models from disk.
     
-    Args:
-        ticker: Stock ticker
-        
     Returns:
-        Tuple of (model, features, scaler) or (None, None, None)
+        Tuple of (models_dict, features, scaler)
     """
-    model_path = get_model_path(ticker)
+    pkl_path, lstm_path = get_model_path(ticker)
     
-    if not os.path.exists(model_path):
-        logger.debug(f"No cached model found for {ticker}")
+    if not os.path.exists(pkl_path):
         return None, None, None
     
     try:
-        with open(model_path, 'rb') as f:
+        with open(pkl_path, 'rb') as f:
             model_data = pickle.load(f)
         
-        trained_at = model_data.get('trained_at')
-        age_days = (datetime.now() - trained_at).days
-        
-        if age_days > config.ML_RETRAIN_DAYS:
-            logger.info(f"Model for {ticker} is {age_days} days old, needs retraining")
-            return None, None, None
-            
+        # Version check
         saved_version = model_data.get('version', '1.0')
         if saved_version != MODEL_VERSION:
-            logger.info(f"Model version mismatch (saved: {saved_version}, current: {MODEL_VERSION}), needs retraining")
             return None, None, None
+            
+        # Age check
+        age_days = (datetime.now() - model_data['trained_at']).days
+        if age_days > config.ML_RETRAIN_DAYS:
+            return None, None, None
+            
+        models = {'ensemble': model_data['model']}
         
-        logger.info(f"Loaded cached model v{saved_version} for {ticker} (age: {age_days} days)")
-        return model_data['model'], model_data['features'], model_data.get('scaler')
+        # Try loading LSTM
+        if os.path.exists(lstm_path):
+            try:
+                # We need feature count to init LSTM
+                input_size = len(model_data['features'])
+                lstm = LSTMModel(input_size=input_size)
+                lstm.load(lstm_path)
+                models['lstm'] = lstm
+            except Exception as e:
+                logger.warning(f"Failed to load LSTM model: {e}")
+                
+        logger.info(f"Loaded models for {ticker} (age: {age_days} days)")
+        return models, model_data['features'], model_data.get('scaler')
         
     except Exception as e:
         logger.error(f"Error loading model for {ticker}: {e}")
@@ -264,12 +291,12 @@ def predict_next_days(ticker, days=5, force_retrain=False):
     days = 1 # Force single day prediction
     
     # Try to load cached model
-    model, feature_names, scaler = None, None, None
+    models, feature_names, scaler = None, None, None
     if not force_retrain:
-        model, feature_names, scaler = load_model(ticker)
+        models, feature_names, scaler = load_model(ticker)
     
     # If no cached model or force retrain, train new one
-    if model is None:
+    if models is None:
         logger.info(f"Training new model for {ticker}")
         
         # Fetch historical data (from database or API)
@@ -290,16 +317,15 @@ def predict_next_days(ticker, days=5, force_retrain=False):
             return {'error': 'Insufficient training data.'}
         
         # Train model
-        model = train_model(X, y)
+        models = train_model(X, y)
         
         # Save model for future use
-        save_model(ticker, model, feature_names, scaler)
+        save_model(ticker, models, feature_names, scaler)
         
         # Log feature importance
         try:
             # Get first estimator for feature importance
-            # Get first estimator for feature importance
-            first_base = model
+            model = models['ensemble']
             if hasattr(model, 'estimators_'):  # VotingRegressor
                 first_base = model.estimators_[0]
             
@@ -339,15 +365,31 @@ def predict_next_days(ticker, days=5, force_retrain=False):
     
     # Make predictions
     try:
-        prediction_val = model.predict(X_last)
-        # Extract scalar if array
-        if isinstance(prediction_val, (np.ndarray, list)):
-             prediction_val = prediction_val[0]
+        ensemble_model = models['ensemble']
+        lstm_model = models.get('lstm')
+        
+        # Ensemble prediction
+        ensemble_pred = ensemble_model.predict(X_last)
+        if isinstance(ensemble_pred, (np.ndarray, list)):
+            ensemble_pred = ensemble_pred[0]
+            
+        prediction_val = ensemble_pred
+        
+        # LSTM prediction
+        if lstm_model:
+            try:
+                lstm_pred = lstm_model.predict(X_current) # Uses sequence from X_current
+                if lstm_pred is not None:
+                    logger.info(f"Ensemble: {ensemble_pred:.2f}, LSTM: {lstm_pred:.2f}")
+                    # Average the predictions
+                    prediction_val = (ensemble_pred + lstm_pred) / 2
+            except Exception as e:
+                logger.warning(f"LSTM prediction failed: {e}")
         
         predictions = [prediction_val]
         
-        # Calculate prediction intervals
-        intervals = calculate_prediction_intervals(model, X_last)
+        # Calculate prediction intervals (using ensemble variance)
+        intervals = calculate_prediction_intervals(ensemble_model, X_last)
         
         # Generate target dates (next trading days)
         last_date = df.index[-1]

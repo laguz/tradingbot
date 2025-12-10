@@ -276,25 +276,45 @@ def get_historical_data(ticker, timeframe):
         logger.error(f"Could not fetch historical data for {ticker}. {e}")
         return None
 
-def get_raw_historical_data(ticker, timeframe):
+def get_raw_historical_data(ticker, timeframe=None, start_date=None, end_date=None):
     """
     Fetches raw historical daily data (OHLCV) for a given ticker.
+    Can specify either timeframe (relative to now) or explicit start/end dates.
     Returns a Pandas DataFrame with datetime index and numeric columns.
     """
     if not TRADIER_API_KEY:
         logger.error("Tradier API key not set in .env file")
         return None
 
-    end_date = date.today()
-    time_deltas = {'1m': 30, '3m': 90, '6m': 180, '1y': 365, '2y': 730, '5y': 1825}
-    start_date = end_date - timedelta(days=time_deltas.get(timeframe.lower(), 365))
+    if end_date is None:
+        end_date = date.today()
+    
+    # Determine start date
+    if start_date is None:
+        if timeframe:
+            time_deltas = {'1m': 30, '3m': 90, '6m': 180, '1y': 365, '2y': 730, '5y': 1825}
+            start_date = end_date - timedelta(days=time_deltas.get(timeframe.lower(), 365))
+        else:
+            # Default to 1 year if neither provided
+            start_date = end_date - timedelta(days=365)
+            
+    # Ensure start_date and end_date are strings for API
+    if isinstance(start_date, (date, datetime)):
+        start_date_str = start_date.strftime('%Y-%m-%d')
+    else:
+        start_date_str = str(start_date)
+        
+    if isinstance(end_date, (date, datetime)):
+        end_date_str = end_date.strftime('%Y-%m-%d')
+    else:
+        end_date_str = str(end_date)
 
     endpoint = "markets/history"
     params = {
         'symbol': ticker,
         'interval': 'daily',
-        'start': start_date.strftime('%Y-%m-%d'),
-        'end': end_date.strftime('%Y-%m-%d')
+        'start': start_date_str,
+        'end': end_date_str
     }
     
     try:

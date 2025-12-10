@@ -2780,3 +2780,356 @@ Error message(s): ["dlopen(/Library/Frameworks/Python.framework/Versions/3.14/li
 2025-12-09 23:54:44 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
 2025-12-09 23:54:44 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
 2025-12-09 23:54:44 - tradingbot - INFO - ml_service.py:395 - Predictions complete for TSLA: [259.86]
+2025-12-10 00:03:25 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:03:25 - tradingbot - INFO - lstm_model.py:102 - LSTM training complete
+2025-12-10 00:03:25 - tradingbot - INFO - lstm_model.py:125 - Saved LSTM model to test_lstm.pt
+2025-12-10 00:03:25 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:03:25 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from test_lstm.pt
+2025-12-10 00:03:25 - tradingbot - INFO - ml_service.py:110 - Training model on 100 samples with 39 features
+2025-12-10 00:03:25 - tradingbot - INFO - ml_service.py:44 - Creating ensemble model (RF + GBM + XGB)
+2025-12-10 00:03:25 - tradingbot - INFO - ml_service.py:78 - XGBoost included in ensemble
+2025-12-10 00:03:25 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:03:25 - tradingbot - INFO - ml_service.py:119 - Training LSTM model...
+2025-12-10 00:03:26 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [10/50], Loss: 4251.7568
+2025-12-10 00:03:26 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [20/50], Loss: 4146.8857
+2025-12-10 00:03:26 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [30/50], Loss: 3935.4890
+2025-12-10 00:03:26 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [40/50], Loss: 3773.2573
+2025-12-10 00:03:26 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [50/50], Loss: 3662.8835
+2025-12-10 00:03:26 - tradingbot - INFO - lstm_model.py:102 - LSTM training complete
+2025-12-10 00:03:26 - tradingbot - INFO - ml_service.py:125 - Model training complete
+2025-12-10 00:03:26 - tradingbot - INFO - lstm_model.py:125 - Saved LSTM model to models/TEST_LSTM_INT_model_v2_lstm.pt
+2025-12-10 00:03:26 - tradingbot - INFO - ml_service.py:170 - Saved model v2.2-lstm for TEST_LSTM_INT
+2025-12-10 00:03:26 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:03:26 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TEST_LSTM_INT_model_v2_lstm.pt
+2025-12-10 00:03:26 - tradingbot - INFO - ml_service.py:212 - Loaded models for TEST_LSTM_INT (age: 0 days)
+2025-12-10 00:04:55 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:04:55 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:04:56 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:04:56 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:04:56 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:04:56 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:04:59 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:05:00 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:05:01 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:05:01 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:05:01 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:05:01 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:05:07 - tradingbot - INFO - ml_service.py:289 - Starting prediction for TSLA, days=1, version=2.2-lstm
+2025-12-10 00:05:07 - tradingbot - INFO - ml_service.py:300 - Training new model for TSLA
+2025-12-10 00:05:07 - tradingbot - INFO - stock_data_service.py:100 - Loaded 500 records for TSLA from database cache
+2025-12-10 00:05:07 - tradingbot - INFO - ml_service.py:110 - Training model on 300 samples with 39 features
+2025-12-10 00:05:07 - tradingbot - INFO - ml_service.py:44 - Creating ensemble model (RF + GBM + XGB)
+2025-12-10 00:05:07 - tradingbot - INFO - ml_service.py:78 - XGBoost included in ensemble
+2025-12-10 00:05:13 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:05:13 - tradingbot - INFO - ml_service.py:119 - Training LSTM model...
+2025-12-10 00:05:16 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [10/50], Loss: 127812.9062
+2025-12-10 00:05:18 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [20/50], Loss: 127360.6328
+2025-12-10 00:05:20 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [30/50], Loss: 126285.9531
+2025-12-10 00:05:21 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [40/50], Loss: 125260.6719
+2025-12-10 00:05:23 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [50/50], Loss: 124490.0703
+2025-12-10 00:05:23 - tradingbot - INFO - lstm_model.py:102 - LSTM training complete
+2025-12-10 00:05:23 - tradingbot - INFO - ml_service.py:125 - Model training complete
+2025-12-10 00:05:23 - tradingbot - INFO - lstm_model.py:125 - Saved LSTM model to models/TSLA_model_v2_lstm.pt
+2025-12-10 00:05:23 - tradingbot - INFO - ml_service.py:170 - Saved model v2.2-lstm for TSLA
+2025-12-10 00:05:23 - tradingbot - INFO - ml_service.py:337 - Top 10 features:
+          feature  importance
+34          Lag_1    0.727117
+36          Lag_3    0.182521
+19            OBV    0.038042
+35          Lag_2    0.008550
+14  Parkinson_Vol    0.008513
+12          HV_50    0.006803
+5        BB_Lower    0.006499
+9     ATR_Percent    0.005540
+4        BB_Upper    0.002944
+31    Momentum_20    0.001688
+2025-12-10 00:05:23 - tradingbot - INFO - ml_service.py:383 - Ensemble: 264.44, LSTM: 4.67
+2025-12-10 00:05:24 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:05:24 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-10 00:05:24 - tradingbot - INFO - ml_service.py:437 - Predictions complete for TSLA: [134.56]
+2025-12-10 00:05:50 - tradingbot - INFO - ml_service.py:289 - Starting prediction for SPY, days=1, version=2.2-lstm
+2025-12-10 00:05:50 - tradingbot - INFO - ml_service.py:300 - Training new model for SPY
+2025-12-10 00:05:50 - tradingbot - INFO - stock_data_service.py:100 - Loaded 500 records for SPY from database cache
+2025-12-10 00:05:51 - tradingbot - INFO - ml_service.py:110 - Training model on 300 samples with 39 features
+2025-12-10 00:05:51 - tradingbot - INFO - ml_service.py:44 - Creating ensemble model (RF + GBM + XGB)
+2025-12-10 00:05:51 - tradingbot - INFO - ml_service.py:78 - XGBoost included in ensemble
+2025-12-10 00:05:53 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:05:53 - tradingbot - INFO - ml_service.py:119 - Training LSTM model...
+2025-12-10 00:05:54 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [10/50], Loss: 380545.3438
+2025-12-10 00:05:54 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [20/50], Loss: 379644.5625
+2025-12-10 00:05:55 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [30/50], Loss: 377863.6562
+2025-12-10 00:05:56 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [40/50], Loss: 376237.6250
+2025-12-10 00:05:57 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [50/50], Loss: 374910.9375
+2025-12-10 00:05:57 - tradingbot - INFO - lstm_model.py:102 - LSTM training complete
+2025-12-10 00:05:57 - tradingbot - INFO - ml_service.py:125 - Model training complete
+2025-12-10 00:05:57 - tradingbot - INFO - lstm_model.py:125 - Saved LSTM model to models/SPY_model_v2_lstm.pt
+2025-12-10 00:05:57 - tradingbot - INFO - ml_service.py:170 - Saved model v2.2-lstm for SPY
+2025-12-10 00:05:57 - tradingbot - INFO - ml_service.py:337 - Top 10 features:
+             feature  importance
+35             Lag_2    0.736083
+27  Distance_SMA_200    0.105509
+34             Lag_1    0.076746
+19               OBV    0.033325
+11             HV_10    0.014666
+36             Lag_3    0.008537
+2        Signal_Line    0.005505
+16     Rel_Volume_20    0.004331
+14     Parkinson_Vol    0.004091
+4           BB_Upper    0.001619
+2025-12-10 00:05:57 - tradingbot - INFO - ml_service.py:383 - Ensemble: 576.62, LSTM: 4.58
+2025-12-10 00:05:57 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-10 00:05:57 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for SPY to database
+2025-12-10 00:05:57 - tradingbot - INFO - ml_service.py:437 - Predictions complete for SPY: [290.6]
+2025-12-10 00:08:05 - tradingbot - INFO - ml_service.py:289 - Starting prediction for RIOT, days=1, version=2.2-lstm
+2025-12-10 00:08:05 - tradingbot - INFO - ml_service.py:300 - Training new model for RIOT
+2025-12-10 00:08:05 - tradingbot - INFO - stock_data_service.py:100 - Loaded 500 records for RIOT from database cache
+2025-12-10 00:08:05 - tradingbot - INFO - ml_service.py:110 - Training model on 300 samples with 39 features
+2025-12-10 00:08:05 - tradingbot - INFO - ml_service.py:44 - Creating ensemble model (RF + GBM + XGB)
+2025-12-10 00:08:05 - tradingbot - INFO - ml_service.py:78 - XGBoost included in ensemble
+2025-12-10 00:08:07 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:08:07 - tradingbot - INFO - ml_service.py:119 - Training LSTM model...
+2025-12-10 00:08:08 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [10/50], Loss: 166.5708
+2025-12-10 00:08:08 - tradingbot - INFO - ml_service.py:289 - Starting prediction for RIOT, days=1, version=2.2-lstm
+2025-12-10 00:08:08 - tradingbot - INFO - ml_service.py:300 - Training new model for RIOT
+2025-12-10 00:08:08 - tradingbot - INFO - stock_data_service.py:100 - Loaded 500 records for RIOT from database cache
+2025-12-10 00:08:08 - tradingbot - INFO - ml_service.py:110 - Training model on 300 samples with 39 features
+2025-12-10 00:08:08 - tradingbot - INFO - ml_service.py:44 - Creating ensemble model (RF + GBM + XGB)
+2025-12-10 00:08:08 - tradingbot - INFO - ml_service.py:78 - XGBoost included in ensemble
+2025-12-10 00:08:08 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [20/50], Loss: 146.3696
+2025-12-10 00:08:09 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [30/50], Loss: 104.4769
+2025-12-10 00:08:10 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [40/50], Loss: 76.7920
+2025-12-10 00:08:11 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:08:11 - tradingbot - INFO - ml_service.py:119 - Training LSTM model...
+2025-12-10 00:08:11 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [50/50], Loss: 61.3156
+2025-12-10 00:08:11 - tradingbot - INFO - lstm_model.py:102 - LSTM training complete
+2025-12-10 00:08:11 - tradingbot - INFO - ml_service.py:125 - Model training complete
+2025-12-10 00:08:11 - tradingbot - INFO - lstm_model.py:125 - Saved LSTM model to models/RIOT_model_v2_lstm.pt
+2025-12-10 00:08:11 - tradingbot - INFO - ml_service.py:170 - Saved model v2.2-lstm for RIOT
+2025-12-10 00:08:11 - tradingbot - INFO - ml_service.py:337 - Top 10 features:
+             feature  importance
+19               OBV    0.636517
+27  Distance_SMA_200    0.220838
+2        Signal_Line    0.109007
+9        ATR_Percent    0.004914
+6           BB_Width    0.004529
+14     Parkinson_Vol    0.004460
+38             Lag_5    0.003663
+7        BB_Position    0.002315
+4           BB_Upper    0.002001
+31       Momentum_20    0.001763
+2025-12-10 00:08:11 - tradingbot - INFO - ml_service.py:383 - Ensemble: 13.15, LSTM: 5.47
+2025-12-10 00:08:11 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:08:11 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for RIOT to database
+2025-12-10 00:08:11 - tradingbot - INFO - ml_service.py:437 - Predictions complete for RIOT: [9.31]
+2025-12-10 00:08:11 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [10/50], Loss: 157.5046
+2025-12-10 00:08:12 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [20/50], Loss: 129.4009
+2025-12-10 00:08:13 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [30/50], Loss: 93.1426
+2025-12-10 00:08:13 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [40/50], Loss: 73.2523
+2025-12-10 00:08:14 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [50/50], Loss: 60.4419
+2025-12-10 00:08:14 - tradingbot - INFO - lstm_model.py:102 - LSTM training complete
+2025-12-10 00:08:14 - tradingbot - INFO - ml_service.py:125 - Model training complete
+2025-12-10 00:08:14 - tradingbot - INFO - lstm_model.py:125 - Saved LSTM model to models/RIOT_model_v2_lstm.pt
+2025-12-10 00:08:14 - tradingbot - INFO - ml_service.py:170 - Saved model v2.2-lstm for RIOT
+2025-12-10 00:08:14 - tradingbot - INFO - ml_service.py:337 - Top 10 features:
+             feature  importance
+19               OBV    0.636517
+27  Distance_SMA_200    0.220838
+2        Signal_Line    0.109007
+9        ATR_Percent    0.004914
+6           BB_Width    0.004529
+14     Parkinson_Vol    0.004460
+38             Lag_5    0.003663
+7        BB_Position    0.002315
+4           BB_Upper    0.002001
+31       Momentum_20    0.001763
+2025-12-10 00:08:14 - tradingbot - INFO - ml_service.py:383 - Ensemble: 13.15, LSTM: 5.58
+2025-12-10 00:08:14 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:08:14 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for RIOT to database
+2025-12-10 00:08:14 - tradingbot - INFO - ml_service.py:437 - Predictions complete for RIOT: [9.36]
+2025-12-10 00:11:23 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:11:24 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:11:25 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:11:25 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:11:25 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:11:25 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:11:44 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:11:44 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:11:46 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:11:46 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:11:46 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:11:46 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:12:21 - tradingbot - INFO - stock_data_service.py:85 - No data for TEST_OHLCV, performing full sync
+2025-12-10 00:12:21 - tradingbot - INFO - stock_data_service.py:214 - Starting full sync for TEST_OHLCV (1y)
+2025-12-10 00:12:21 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 30 OHLCV records
+2025-12-10 00:12:21 - tradingbot - INFO - stock_data_service.py:46 - Saved 30 OHLCV records for TEST_OHLCV
+2025-12-10 00:12:21 - tradingbot - INFO - stock_data_service.py:230 - Full sync complete for TEST_OHLCV: 30 records saved
+2025-12-10 00:12:21 - tradingbot - WARNING - stock_data_service.py:137 - No records found for TEST_OHLCV even after sync attempt
+2025-12-10 00:13:04 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:13:04 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:85 - No data for TEST_OHLCV, performing full sync
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:214 - Starting full sync for TEST_OHLCV (1y)
+2025-12-10 00:13:05 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 30 OHLCV records
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:46 - Saved 30 OHLCV records for TEST_OHLCV
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:230 - Full sync complete for TEST_OHLCV: 30 records saved
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:134 - Returning 30 records for TEST_OHLCV from database
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:134 - Returning 30 records for TEST_OHLCV from database
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:93 - Data for TEST_OHLCV is stale (6 days old), updating
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:164 - Updating TEST_OHLCV from 2024-01-30 00:00:00 to present
+2025-12-10 00:13:05 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 6 OHLCV records
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:46 - Saved 6 OHLCV records for TEST_OHLCV
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:184 - Updated 6 new records for TEST_OHLCV
+2025-12-10 00:13:05 - tradingbot - INFO - stock_data_service.py:134 - Returning 31 records for TEST_OHLCV from database
+2025-12-10 00:13:05 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:13:05 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:13:05 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:13:05 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:13:27 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:13:27 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:13:28 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:13:28 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:13:28 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:13:28 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:13:57 - tradingbot - INFO - stock_data_service.py:85 - No data for TEST_OHLCV, performing full sync
+2025-12-10 00:13:57 - tradingbot - INFO - stock_data_service.py:214 - Starting full sync for TEST_OHLCV (1y)
+2025-12-10 00:13:57 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 30 OHLCV records
+2025-12-10 00:13:57 - tradingbot - INFO - stock_data_service.py:46 - Saved 30 OHLCV records for TEST_OHLCV
+2025-12-10 00:13:57 - tradingbot - INFO - stock_data_service.py:230 - Full sync complete for TEST_OHLCV: 30 records saved
+2025-12-10 00:13:58 - tradingbot - INFO - stock_data_service.py:134 - Returning 30 records for TEST_OHLCV from database
+2025-12-10 00:13:58 - tradingbot - INFO - stock_data_service.py:134 - Returning 30 records for TEST_OHLCV from database
+2025-12-10 00:13:58 - tradingbot - INFO - stock_data_service.py:93 - Data for TEST_OHLCV is stale (6 days old), updating
+2025-12-10 00:13:58 - tradingbot - INFO - stock_data_service.py:164 - Updating TEST_OHLCV from 2024-01-30 00:00:00 to present
+2025-12-10 00:13:58 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 6 OHLCV records
+2025-12-10 00:13:58 - tradingbot - INFO - stock_data_service.py:46 - Saved 6 OHLCV records for TEST_OHLCV
+2025-12-10 00:13:58 - tradingbot - INFO - stock_data_service.py:184 - Updated 6 new records for TEST_OHLCV
+2025-12-10 00:13:58 - tradingbot - INFO - stock_data_service.py:134 - Returning 31 records for TEST_OHLCV from database
+2025-12-10 00:15:03 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:15:03 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:15:04 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:15:04 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:15:04 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:15:04 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:15:06 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:15:06 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:15:08 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:15:08 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:15:08 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:15:08 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:15:08 - tradingbot - INFO - ml_service.py:289 - Starting prediction for RIOT, days=1, version=2.2-lstm
+2025-12-10 00:15:08 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:15:08 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/RIOT_model_v2_lstm.pt
+2025-12-10 00:15:08 - tradingbot - INFO - ml_service.py:212 - Loaded models for RIOT (age: 0 days)
+2025-12-10 00:15:09 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for RIOT from database
+2025-12-10 00:15:09 - tradingbot - INFO - ml_service.py:383 - Ensemble: 13.15, LSTM: 5.58
+2025-12-10 00:15:09 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:15:09 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for RIOT to database
+2025-12-10 00:15:09 - tradingbot - INFO - ml_service.py:437 - Predictions complete for RIOT: [9.36]
+2025-12-10 00:15:19 - tradingbot - INFO - ml_service.py:289 - Starting prediction for TSLA, days=1, version=2.2-lstm
+2025-12-10 00:15:19 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:15:19 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-10 00:15:19 - tradingbot - INFO - ml_service.py:212 - Loaded models for TSLA (age: 0 days)
+2025-12-10 00:15:20 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-10 00:15:20 - tradingbot - INFO - ml_service.py:383 - Ensemble: 264.44, LSTM: 4.67
+2025-12-10 00:15:20 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:15:20 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-10 00:15:20 - tradingbot - INFO - ml_service.py:437 - Predictions complete for TSLA: [134.56]
+2025-12-10 00:15:22 - tradingbot - INFO - ml_service.py:289 - Starting prediction for TSLA, days=1, version=2.2-lstm
+2025-12-10 00:15:22 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:15:22 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-10 00:15:22 - tradingbot - INFO - ml_service.py:212 - Loaded models for TSLA (age: 0 days)
+2025-12-10 00:15:23 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-10 00:15:24 - tradingbot - INFO - ml_service.py:383 - Ensemble: 264.44, LSTM: 4.67
+2025-12-10 00:15:24 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:15:24 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-10 00:15:24 - tradingbot - INFO - ml_service.py:437 - Predictions complete for TSLA: [134.56]
+2025-12-10 00:16:28 - tradingbot - INFO - ml_service.py:289 - Starting prediction for T, days=1, version=2.2-lstm
+2025-12-10 00:16:28 - tradingbot - INFO - ml_service.py:300 - Training new model for T
+2025-12-10 00:16:28 - tradingbot - INFO - stock_data_service.py:85 - No data for T, performing full sync
+2025-12-10 00:16:28 - tradingbot - INFO - stock_data_service.py:214 - Starting full sync for T (2y)
+2025-12-10 00:16:30 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 501 OHLCV records
+2025-12-10 00:16:30 - tradingbot - INFO - stock_data_service.py:46 - Saved 501 OHLCV records for T
+2025-12-10 00:16:30 - tradingbot - INFO - stock_data_service.py:230 - Full sync complete for T: 501 records saved
+2025-12-10 00:16:30 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for T from database
+2025-12-10 00:16:30 - tradingbot - INFO - ml_service.py:110 - Training model on 300 samples with 39 features
+2025-12-10 00:16:30 - tradingbot - INFO - ml_service.py:44 - Creating ensemble model (RF + GBM + XGB)
+2025-12-10 00:16:30 - tradingbot - INFO - ml_service.py:78 - XGBoost included in ensemble
+2025-12-10 00:16:32 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:16:32 - tradingbot - INFO - ml_service.py:119 - Training LSTM model...
+2025-12-10 00:16:33 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [10/50], Loss: 693.6494
+2025-12-10 00:16:34 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [20/50], Loss: 640.5682
+2025-12-10 00:16:34 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [30/50], Loss: 559.2213
+2025-12-10 00:16:35 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [40/50], Loss: 495.3837
+2025-12-10 00:16:35 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [50/50], Loss: 452.3006
+2025-12-10 00:16:35 - tradingbot - INFO - lstm_model.py:102 - LSTM training complete
+2025-12-10 00:16:35 - tradingbot - INFO - ml_service.py:125 - Model training complete
+2025-12-10 00:16:35 - tradingbot - INFO - lstm_model.py:125 - Saved LSTM model to models/T_model_v2_lstm.pt
+2025-12-10 00:16:35 - tradingbot - INFO - ml_service.py:170 - Saved model v2.2-lstm for T
+2025-12-10 00:16:35 - tradingbot - INFO - ml_service.py:337 - Top 10 features:
+             feature  importance
+34             Lag_1    0.953168
+19               OBV    0.019655
+27  Distance_SMA_200    0.005178
+17     Rel_Volume_50    0.004479
+13         Vol_Ratio    0.003229
+15     Volume_Change    0.002427
+16     Rel_Volume_20    0.001714
+9        ATR_Percent    0.001358
+1               MACD    0.001055
+14     Parkinson_Vol    0.001002
+2025-12-10 00:16:35 - tradingbot - INFO - ml_service.py:383 - Ensemble: 21.77, LSTM: 4.92
+2025-12-10 00:16:36 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-10 00:16:36 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for T to database
+2025-12-10 00:16:36 - tradingbot - INFO - ml_service.py:437 - Predictions complete for T: [13.35]
+2025-12-10 00:21:29 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:21:30 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:21:31 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:21:31 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:21:31 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:21:31 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:21:54 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:21:54 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:21:55 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:21:55 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:21:55 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:21:55 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:22:25 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 20 OHLCV records
+2025-12-10 00:22:25 - tradingbot - INFO - stock_data_service.py:173 - Updating TEST_SYNC from 2024-01-21 to present
+2025-12-10 00:22:25 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 5 OHLCV records
+2025-12-10 00:22:25 - tradingbot - INFO - stock_data_service.py:46 - Saved 5 OHLCV records for TEST_SYNC
+2025-12-10 00:22:25 - tradingbot - INFO - stock_data_service.py:188 - Updated 5 new records for TEST_SYNC
+2025-12-10 00:22:25 - tradingbot - INFO - stock_data_service.py:216 - Starting sync for TEST_SYNC (2y)
+2025-12-10 00:22:25 - tradingbot - ERROR - stock_data_service.py:243 - Error syncing TEST_SYNC: Invalid document {'symbol': 'TEST_SYNC', 'date': Timestamp('2024-01-01 00:00:00'), 'open': np.int64(150), 'high': np.int64(155), 'low': np.int64(145), 'close': np.int64(152), 'volume': np.int64(2000), 'last_updated': datetime.datetime(2025, 12, 10, 5, 22, 25, 868837), '_id': ObjectId('693903911664fd46aa4e6444')} | cannot encode object: np.int64(150), of type: <class 'numpy.int64'>
+2025-12-10 00:22:44 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:22:44 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:22:45 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:22:45 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:22:45 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:22:45 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:23:04 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 20 OHLCV records
+2025-12-10 00:23:04 - tradingbot - INFO - stock_data_service.py:173 - Updating TEST_SYNC from 2024-01-21 to present
+2025-12-10 00:23:04 - tradingbot - DEBUG - mongodb_models.py:360 - Inserted 5 OHLCV records
+2025-12-10 00:23:04 - tradingbot - INFO - stock_data_service.py:46 - Saved 5 OHLCV records for TEST_SYNC
+2025-12-10 00:23:04 - tradingbot - INFO - stock_data_service.py:188 - Updated 5 new records for TEST_SYNC
+2025-12-10 00:23:04 - tradingbot - INFO - stock_data_service.py:216 - Starting sync for TEST_SYNC (2y)
+2025-12-10 00:23:04 - tradingbot - DEBUG - mongodb_models.py:365 - Some records already exist, skipping duplicates
+2025-12-10 00:23:04 - tradingbot - INFO - stock_data_service.py:242 - Sync complete for TEST_SYNC: 0 new records inserted
+2025-12-10 00:25:43 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:25:44 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:25:45 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:25:45 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:25:45 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:25:45 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:25:47 - tradingbot - INFO - app.py:22 - Starting Trading Bot in development mode
+2025-12-10 00:25:47 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 00:25:48 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 00:25:48 - tradingbot - INFO - app.py:27 - Database initialized successfully
+2025-12-10 00:25:48 - tradingbot - INFO - app.py:33 - Flask-Login initialized with Nostr authentication
+2025-12-10 00:25:48 - tradingbot - INFO - app.py:42 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 00:25:57 - tradingbot - INFO - ml_service.py:289 - Starting prediction for T, days=1, version=2.2-lstm
+2025-12-10 00:25:58 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 00:25:58 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/T_model_v2_lstm.pt
+2025-12-10 00:25:58 - tradingbot - INFO - ml_service.py:212 - Loaded models for T (age: 0 days)
+2025-12-10 00:25:58 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for T from database
+2025-12-10 00:25:58 - tradingbot - INFO - ml_service.py:383 - Ensemble: 21.77, LSTM: 4.92
+2025-12-10 00:25:59 - tradingbot - DEBUG - mongodb_models.py:95 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 00:25:59 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for T to database
+2025-12-10 00:25:59 - tradingbot - INFO - ml_service.py:437 - Predictions complete for T: [13.35]

@@ -402,20 +402,18 @@ class StockDataModel:
     def get_latest_date(symbol: str) -> Optional[datetime]:
         """
         Get the most recent date for which we have data for a symbol.
-        
-        Args:
-            symbol: Stock ticker
-            
-        Returns:
-            Latest date as datetime or None if no data exists
         """
         collection = StockDataModel.get_collection()
-        
-        result = collection.find_one(
-            {'symbol': symbol},
-            sort=[('date', -1)]
-        )
-        
+        result = collection.find_one({'symbol': symbol}, sort=[('date', -1)])
+        return result['date'] if result else None
+    
+    @staticmethod
+    def get_earliest_date(symbol: str) -> Optional[datetime]:
+        """
+        Get the oldest date for which we have data for a symbol.
+        """
+        collection = StockDataModel.get_collection()
+        result = collection.find_one({'symbol': symbol}, sort=[('date', 1)])
         return result['date'] if result else None
     
     @staticmethod
