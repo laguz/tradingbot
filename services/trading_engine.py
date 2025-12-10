@@ -8,11 +8,13 @@ from datetime import datetime, date, timedelta
 from typing import Dict, List, Optional, Tuple
 from services.ml_service import predict_next_days
 from services.tradier_service import (
-    get_option_expirations, calculate_smart_strikes,
+    get_option_expirations, get_historical_data, get_option_chain,
     place_single_option_order, place_vertical_spread_order,
     get_current_price
 )
+from services.market_analysis import calculate_smart_strikes
 from services.risk_manager import risk_manager
+
 from models.mongodb_models import AutoTradeModel
 from utils.logger import logger
 from config import get_config
@@ -122,9 +124,34 @@ class TradingEngine:
                 logger.warning(f"No suitable expiration found for {symbol}")
                 return None
             
+            # Fetch data for smart strike calculation
+            historical_data = get_historical_data(symbol, '6m')
+            option_chain = get_option_chain(symbol, target_exp)
+            
+            if not historical_data or not option_chain:
+                logger.error(f"Could not fetch necessary data for {symbol}")
+                return None
+                
+            # Filter chain for correct type
+            option_type = 'put'
+            chain = [opt for opt in option_chain if opt['option_type'] == option_type]
+            available_strikes = sorted(list(set([opt['strike'] for opt in chain])))
+            
+            current_price = get_current_price(symbol)
+            if isinstance(current_price, dict): # Error
+                 current_price = historical_data['data'][-1]
+
             # Calculate smart strike (at support level)
             short_strike, _, trigger_level = calculate_smart_strikes(
-                symbol, target_exp, 'credit', 'put', width=5.0
+                symbol=symbol,
+                expiration=target_exp,
+                spread_type='credit',
+                option_type='put',
+                width=5.0,
+                current_price=current_price,
+                support_levels=historical_data.get('support', []),
+                resistance_levels=historical_data.get('resistance', []),
+                available_strikes=available_strikes
             )
             
             # Determine quantity based on confidence (1-5 contracts)
@@ -225,10 +252,32 @@ class TradingEngine:
             if not target_exp:
                 return None
             
+            # Fetch data for smart strike calculation
+            historical_data = get_historical_data(symbol, '6m')
+            option_chain = get_option_chain(symbol, target_exp)
+            
+            if not historical_data or not option_chain:
+                return None
+            
+            # Filter chain for correct type
+            chain = [opt for opt in option_chain if opt['option_type'] == option_type]
+            available_strikes = sorted(list(set([opt['strike'] for opt in chain])))
+            
+            current_price = get_current_price(symbol)
+            if isinstance(current_price, dict): 
+                 current_price = historical_data['data'][-1]
+
             # Calculate strikes
             short_strike, long_strike, trigger_level = calculate_smart_strikes(
-                symbol, target_exp, 'credit', option_type,
-                width=config.AUTO_TRADE_SPREAD_WIDTH
+                symbol=symbol,
+                expiration=target_exp,
+                spread_type='credit',
+                option_type=option_type,
+                width=config.AUTO_TRADE_SPREAD_WIDTH,
+                current_price=current_price,
+                support_levels=historical_data.get('support', []),
+                resistance_levels=historical_data.get('resistance', []),
+                available_strikes=available_strikes
             )
             
             # Prepare order

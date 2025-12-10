@@ -24,12 +24,7 @@ HEADERS = {
     'Accept': 'application/json'
 }
 
-# --- Helper Function ---
-def custom_round(price):
-    if price < 100:
-        return round(price)
-    else:
-        return round(price / 5) * 5
+from services.market_analysis import find_support_resistance, custom_round
 
 # --- Service Functions ---
 
@@ -55,7 +50,7 @@ def get_account_summary():
         }
         return summary
     except requests.exceptions.RequestException as e:
-        print(f"ERROR: Could not fetch account summary. {e}")
+        logger.error(f"Could not fetch account summary. {e}")
         return None
 
 def get_yearly_pl():
@@ -144,7 +139,7 @@ def get_open_positions():
                     strike_price = float(strike_part) / 1000.0
                     option_type = 'call' if opt_type == 'C' else 'put'
             except Exception as e:
-                print(f"Error parsing details for {pos['symbol']}: {e}")
+                logger.warning(f"Error parsing details for {pos['symbol']}: {e}")
             
             # For options, convert prices to per-contract (multiply by 100)
             # For stocks, keep as-is
@@ -183,7 +178,7 @@ def get_open_positions():
         return enriched_positions
         
     except requests.exceptions.RequestException as e:
-        print(f"ERROR: Could not fetch open positions. {e}")
+        logger.error(f"Could not fetch open positions. {e}")
         return None
 
 def get_current_price(symbol):
@@ -212,72 +207,12 @@ def get_current_price(symbol):
         return quote.get('last')
         
     except Exception as e:
-        print(f"ERROR: Could not fetch price for {symbol}. {e}")
+        logger.error(f"Could not fetch price for {symbol}. {e}")
         return {'error': str(e)}
 
-def find_support_resistance(data, window=None, tolerance=None):
-    """
-    Identifies support and resistance levels using volume-weighted clustering.
-    """
-    if window is None:
-        window = config.SR_WINDOW
-    if tolerance is None:
-        tolerance = config.SR_TOLERANCE
-        
-    if data.empty: return [], []
-    
-    supports = []
-    resistances = []
-    
-    # 1. Identify Pivot Points
-    for i in range(window, len(data) - window):
-        # Support Pivot (Local Low)
-        if data['Low'].iloc[i] == data['Low'].iloc[i-window:i+window+1].min():
-            supports.append({'price': data['Low'].iloc[i], 'volume': data['Volume'].iloc[i]})
-            
-        # Resistance Pivot (Local High)
-        if data['High'].iloc[i] == data['High'].iloc[i-window:i+window+1].max():
-            resistances.append({'price': data['High'].iloc[i], 'volume': data['Volume'].iloc[i]})
 
-    def cluster_levels(levels):
-        if not levels: return []
-        
-        levels.sort(key=lambda x: x['price'])
-        clusters = []
-        current_cluster = [levels[0]]
-        
-        for i in range(1, len(levels)):
-            price = levels[i]['price']
-            prev_price = current_cluster[-1]['price']
-            
-            # Check if within tolerance
-            if price <= prev_price * (1 + tolerance):
-                current_cluster.append(levels[i])
-            else:
-                clusters.append(current_cluster)
-                current_cluster = [levels[i]]
-        clusters.append(current_cluster)
-        
-        # Score Clusters
-        scored_clusters = []
-        for cluster in clusters:
-            avg_price = sum(l['price'] for l in cluster) / len(cluster)
-            total_volume = sum(l['volume'] for l in cluster)
-            touch_count = len(cluster)
-            
-            # Score = Volume * Touches (Simple heuristic)
-            score = total_volume * touch_count
-            scored_clusters.append({'price': avg_price, 'score': score})
-            
-        # Sort by score and take top N significant levels
-        scored_clusters.sort(key=lambda x: x['score'], reverse=True)
-        return sorted([c['price'] for c in scored_clusters[:config.SR_MAX_LEVELS]])
 
-    final_supports = cluster_levels(supports)
-    final_resistances = cluster_levels(resistances)
-    
-    logger.debug(f"Found {len(final_supports)} support levels and {len(final_resistances)} resistance levels")
-    return final_supports, final_resistances
+
 
 def get_historical_data(ticker, timeframe):
     """
@@ -285,7 +220,7 @@ def get_historical_data(ticker, timeframe):
     Formats the data for Chart.js.
     """
     if not TRADIER_API_KEY:
-        print("ERROR: Tradier API key not set in .env file")
+        logger.error("Tradier API key not set in .env file")
         return None
 
     end_date = date.today()
@@ -338,7 +273,7 @@ def get_historical_data(ticker, timeframe):
         return chart_data
 
     except requests.exceptions.RequestException as e:
-        print(f"ERROR: Could not fetch historical data for {ticker}. {e}")
+        logger.error(f"Could not fetch historical data for {ticker}. {e}")
         return None
 
 def get_raw_historical_data(ticker, timeframe):
@@ -347,7 +282,7 @@ def get_raw_historical_data(ticker, timeframe):
     Returns a Pandas DataFrame with datetime index and numeric columns.
     """
     if not TRADIER_API_KEY:
-        print("ERROR: Tradier API key not set in .env file")
+        logger.error("Tradier API key not set in .env file")
         return None
 
     end_date = date.today()
@@ -396,7 +331,7 @@ def get_raw_historical_data(ticker, timeframe):
         return df
 
     except requests.exceptions.RequestException as e:
-        print(f"ERROR: Could not fetch raw historical data for {ticker}. {e}")
+        logger.error(f"Could not fetch raw historical data for {ticker}. {e}")
         return pd.DataFrame()
 
 def get_option_expirations(symbol):
@@ -419,10 +354,10 @@ def get_option_expirations(symbol):
 
     except requests.exceptions.RequestException as e:
         error_details = e.response.json() if e.response else str(e)
-        print(f"ERROR: Could not fetch expirations for {symbol}. {error_details}")
+        logger.error(f"Could not fetch expirations for {symbol}. {error_details}")
         return {'error': f"Failed to fetch expirations: {error_details}"}
     except Exception as e:
-        print(f"An unexpected error occurred while fetching expirations: {e}")
+        logger.error(f"An unexpected error occurred while fetching expirations: {e}")
         return {'error': f"An unexpected error occurred: {str(e)}"}
 
 def _generate_occ_symbol(symbol, expiration, option_type, strike):
@@ -476,10 +411,10 @@ def place_stock_order(form_data):
                     error_message = str(error_details)
             except ValueError:
                 error_message = e.response.text
-        print(f"ERROR: Could not place stock order. {error_message}")
+        logger.error(f"Could not place stock order. {error_message}")
         return {'error': f"Failed to place order: {error_message}"}
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        logger.error(f"An unexpected error occurred: {e}")
         return {'error': f"An unexpected error occurred: {str(e)}"}
 
 
@@ -526,10 +461,10 @@ def place_single_option_order(form_data):
                     error_message = str(error_details)
             except ValueError:
                 error_message = e.response.text
-        print(f"ERROR: Could not place single option order. {error_message}")
+        logger.error(f"Could not place single option order. {error_message}")
         return {'error': f"Failed to place order: {error_message}"}
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        logger.error(f"An unexpected error occurred: {e}")
         return {'error': f"An unexpected error occurred: {str(e)}"}
 
 
@@ -585,10 +520,10 @@ def place_vertical_spread_order(form_data):
             except ValueError:
                 error_message = e.response.text
 
-        print(f"ERROR: Could not place order. {error_message}")
+        logger.error(f"Could not place order. {error_message}")
         return {'error': f"Failed to place order: {error_message}"}
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        logger.error(f"An unexpected error occurred: {e}")
         return {'error': f"An unexpected error occurred: {str(e)}"}
 
 
@@ -642,10 +577,10 @@ def place_iron_condor_order(form_data):
                     error_message = str(error_details)
             except ValueError:
                 error_message = e.response.text
-        print(f"ERROR: Could not place iron condor order. {error_message}")
+        logger.error(f"Could not place iron condor order. {error_message}")
         return {'error': f"Failed to place order: {error_message}"}
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        logger.error(f"An unexpected error occurred: {e}")
         return {'error': f"An unexpected error occurred: {str(e)}"}
 
 def get_option_chain(symbol, expiration):
@@ -670,104 +605,12 @@ def get_option_chain(symbol, expiration):
         return options
 
     except requests.exceptions.RequestException as e:
-        print(f"ERROR: Could not fetch option chain for {symbol}. {e}")
+        logger.error(f"Could not fetch option chain for {symbol}. {e}")
         return []
 
-def calculate_smart_strikes(symbol, expiration, spread_type, option_type, width):
-    """
-    Calculates optimal strikes based on Support (Put Credit) or Resistance (Call Credit).
-    """
-    # 1. Get Historical Data for Support/Resistance
-    chart_data = get_historical_data(symbol, '6m') # Use 6 months for reliable levels
-    if not chart_data:
-        raise ValueError("Could not fetch historical data for analysis.")
-        
-    support_levels = chart_data.get('support', [])
-    resistance_levels = chart_data.get('resistance', [])
-    current_price = chart_data['data'][-1]
-    
-    if not support_levels and not resistance_levels:
-         raise ValueError("No support or resistance levels found.")
 
-    # 2. Determine Target Price based on Strategy
-    target_price = None
-    trigger_level = None # The level (support/resistance) used for decision
-    
-    if spread_type == 'credit' and option_type == 'put':
-        # Bullish: Sell Put AT or BELOW Support
-        # Find the closest support level below current price
-        valid_supports = [s for s in support_levels if s < current_price]
-        
-        # Safety Buffer: Ensure we are at least 1% OTM
-        safety_threshold = current_price * 0.99
-        
-        if valid_supports:
-            closest_support = valid_supports[-1]
-            # Use the lower of the two (further OTM) to ensure safety
-            target_price = min(closest_support, safety_threshold)
-            trigger_level = closest_support
-        else:
-            target_price = current_price * 0.95 # Fallback: 5% OTM
-            trigger_level = "Fallback (5% OTM)"
-            
-    elif spread_type == 'credit' and option_type == 'call':
-        # Bearish: Sell Call AT or ABOVE Resistance
-        # Find the closest resistance level above current price
-        valid_resistances = [r for r in resistance_levels if r > current_price]
-        
-        # Safety Buffer: Ensure we are at least 1% OTM
-        safety_threshold = current_price * 1.01
-        
-        if valid_resistances:
-            closest_resistance = valid_resistances[0]
-            # Use the higher of the two (further OTM) to ensure safety
-            target_price = max(closest_resistance, safety_threshold)
-            trigger_level = closest_resistance
-        else:
-            target_price = current_price * 1.05 # Fallback: 5% OTM
-            trigger_level = "Fallback (5% OTM)"
-    else:
-        raise ValueError("Auto-selection currently only supports Credit Spreads (Put/Call).")
 
-    # 3. Get Option Chain to find real strikes
-    chain = get_option_chain(symbol, expiration)
-    if not chain:
-        raise ValueError("Could not fetch option chain.")
-        
-    # Filter chain for correct type
-    chain = [opt for opt in chain if opt['option_type'] == option_type]
-    strikes = sorted(list(set([opt['strike'] for opt in chain])))
-    
-    if not strikes:
-        raise ValueError("No strikes found for this expiration.")
 
-    # 4. Select Short Strike (Closest to Target Price)
-    # We want to sell the option closest to our target level
-    short_strike = min(strikes, key=lambda x: abs(x - target_price))
-    
-    # 5. Calculate Long Strike
-    if option_type == 'put':
-        # Put Credit Spread: Long Strike is LOWER than Short Strike
-        long_strike_target = short_strike - width
-    else:
-        # Call Credit Spread: Long Strike is HIGHER than Short Strike
-        long_strike_target = short_strike + width
-        
-    # Find closest real strike to the calculated long target
-    long_strike = min(strikes, key=lambda x: abs(x - long_strike_target))
-    
-    # Validation: Ensure spread width is maintained roughly (don't collapse the spread)
-    if option_type == 'put' and long_strike >= short_strike:
-         # Try to find a lower strike
-         lower_strikes = [s for s in strikes if s < short_strike]
-         if lower_strikes: long_strike = lower_strikes[-1] # Highest of the lower strikes
-         
-    if option_type == 'call' and long_strike <= short_strike:
-         # Try to find a higher strike
-         higher_strikes = [s for s in strikes if s > short_strike]
-         if higher_strikes: long_strike = higher_strikes[0] # Lowest of the higher strikes
-
-    return short_strike, long_strike, trigger_level
 
 def close_position(position_id, symbol, quantity, limit_price=None):
     """
@@ -807,7 +650,7 @@ def close_position(position_id, symbol, quantity, limit_price=None):
         return response.json()
 
     except Exception as e:
-        print(f"ERROR: Could not close position {symbol}. {e}")
+        logger.error(f"Could not close position {symbol}. {e}")
         return {'error': str(e)}
 
 def manage_position_state(positions, underlying_prices):
@@ -870,7 +713,7 @@ def manage_position_state(positions, underlying_prices):
         with open(STATE_FILE, 'w') as f:
             json.dump(updated_state, f, indent=2)
     except Exception as e:
-        print(f"Error saving state: {e}")
+        logger.error(f"Error saving state: {e}")
         
     return updated_state
 
@@ -1029,7 +872,7 @@ def place_multileg_order(legs, symbol, type, duration='day', price=None):
         return response.json()
 
     except Exception as e:
-        print(f"ERROR: Could not place multileg order. {e}")
+        logger.error(f"Could not place multileg order. {e}")
         return {'error': str(e)}
 
 def check_and_roll_positions():
@@ -1131,7 +974,7 @@ def check_and_roll_positions():
             reason = f"ITM for {itm_days} consecutive days (threshold: {config.AUTO_ROLL_ITM_DAYS})"
             
         if should_roll:
-            print(f"Rolling {symbol}: {reason}")
+            logger.info(f"Rolling {symbol}: {reason}")
             
             # Find New Option
             try:

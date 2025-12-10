@@ -2,12 +2,12 @@ from flask import Flask, render_template, jsonify, request
 from flask_login import login_required, current_user
 # UPDATED: Added get_option_expirations to the import list
 from services.tradier_service import get_account_summary, get_open_positions, get_yearly_pl, get_historical_data, get_option_expirations, get_current_price, check_and_close_positions
-from spread_routes import spreads
-from prediction_routes import predictions
-from ml_performance_routes import ml_performance
-from ml_correction_routes import ml_correction
-from auth_routes import auth_routes, init_login_manager
-from auto_trader_routes import auto_trader_routes
+from routes.spread_routes import spreads
+from routes.prediction_routes import predictions
+from routes.ml_performance_routes import ml_performance
+from routes.ml_correction_routes import ml_correction
+from routes.auth_routes import auth_routes, init_login_manager
+from routes.auto_trader_routes import auto_trader_routes
 from config import get_config
 from utils.logger import logger
 from database import init_db, mongo_db, mongo_client

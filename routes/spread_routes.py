@@ -2,8 +2,9 @@ from flask import Blueprint, render_template, flash, redirect, url_for
 from forms import VerticalSpreadForm, StockOrderForm, SingleOptionForm, IronCondorForm
 from services.tradier_service import (
     place_vertical_spread_order, get_option_expirations, place_stock_order,
-    place_single_option_order, place_iron_condor_order, calculate_smart_strikes
+    place_single_option_order, place_iron_condor_order
 )
+from services.market_analysis import calculate_smart_strikes
 
 spreads = Blueprint('spreads', __name__)
 
