@@ -50,6 +50,12 @@ class Config:
     SR_MAX_LEVELS = 5         # Maximum levels to return
     SR_TIMEFRAME = '6m'       # Default timeframe for analysis
     
+    # Enhanced S/R with RSI/MACD
+    SR_USE_INDICATORS = True  # Use RSI/MACD confirmation
+    SR_RSI_OVERSOLD = 30      # RSI oversold threshold
+    SR_RSI_OVERBOUGHT = 70    # RSI overbought threshold
+    SR_INDICATOR_WEIGHT = 0.3 # Weight for indicator score (0-1)
+    
     # Smart Strike Selection
     STRIKE_SAFETY_BUFFER = 0.01  # 1% OTM safety buffer
     STRIKE_FALLBACK_OTM = 0.05   # 5% OTM fallback
@@ -95,7 +101,7 @@ class Config:
     AUTO_TRADE_DRY_RUN = True   # Simulation mode (no real orders)
     AUTO_TRADE_MAX_DAILY_LOSS = 500.0  # Stop trading if daily loss exceeds this
     AUTO_TRADE_MAX_POSITION_SIZE = 5   # Maximum contracts per position
-    AUTO_TRADE_MAX_POSITIONS = 10      # Maximum open positions at once
+    AUTO_TRADE_MAX_POSITIONS = 100     # Maximum open positions at once
     AUTO_TRADE_SYMBOLS = ['SPY', 'QQQ', 'AAPL', 'MSFT', 'TSLA']  # Allowed symbols
     AUTO_TRADE_SCHEDULE_HOURS = [10, 14]  # Hours to run (24-hour format, EST)
     AUTO_TRADE_MIN_CONFIDENCE = 0.65   # ML prediction confidence threshold

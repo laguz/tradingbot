@@ -192,16 +192,29 @@ class TradingEngine:
                 result = place_single_option_order(order_data)
             
             if result and 'error' not in result:
+                # Build position symbol for tracking
+                from datetime import datetime as dt
+                exp_date = dt.strptime(target_exp, '%Y-%m-%d')
+                exp_code = exp_date.strftime('%y%m%d')
+                opt_code = 'P'  # Put
+                strike_code = str(int(float(short_strike) * 1000)).zfill(8)
+                position_symbol = f"{symbol}{exp_code}{opt_code}{strike_code}"
+                
                 trade_record = {
                     'timestamp': datetime.now().isoformat(),
                     'strategy': 'wheel',
                     'symbol': symbol,
+                    'position_symbol': position_symbol,
                     'action': 'open',
                     'details': order_data,
                     'ml_confidence': opportunity['confidence'],
                     'result': result,
                     'dry_run': config.AUTO_TRADE_DRY_RUN
                 }
+                
+                # Track position in dry run mode
+                if config.AUTO_TRADE_DRY_RUN:
+                    risk_manager.add_dry_run_position(position_symbol)
                 
                 risk_manager.log_trade(trade_record)
                 self.executed_trades.append(trade_record)
@@ -302,16 +315,35 @@ class TradingEngine:
                 result = place_vertical_spread_order(order_data)
             
             if result and 'error' not in result:
+                # Build position symbols for spread legs
+                from datetime import datetime as dt
+                exp_date = dt.strptime(target_exp, '%Y-%m-%d')
+                exp_code = exp_date.strftime('%y%m%d')
+                opt_code = 'C' if option_type == 'call' else 'P'
+                
+                short_strike_code = str(int(float(short_strike) * 1000)).zfill(8)
+                long_strike_code = str(int(float(long_strike) * 1000)).zfill(8)
+                
+                short_leg_symbol = f"{symbol}{exp_code}{opt_code}{short_strike_code}"
+                long_leg_symbol = f"{symbol}{exp_code}{opt_code}{long_strike_code}"
+                
                 trade_record = {
                     'timestamp': datetime.now().isoformat(),
                     'strategy': 'credit_spread',
                     'symbol': symbol,
+                    'short_leg_symbol': short_leg_symbol,
+                    'long_leg_symbol': long_leg_symbol,
                     'action': 'open',
                     'details': order_data,
                     'ml_confidence': opportunity['confidence'],
                     'result': result,
                     'dry_run': config.AUTO_TRADE_DRY_RUN
                 }
+                
+                # Track both spread legs in dry run mode
+                if config.AUTO_TRADE_DRY_RUN:
+                    risk_manager.add_dry_run_position(short_leg_symbol)
+                    risk_manager.add_dry_run_position(long_leg_symbol)
                 
                 risk_manager.log_trade(trade_record)
                 self.executed_trades.append(trade_record)

@@ -155,7 +155,12 @@ class MLPredictionModel:
     
     @staticmethod
     def update_actual_prices_bulk(updates: List[Dict]) -> int:
-        """Bulk update actual prices. Updates dict: {id, actual_price}"""
+        """
+        Bulk update actual prices. Updates dict: {id, actual_price}
+        
+        IMPORTANT: Only updates the 'actual_price' field. All other fields
+        (predicted_price, features, etc.) remain unchanged.
+        """
         from bson import ObjectId
         from bson.errors import InvalidId
         collection = MLPredictionModel.get_collection()
@@ -169,7 +174,7 @@ class MLPredictionModel:
                 operations.append(
                     UpdateOne(
                         {'_id': oid},
-                        {'$set': {'actual_price': update['actual_price']}}
+                        {'$set': {'actual_price': update['actual_price']}}  # Only update actual_price
                     )
                 )
             except (InvalidId, TypeError, ValueError, KeyError) as e:

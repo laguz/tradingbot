@@ -231,10 +231,18 @@ def save_prediction_to_db(ticker, target_dates, predicted_prices, model_version,
         logger.error(f"Error saving predictions to database: {e}")
 
 
-def backfill_actual_prices():
+def backfill_actual_prices(auto_sync=True):
     """
     Update MLPrediction collection with actual prices for past predictions.
-    Should be run daily as a background job.
+    
+    IMPORTANT: This function ONLY updates the 'actual_price' field with the
+    closing price from stock data. All other prediction fields remain unchanged.
+    
+    If auto_sync is True and it's after 4:30 PM EST, will automatically trigger
+    a stock data sync if missing data is detected.
+    
+    Args:
+        auto_sync: If True, automatically sync stock data after 4:30 PM EST
     
     Returns:
         Number of predictions updated
@@ -253,6 +261,52 @@ def backfill_actual_prices():
         }))
         
         logger.info(f"Found {len(pending)} predictions to backfill")
+        
+        # Check if we should trigger stock sync
+        if auto_sync and pending:
+            from datetime import timezone
+            import pytz
+            
+            # Get current time in EST
+            est = pytz.timezone('US/Eastern')
+            now_est = datetime.now(est)
+            market_close_time = now_est.replace(hour=16, minute=30, second=0, microsecond=0)
+            
+            # If after 4:30 PM EST and we have pending predictions
+            if now_est >= market_close_time:
+                logger.info(f"After market close ({now_est.strftime('%H:%M')} EST) - checking if sync needed")
+                
+                # Get unique symbols that need backfill
+                symbols_needed = set(p['symbol'] for p in pending)
+                
+                # Check if any of these symbols have missing recent data
+                from services.stock_data_service import get_cache_status
+                needs_sync = []
+                
+                for symbol in symbols_needed:
+                    try:
+                        status = get_cache_status(symbol)
+                        latest_date_str = status.get('latest_date')
+                        if latest_date_str:
+                            from dateutil import parser
+                            latest_date = parser.parse(latest_date_str).date()
+                            today = datetime.now().date()
+                            
+                            # If latest data is not today, needs sync
+                            if latest_date < today:
+                                needs_sync.append(symbol)
+                    except Exception:
+                        needs_sync.append(symbol)
+                
+                if needs_sync:
+                    logger.info(f"Triggering stock data sync for {len(needs_sync)} symbols: {needs_sync[:5]}...")
+                    
+                    try:
+                        from jobs.daily_stock_sync import sync_all_tickers
+                        sync_results = sync_all_tickers()
+                        logger.info(f"Stock sync complete: {sync_results['success'].__len__()} updated")
+                    except Exception as e:
+                        logger.warning(f"Auto-sync failed: {e}")
         
         # Group by symbol to batch API calls
         by_symbol = {}
@@ -289,20 +343,58 @@ def backfill_actual_prices():
                     df = get_historical_data(symbol, '3m', use_cache=True) 
                     
                     if not df.empty:
+                        # Ensure df.index is DatetimeIndex for proper comparison
+                        if not isinstance(df.index, pd.DatetimeIndex):
+                            try:
+                                df.index = pd.to_datetime(df.index)
+                            except Exception:
+                                logger.warning(f"Could not convert index to DatetimeIndex for {symbol}")
+                                continue
+                        
                         for pred in predictions:
                             # Skip if we already found it in DB
                             if any(u['id'] == str(pred['_id']) for u in updates):
                                 continue
-                                
-                            target_date_str = pred['target_date'].strftime('%Y-%m-%d')
-                            if target_date_str in df.index:
-                                actual_price = float(df.loc[target_date_str, 'Close'])
+                            
+                            # Normalize both dates to remove timezone and time components
+                            target_date = pred['target_date']
+                            if hasattr(target_date, 'date'):
+                                target_date_only = target_date.date()
+                            else:
+                                target_date_only = target_date
+                            
+                            # Convert target_date to pandas Timestamp for comparison
+                            target_ts = pd.Timestamp(target_date_only)
+                            
+                            # Try exact match first
+                            matching_dates = df.index[df.index.normalize() == target_ts]
+                            
+                            if len(matching_dates) > 0:
+                                # Found exact match
+                                actual_price = float(df.loc[matching_dates[0], 'Close'])
                                 updates.append({
                                     'id': str(pred['_id']),
                                     'actual_price': actual_price
                                 })
+                                logger.debug(f"Matched {symbol} on {target_date_only}: ${actual_price:.2f}")
                             else:
-                                logger.debug(f"Still no data for {symbol} on {target_date_str}")
+                                # Try to find nearest date (in case of holidays/weekends)
+                                nearest_idx = df.index.searchsorted(target_ts)
+                                if nearest_idx < len(df):
+                                    # Check if within 3 days
+                                    nearest_date = df.index[nearest_idx]
+                                    days_diff = abs((nearest_date - target_ts).days)
+                                    if days_diff <= 3:
+                                        actual_price = float(df.loc[nearest_date, 'Close'])
+                                        updates.append({
+                                            'id': str(pred['_id']),
+                                            'actual_price': actual_price
+                                        })
+                                        logger.debug(f"Matched {symbol} on {target_date_only} (used {nearest_date.date()}, {days_diff} days diff): ${actual_price:.2f}")
+                                    else:
+                                        logger.debug(f"No close match for {symbol} on {target_date_only} (nearest: {days_diff} days)")
+                                else:
+                                    logger.debug(f"No data available for {symbol} after {target_date_only}")
                 
             except Exception as e:
                 logger.error(f"Error fetching data for {symbol}: {e}")

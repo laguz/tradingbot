@@ -6,12 +6,17 @@ Manages trading risk limits and circuit breakers for automated trading.
 
 from datetime import datetime, date
 from typing import Dict, List, Optional
+import json
+import os
 from models.mongodb_models import MLPredictionModel
 from services.tradier_service import get_open_positions, get_account_summary
 from utils.logger import logger
 from config import get_config
 
 config = get_config()
+
+# Dry run position tracking file
+DRY_RUN_POSITIONS_FILE = 'dry_run_positions.json'
 
 
 class RiskManager:
@@ -23,6 +28,61 @@ class RiskManager:
         self.daily_trades = 0
         self.today = date.today().isoformat()
         self.emergency_stop = False
+        self.dry_run_position_symbols = self._load_dry_run_positions()
+    
+    def _load_dry_run_positions(self) -> List[str]:
+        """Load the list of position symbols created in dry run mode."""
+        if not os.path.exists(DRY_RUN_POSITIONS_FILE):
+            return []
+        
+        try:
+            with open(DRY_RUN_POSITIONS_FILE, 'r') as f:
+                data = json.load(f)
+                return data.get('positions', [])
+        except Exception as e:
+            logger.warning(f"Error loading dry run positions: {e}")
+            return []
+    
+    def _save_dry_run_positions(self):
+        """Save the list of dry run positions to file."""
+        try:
+            data = {
+                'positions': self.dry_run_position_symbols,
+                'last_updated': datetime.now().isoformat()
+            }
+            with open(DRY_RUN_POSITIONS_FILE, 'w') as f:
+                json.dump(data, f, indent=2)
+        except Exception as e:
+            logger.error(f"Error saving dry run positions: {e}")
+    
+    def add_dry_run_position(self, symbol: str):
+        """Add a position symbol to dry run tracking."""
+        if symbol not in self.dry_run_position_symbols:
+            self.dry_run_position_symbols.append(symbol)
+            self._save_dry_run_positions()
+            logger.info(f"Added {symbol} to dry run position tracking")
+    
+    def reset_dry_run_positions(self):
+        """Clear all dry run position tracking."""
+        self.dry_run_position_symbols = []
+        self._save_dry_run_positions()
+        logger.info("Reset dry run position tracking")
+    
+    def _get_filtered_positions(self) -> List[Dict]:
+        """Get positions filtered by dry run mode if applicable."""
+        all_positions = get_open_positions()
+        
+        if not all_positions:
+            return []
+        
+        # In dry run mode, only count positions tracked by dry run
+        if config.AUTO_TRADE_DRY_RUN:
+            filtered = [p for p in all_positions if p['symbol'] in self.dry_run_position_symbols]
+            logger.debug(f"Dry run filter: {len(all_positions)} total -> {len(filtered)} tracked")
+            return filtered
+        
+        # In live mode, count all positions
+        return all_positions
     
     def check_can_trade(self) -> tuple[bool, str]:
         """
@@ -47,8 +107,8 @@ class RiskManager:
             logger.warning(f"Daily loss limit exceeded: ${self.daily_pnl:.2f}")
             return False, f"Daily loss limit exceeded (${self.daily_pnl:.2f})"
         
-        # Check position count
-        positions = get_open_positions()
+        # Check position count (filtered for dry run)
+        positions = self._get_filtered_positions()
         if positions and len(positions) >= config.AUTO_TRADE_MAX_POSITIONS:
             return False, f"Max positions reached ({len(positions)}/{config.AUTO_TRADE_MAX_POSITIONS})"
         
@@ -140,7 +200,8 @@ class RiskManager:
         """
         self._update_daily_pnl()
         
-        positions = get_open_positions()
+        # Use filtered positions for dry run
+        positions = self._get_filtered_positions()
         position_count = len(positions) if positions else 0
         
         can_trade, reason = self.check_can_trade()

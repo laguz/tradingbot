@@ -11,6 +11,16 @@ from datetime import date, datetime
 from config import get_config
 from utils.logger import logger
 
+# Import enhanced S/R if indicators enabled
+try:
+    from services.market_analysis_enhanced import (
+        find_support_resistance_enhanced,
+        find_support_resistance_simple
+    )
+    ENHANCED_SR_AVAILABLE = True
+except ImportError:
+    ENHANCED_SR_AVAILABLE = False
+
 config = get_config()
 
 def custom_round(price: float) -> float:
@@ -25,6 +35,7 @@ def custom_round(price: float) -> float:
 def find_support_resistance(data: pd.DataFrame, window: int = None, tolerance: float = None) -> Tuple[List[float], List[float]]:
     """
     Identifies support and resistance levels using volume-weighted clustering.
+    Automatically uses enhanced algorithm with RSI/MACD if SR_USE_INDICATORS is enabled.
     
     Args:
         data: DataFrame with Low, High, Volume columns
@@ -32,8 +43,13 @@ def find_support_resistance(data: pd.DataFrame, window: int = None, tolerance: f
         tolerance: Percentage tolerance for clustering levels
         
     Returns:
-        Tuple of (support_levels, resistance_levels)
+        Tuple of (support_levels, resistance_levels) as price lists
     """
+    # Use enhanced algorithm if enabled and available
+    if ENHANCED_SR_AVAILABLE and config.SR_USE_INDICATORS:
+        return find_support_resistance_simple(data, window, tolerance)
+    
+    # Otherwise use original implementation
     if window is None:
         window = config.SR_WINDOW
     if tolerance is None:
