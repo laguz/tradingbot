@@ -738,3 +738,234 @@ class AutoTradeModel:
             'by_symbol': symbols,
             'period_days': days
         }
+
+
+class DailyPLModel:
+    """Daily profit/loss tracking - MongoDB collection."""
+    
+    COLLECTION_NAME = 'daily_pl'
+    
+    @staticmethod
+    def get_collection():
+        """Get the daily P/L collection."""
+        db = get_mongo_db()
+        if db is None:
+            raise Exception("MongoDB not configured")
+        return db[DailyPLModel.COLLECTION_NAME]
+    
+    @staticmethod
+    def upsert_daily(date: datetime, daily_pl: float, yearly_cumulative_pl: float,
+                    trade_count: int = 0, positions_closed: int = 0, notes: str = None) -> str:
+        """
+        Insert or update daily P/L record.
+        
+        Args:
+            date: Trading date (will be normalized to midnight)
+            daily_pl: Net profit/loss for this specific day
+            yearly_cumulative_pl: Running year-to-date total
+            trade_count: Number of trades executed
+            positions_closed: Number of positions closed
+            notes: Optional notes about the day
+            
+        Returns:
+            Document ID as string or "updated"
+        """
+        collection = DailyPLModel.get_collection()
+        
+        # Normalize date to midnight
+        normalized_date = date.replace(hour=0, minute=0, second=0, microsecond=0)
+        
+        doc = {
+            'date': normalized_date,
+            'daily_pl': float(daily_pl),
+            'yearly_cumulative_pl': float(yearly_cumulative_pl),
+            'trade_count': int(trade_count),
+            'positions_closed': int(positions_closed),
+            'notes': notes,
+            'updated_at': datetime.utcnow()
+        }
+        
+        result = collection.update_one(
+            {'date': normalized_date},
+            {'$set': doc, '$setOnInsert': {'created_at': datetime.utcnow()}},
+            upsert=True
+        )
+        
+        logger.debug(f"Upserted daily P/L for {normalized_date.date()}: ${daily_pl:.2f}")
+        return str(result.upserted_id) if result.upserted_id else "updated"
+    
+    @staticmethod
+    def find_by_date_range(start_date: datetime, end_date: datetime = None) -> List[Dict]:
+        """
+        Find P/L records within date range.
+        
+        Args:
+            start_date: Start of range
+            end_date: End of range (defaults to today)
+            
+        Returns:
+            List of P/L records, sorted by date descending
+        """
+        collection = DailyPLModel.get_collection()
+        
+        if end_date is None:
+            end_date = datetime.utcnow()
+        
+        # Normalize dates
+        start_date = start_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = end_date.replace(hour=23, minute=59, second=59, microsecond=999999)
+        
+        cursor = collection.find({
+            'date': {'$gte': start_date, '$lte': end_date}
+        }).sort('date', -1)
+        
+        return list(cursor)
+    
+    @staticmethod
+    def get_latest_yearly_pl() -> Optional[float]:
+        """
+        Get the most recent yearly cumulative P/L.
+        
+        Returns:
+            Latest yearly cumulative P/L or None
+        """
+        collection = DailyPLModel.get_collection()
+        
+        # Get current year's records
+        year_start = datetime(datetime.utcnow().year, 1, 1)
+        
+        result = collection.find_one(
+            {'date': {'$gte': year_start}},
+            sort=[('date', -1)]
+        )
+        
+        return result['yearly_cumulative_pl'] if result else 0.0
+    
+    @staticmethod
+    def calculate_and_store(date: datetime) -> Dict:
+        """
+        Calculate daily P/L from positions and store it.
+        
+        Aggregates all positions closed on the given date and calculates:
+        - Daily P/L (sum of pl_amount for positions closed that day)
+        - Yearly cumulative P/L (previous cumulative + daily P/L)
+        
+        Args:
+            date: Date to calculate P/L for
+            
+        Returns:
+            Dict with calculation results
+        """
+        from models.mongodb_models import PositionModel
+        
+        # Normalize date
+        target_date = date.replace(hour=0, minute=0, second=0, microsecond=0)
+        end_of_day = target_date + timedelta(days=1)
+        
+        # Get all positions closed on this date
+        positions = PositionModel.get_collection().find({
+            'exit_date': {'$gte': target_date, '$lt': end_of_day},
+            'status': 'closed'
+        })
+        
+        positions_list = list(positions)
+        
+        # Calculate daily P/L
+        daily_pl = sum(pos.get('pl_amount', 0.0) or 0.0 for pos in positions_list)
+        positions_closed = len(positions_list)
+        
+        # Get previous day's cumulative P/L
+        prev_date = target_date - timedelta(days=1)
+        
+        # Check if it's the start of a new year
+        if target_date.month == 1 and target_date.day == 1:
+            # Reset cumulative at year start
+            previous_cumulative = 0.0
+        else:
+            # Look back up to 90 days for the most recent record
+            lookback_start = target_date - timedelta(days=90)
+            previous_record = DailyPLModel.get_collection().find_one(
+                {'date': {'$gte': lookback_start, '$lt': target_date}},
+                sort=[('date', -1)]
+            )
+            
+            if previous_record and previous_record['date'].year == target_date.year:
+                previous_cumulative = previous_record['yearly_cumulative_pl']
+            else:
+                # No previous record in same year, start fresh
+                previous_cumulative = 0.0
+        
+        # Calculate new cumulative
+        yearly_cumulative_pl = previous_cumulative + daily_pl
+        
+        # Store the record
+        DailyPLModel.upsert_daily(
+            date=target_date,
+            daily_pl=daily_pl,
+            yearly_cumulative_pl=yearly_cumulative_pl,
+            trade_count=positions_closed,  # Using positions as trade proxy
+            positions_closed=positions_closed
+        )
+        
+        logger.info(f"Calculated P/L for {target_date.date()}: Daily=${daily_pl:.2f}, YTD=${yearly_cumulative_pl:.2f}")
+        
+        return {
+            'date': target_date,
+            'daily_pl': daily_pl,
+            'yearly_cumulative_pl': yearly_cumulative_pl,
+            'positions_closed': positions_closed
+        }
+    
+    @staticmethod
+    def get_yearly_summary(year: int = None) -> Dict:
+        """
+        Get summary statistics for a year.
+        
+        Args:
+            year: Year to summarize (defaults to current year)
+            
+        Returns:
+            Dict with year summary
+        """
+        collection = DailyPLModel.get_collection()
+        
+        if year is None:
+            year = datetime.utcnow().year
+        
+        year_start = datetime(year, 1, 1)
+        year_end = datetime(year, 12, 31, 23, 59, 59)
+        
+        records = list(collection.find({
+            'date': {'$gte': year_start, '$lte': year_end}
+        }).sort('date', 1))
+        
+        if not records:
+            return {
+                'year': year,
+                'total_pl': 0.0,
+                'trading_days': 0,
+                'best_day': None,
+                'worst_day': None,
+                'average_daily_pl': 0.0
+            }
+        
+        daily_pls = [r['daily_pl'] for r in records]
+        
+        best_day_record = max(records, key=lambda x: x['daily_pl'])
+        worst_day_record = min(records, key=lambda x: x['daily_pl'])
+        
+        return {
+            'year': year,
+            'total_pl': records[-1]['yearly_cumulative_pl'],  # Last record has final cumulative
+            'trading_days': len(records),
+            'best_day': {
+                'date': best_day_record['date'],
+                'pl': best_day_record['daily_pl']
+            },
+            'worst_day': {
+                'date': worst_day_record['date'],
+                'pl': worst_day_record['daily_pl']
+            },
+            'average_daily_pl': sum(daily_pls) / len(daily_pls) if daily_pls else 0.0
+        }
+

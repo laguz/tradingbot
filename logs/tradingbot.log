@@ -3247,3 +3247,32 @@ Error message(s): ["dlopen(/Library/Frameworks/Python.framework/Versions/3.14/li
 2025-12-10 00:53:12 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
 2025-12-10 00:53:12 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
 2025-12-10 00:53:12 - tradingbot - INFO - ml_service.py:437 - Predictions complete for TSLA: [134.56]
+2025-12-10 01:00:26 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 01:00:26 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 01:00:27 - tradingbot - INFO - database.py:87 - MongoDB indexes created successfully
+2025-12-10 01:00:27 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 01:00:27 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 01:00:27 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 01:00:41 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 01:00:41 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 01:00:43 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-10 01:00:43 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 01:00:43 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 01:00:43 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 01:01:53 - tradingbot - DEBUG - mongodb_models.py:794 - Upserted daily P/L for 2025-01-15: $500.75
+2025-12-10 01:01:54 - tradingbot - DEBUG - mongodb_models.py:794 - Upserted daily P/L for 2025-01-16: $1000.00
+2025-12-10 01:01:54 - tradingbot - INFO - mongodb_models.py:910 - Calculated P/L for 2025-01-16: Daily=$1000.00, YTD=$1500.75
+2025-12-10 01:01:54 - tradingbot - DEBUG - mongodb_models.py:794 - Upserted daily P/L for 2026-01-01: $0.00
+2025-12-10 01:01:54 - tradingbot - INFO - mongodb_models.py:910 - Calculated P/L for 2026-01-01: Daily=$0.00, YTD=$0.00
+2025-12-10 01:04:58 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 01:04:58 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 01:05:00 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-10 01:05:00 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 01:05:00 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 01:05:00 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-10 01:05:02 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-10 01:05:02 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-10 01:05:03 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-10 01:05:03 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-10 01:05:03 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-10 01:05:03 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader

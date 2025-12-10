@@ -84,6 +84,10 @@ def _create_indexes():
         mongo_db.user_profiles.create_index([('pubkey', 1)], unique=True)
         mongo_db.user_profiles.create_index([('username', 1)], unique=True, sparse=True)
         
+        # DailyPL indexes
+        mongo_db.daily_pl.create_index([('date', -1)], unique=True)
+        mongo_db.daily_pl.create_index([('date', 1)])  # For range queries
+        
         logger.info("MongoDB indexes created successfully")
     except Exception as e:
         logger.warning(f"Could not create some MongoDB indexes: {e}")
