@@ -35,8 +35,8 @@ class RiskManager:
         if self.emergency_stop:
             return False, "Emergency stop activated"
         
-        # Check if auto-trading is enabled
-        if not config.AUTO_TRADE_ENABLED:
+        # Check if auto-trading is enabled (or if execution is skipped via dry run)
+        if not config.AUTO_TRADE_ENABLED and not config.AUTO_TRADE_DRY_RUN:
             return False, "Auto-trading is disabled in config"
         
         # Update daily P&L
