@@ -23,6 +23,7 @@ from services.stock_data_service import get_historical_data
 from services.ml_features import prepare_features, get_feature_count
 from services.ml_evaluation import save_prediction_to_db, get_feature_importance
 from services.models.lstm_model import LSTMModel
+from services.ml_top_features import TOP_10_FEATURES
 from config import get_config
 from utils.logger import logger
 
@@ -32,7 +33,7 @@ config = get_config()
 os.makedirs(config.ML_MODEL_DIR, exist_ok=True)
 
 # Model version for tracking
-MODEL_VERSION = "2.2-lstm"
+MODEL_VERSION = "2.3-weighted-top10"
 
 
 def create_model():
@@ -100,6 +101,8 @@ def train_model(X, y):
     """
     Train the ML model on provided features and targets.
     
+    Time-weighted training: 80% weight to last 4 months, 20% to older data.
+    
     Args:
         X: Feature DataFrame
         y: Target DataFrame (5 columns for 5-day predictions)
@@ -109,9 +112,28 @@ def train_model(X, y):
     """
     logger.info(f"Training model on {len(X)} samples with {X.shape[1]} features")
     
-    # Train ensemble
+    # Calculate sample weights: 80% to last 4 months, 20% to older
+    total_samples = len(X)
+    four_months_samples = min(int(total_samples * 0.33), total_samples)  # ~4 months ≈ 80 trading days ≈ 33% of 252
+    
+    sample_weights = np.ones(total_samples)
+    # Recent data (last 4 months): higher weight
+    sample_weights[-four_months_samples:] = 4.0  # 80% total weight
+    # Older data: lower weight  
+    sample_weights[:-four_months_samples] = 1.0  # 20% total weight
+    
+    # Normalize weights
+    sample_weights = sample_weights / sample_weights.sum() * total_samples
+    
+    logger.info(f"Sample weighting: {four_months_samples} recent samples (4.0x weight), {total_samples - four_months_samples} older samples (1.0x weight)")
+    
+    # Train ensemble with sample weights
     ensemble_model = create_model()
-    ensemble_model.fit(X, y)
+    
+    # Extract target (single column for single-day prediction)
+    y_values = y.iloc[:, 0] if hasattr(y, 'iloc') else y
+    
+    ensemble_model.fit(X, y_values, sample_weight=sample_weights)
     
     # Train LSTM
     lstm_model = LSTMModel(input_size=X.shape[1])
@@ -308,13 +330,34 @@ def predict_next_days(ticker, days=5, force_retrain=False):
         # Prepare features and targets
         try:
             X, y, feature_names, scaler = prepare_features(df, for_training=True, prediction_horizon=1)
+            
+            # Filter to top 10 features only
+            available_features = [f for f in TOP_10_FEATURES if f in feature_names]
+            if len(available_features) < 10:
+                logger.warning(f"Only {len(available_features)}/10 top features available: {available_features}")
+            
+            X_filtered = X[available_features]
+            
+            # Re-fit scaler on filtered features only
+            if config.ML_ENABLE_NORMALIZATION:
+                from sklearn.preprocessing import StandardScaler
+                scaler = StandardScaler()
+                X_scaled = scaler.fit_transform(X_filtered)
+                X = pd.DataFrame(X_scaled, columns=available_features, index=X_filtered.index)
+            else:
+                X = X_filtered
+                scaler = None
+            
+            feature_names = available_features
+            logger.info(f"Using top {len(feature_names)} features: {feature_names}")
+            
         except ValueError as e:
             logger.error(f"Feature preparation failed: {e}")
             return {'error': str(e)}
         
-        if len(X) < config.ML_MIN_TRAIN_SIZE:
-            logger.error(f"Insufficient training data: {len(X)} samples (need {config.ML_MIN_TRAIN_SIZE})")
-            return {'error': 'Insufficient training data.'}
+        if len(X) < config.ML_MIN_TRAIN_SAMPLES:
+            logger.error(f"Insufficient training samples: {len(X)} (need {config.ML_MIN_TRAIN_SAMPLES})") 
+            return {'error': 'Insufficient training data after feature engineering.'}
         
         # Train model
         models = train_model(X, y)
@@ -348,13 +391,16 @@ def predict_next_days(ticker, days=5, force_retrain=False):
     try:
         X_full, _, _, pred_scaler = prepare_features(df, for_training=False)
         
+        # Filter to same features used in training
+        X_full_filtered = X_full[[f for f in feature_names if f in X_full.columns]]
+        
         # Use the cached scaler if available, otherwise use the one just created
         if scaler is not None and config.ML_ENABLE_NORMALIZATION:
             # Re-scale with cached scaler
-            X_scaled = scaler.transform(X_full[feature_names])
-            X_current = pd.DataFrame(X_scaled, columns=feature_names, index=X_full.index)
+            X_scaled = scaler.transform(X_full_filtered)
+            X_current = pd.DataFrame(X_scaled, columns=feature_names, index=X_full_filtered.index)
         else:
-            X_current = X_full[feature_names]
+            X_current = X_full_filtered
         
         # Get the last row for prediction
         X_last = X_current.iloc[[-1]]
@@ -375,8 +421,9 @@ def predict_next_days(ticker, days=5, force_retrain=False):
             
         prediction_val = ensemble_pred
         
-        # LSTM prediction
-        if lstm_model:
+        # LSTM prediction - DISABLED due to scaling issues
+        # TODO: Fix LSTM target scaling before re-enabling
+        if lstm_model and False:  # Temporarily disabled
             try:
                 lstm_pred = lstm_model.predict(X_current) # Uses sequence from X_current
                 if lstm_pred is not None:
@@ -387,6 +434,29 @@ def predict_next_days(ticker, days=5, force_retrain=False):
                 logger.warning(f"LSTM prediction failed: {e}")
         
         predictions = [prediction_val]
+        
+        # Validate prediction is within reasonable bounds
+        last_close = float(df['Close'].iloc[-1])
+        max_deviation_pct = config.ML_PREDICTION_BOUNDS_PCT
+        lower_bound = last_close * (1 - max_deviation_pct / 100)
+        upper_bound = last_close * (1 + max_deviation_pct / 100)
+        
+        if not (lower_bound <= prediction_val <= upper_bound):
+            deviation_pct = abs((prediction_val - last_close) / last_close * 100)
+            logger.error(f"Prediction ${prediction_val:.2f} is {deviation_pct:.1f}% from last close ${last_close:.2f}")
+            logger.error(f"Expected range: ${lower_bound:.2f} - ${upper_bound:.2f}")
+            logger.warning("Prediction outside bounds - forcing model retrain")
+            
+            # Force retrain and try again (only once to avoid infinite loop)
+            if not force_retrain:
+                return predict_next_days(ticker, days=days, force_retrain=True)
+            else:
+                # Even after retrain, still bad - return error
+                return {
+                    'error': f'Prediction validation failed: prediction ${prediction_val:.2f} is {deviation_pct:.1f}% from last close ${last_close:.2f}. Model may need more data or tuning.'
+                }
+        
+        logger.info(f"Prediction validated: ${prediction_val:.2f} (last close: ${last_close:.2f}, {((prediction_val/last_close - 1) * 100):+.1f}%)")
         
         # Calculate prediction intervals (using ensemble variance)
         intervals = calculate_prediction_intervals(ensemble_model, X_last)

@@ -74,7 +74,7 @@ class Config:
     
     # ML Model Configuration
     ML_MODEL_DIR = 'models'
-    ML_RETRAIN_DAYS = 7       # Retrain model every N days
+    ML_RETRAIN_DAYS = 7       # Retrain model if older than N days (keeps models fresh)
     ML_CACHE_HOURS = 24       # Cache predictions for N hours
     
     # ML Model Hyperparameters
@@ -95,6 +95,8 @@ class Config:
     # ML Validation
     ML_VALIDATION_SPLITS = 5
     ML_MIN_TRAIN_SIZE = 252   # Minimum 1 year training data
+    ML_PREDICTION_BOUNDS_PCT = 30  # Max % deviation from last close for predictions
+    ML_MIN_TRAIN_SAMPLES = 100  # Minimum samples after feature engineering
     
     # Automated Trading Configuration
     AUTO_TRADE_ENABLED = False  # Master switch - KEEP FALSE UNTIL TESTED

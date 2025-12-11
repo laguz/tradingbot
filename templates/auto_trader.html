@@ -79,13 +79,16 @@
                                 <th>Symbol</th>
                                 <th>Strategy</th>
                                 <th>Details</th>
+                                <th>Entry Price</th>
+                                <th>Exit Price</th>
+                                <th>P/L</th>
                                 <th>Confidence</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody id="tradesTable">
                             <tr>
-                                <td colspan="6" class="text-center">Loading...</td>
+                                <td colspan="9" class="text-center">Loading...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -137,15 +140,58 @@
         const tbody = document.getElementById('tradesTable');
 
         if (trades.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="text-center">No trades yet</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9" class="text-center">No trades yet</td></tr>';
             return;
         }
 
         tbody.innerHTML = trades.map(trade => {
             const time = new Date(trade.timestamp).toLocaleString();
-            const details = trade.details ? `${trade.details.strike || ''} ${trade.details.option_type || ''}` : '';
+            const details = trade.details ? `${trade.details.strike || trade.details.short_strike || ''} ${trade.details.option_type || ''}` : '';
             const conf = (trade.ml_confidence * 100).toFixed(0) + '%';
             const status = trade.dry_run ? '🧪 Dry Run' : (trade.result?.success ? '✓ Success' : '✗ Failed');
+
+            // Extract entry price from order details or result
+            let entryPrice = '-';
+            let entryPriceNum = 0;
+            if (trade.details && trade.details.price) {
+                entryPriceNum = parseFloat(trade.details.price);
+                entryPrice = `$${entryPriceNum.toFixed(2)}`;
+            } else if (trade.result && trade.result.order && trade.result.order.avg_fill_price) {
+                entryPriceNum = parseFloat(trade.result.order.avg_fill_price);
+                entryPrice = `$${entryPriceNum.toFixed(2)}`;
+            } else if (trade.result && trade.result.avg_fill_price) {
+                entryPriceNum = parseFloat(trade.result.avg_fill_price);
+                entryPrice = `$${entryPriceNum.toFixed(2)}`;
+            }
+
+            // Extract exit price if position was closed
+            let exitPrice = '-';
+            let exitPriceNum = 0;
+            if (trade.action === 'close' && trade.details && trade.details.price) {
+                exitPriceNum = parseFloat(trade.details.price);
+                exitPrice = `$${exitPriceNum.toFixed(2)}`;
+            } else if (trade.result && trade.result.exit_price) {
+                exitPriceNum = parseFloat(trade.result.exit_price);
+                exitPrice = `$${exitPriceNum.toFixed(2)}`;
+            }
+
+            // Calculate P/L
+            let pnl = '-';
+            let pnlClass = '';
+            const quantity = trade.details?.quantity || 1;
+
+            if (trade.action === 'close' && entryPriceNum > 0 && exitPriceNum > 0) {
+                // For closing: sold at entry, bought back at exit
+                // P/L = (entry - exit) * quantity * 100 (options are 100 shares per contract)
+                const pnlValue = (entryPriceNum - exitPriceNum) * quantity * 100;
+                pnl = `$${pnlValue.toFixed(2)}`;
+                pnlClass = pnlValue >= 0 ? 'text-success' : 'text-danger';
+            } else if (trade.action === 'open' && entryPriceNum > 0) {
+                // For opening (sell to open): credit received
+                const pnlValue = entryPriceNum * quantity * 100;
+                pnl = `$${pnlValue.toFixed(2)}`;
+                pnlClass = 'text-success'; // Credit received
+            }
 
             return `
       <tr>
@@ -153,6 +199,9 @@
         <td>${trade.symbol}</td>
         <td>${trade.strategy}</td>
         <td>${details}</td>
+        <td>${entryPrice}</td>
+        <td>${exitPrice}</td>
+        <td class="${pnlClass}">${pnl}</td>
         <td>${conf}</td>
         <td>${status}</td>
       </tr>

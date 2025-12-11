@@ -378,23 +378,41 @@ def backfill_actual_prices(auto_sync=True):
                                 })
                                 logger.debug(f"Matched {symbol} on {target_date_only}: ${actual_price:.2f}")
                             else:
-                                # Try to find nearest date (in case of holidays/weekends)
+                                # Try to find nearest date (in case of holidays/weekends or data not yet available)
                                 nearest_idx = df.index.searchsorted(target_ts)
+                                
+                                # Find candidates: next date (if exists) and previous date (if exists)
+                                candidates = []
+                                
+                                # Check date after target (forward)
                                 if nearest_idx < len(df):
-                                    # Check if within 3 days
-                                    nearest_date = df.index[nearest_idx]
-                                    days_diff = abs((nearest_date - target_ts).days)
+                                    forward_date = df.index[nearest_idx]
+                                    forward_diff = abs((forward_date - target_ts).days)
+                                    candidates.append((forward_date, forward_diff, 'forward'))
+                                
+                                # Check date before target (backward)
+                                if nearest_idx > 0:
+                                    backward_date = df.index[nearest_idx - 1]
+                                    backward_diff = abs((backward_date - target_ts).days)
+                                    candidates.append((backward_date, backward_diff, 'backward'))
+                                
+                                # Use the closest date that's within 3 days
+                                if candidates:
+                                    # Sort by days_diff (closest first)
+                                    candidates.sort(key=lambda x: x[1])
+                                    nearest_date, days_diff, direction = candidates[0]
+                                    
                                     if days_diff <= 3:
                                         actual_price = float(df.loc[nearest_date, 'Close'])
                                         updates.append({
                                             'id': str(pred['_id']),
                                             'actual_price': actual_price
                                         })
-                                        logger.debug(f"Matched {symbol} on {target_date_only} (used {nearest_date.date()}, {days_diff} days diff): ${actual_price:.2f}")
+                                        logger.debug(f"Matched {symbol} on {target_date_only} (used {nearest_date.date()}, {days_diff} days {direction}): ${actual_price:.2f}")
                                     else:
                                         logger.debug(f"No close match for {symbol} on {target_date_only} (nearest: {days_diff} days)")
                                 else:
-                                    logger.debug(f"No data available for {symbol} after {target_date_only}")
+                                    logger.debug(f"No data available for {symbol} near {target_date_only}")
                 
             except Exception as e:
                 logger.error(f"Error fetching data for {symbol}: {e}")
