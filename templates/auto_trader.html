@@ -13,7 +13,7 @@
                 <div class="card bg-dark text-light">
                     <div class="card-body">
                         <h6 class="text-muted">Status</h6>
-                        <h4 id="botStatus">Loading...</h4>
+                        <h4 id="botStatus" aria-live="polite" aria-atomic="true">Loading...</h4>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <div class="card bg-dark text-light">
                     <div class="card-body">
                         <h6 class="text-muted">Daily P&L</h6>
-                        <h4 id="dailyPnl">$0.00</h4>
+                        <h4 id="dailyPnl" aria-live="polite" aria-atomic="true">$0.00</h4>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 <div class="card bg-dark text-light">
                     <div class="card-body">
                         <h6 class="text-muted">Positions</h6>
-                        <h4 id="positions">0/0</h4>
+                        <h4 id="positions" aria-live="polite" aria-atomic="true">0/0</h4>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <div class="card bg-dark text-light">
                     <div class="card-body">
                         <h6 class="text-muted">Today's Trades</h6>
-                        <h4 id="todayTrades">0</h4>
+                        <h4 id="todayTrades" aria-live="polite" aria-atomic="true">0</h4>
                     </div>
                 </div>
             </div>
@@ -50,14 +50,17 @@
             </div>
             <div class="card-body">
                 <div class="d-flex gap-2 mb-3">
-                    <button id="runBtn" class="btn btn-success" onclick="runBot()">
-                        <i class="fas fa-play me-2"></i>Run Now
+                    <button id="runBtn" class="btn btn-success btn-ripple" onclick="runBot()"
+                        aria-label="Run trading bot now">
+                        <i class="fas fa-play me-2" aria-hidden="true"></i>Run Now
                     </button>
-                    <button id="emergencyBtn" class="btn btn-danger" onclick="emergencyStop()">
-                        <i class="fas fa-stop-circle me-2"></i>Emergency Stop
+                    <button id="emergencyBtn" class="btn btn-danger btn-ripple" onclick="emergencyStop()"
+                        aria-label="Emergency stop all trading">
+                        <i class="fas fa-stop-circle me-2" aria-hidden="true"></i>Emergency Stop
                     </button>
-                    <button id="resumeBtn" class="btn btn-warning" onclick="resume()" style="display:none;">
-                        <i class="fas fa-play-circle me-2"></i>Resume
+                    <button id="resumeBtn" class="btn btn-warning btn-ripple" onclick="resume()" style="display:none;"
+                        aria-label="Resume trading after emergency stop">
+                        <i class="fas fa-play-circle me-2" aria-hidden="true"></i>Resume
                     </button>
                 </div>
 
@@ -221,13 +224,13 @@
             const data = await response.json();
 
             if (data.success) {
-                alert('Bot started! Check the logs for progress.');
+                toastSuccess('Bot started! Check the logs for progress.');
                 setTimeout(loadStatus, 2000);
             } else {
-                alert('Error: ' + data.error);
+                toastError('Error: ' + data.error);
             }
         } catch (error) {
-            alert('Error: ' + error.message);
+            toastError('Error: ' + error.message);
         } finally {
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-play me-2"></i>Run Now';
@@ -242,11 +245,13 @@
             const data = await response.json();
 
             if (data.success) {
-                alert('Emergency stop activated!');
+                toastWarning('⚠️ Emergency stop activated!', 6000);
                 loadStatus();
+            } else {
+                toastError('Failed to activate emergency stop');
             }
         } catch (error) {
-            alert('Error: ' + error.message);
+            toastError('Error: ' + error.message);
         }
     }
 
@@ -258,11 +263,13 @@
             const data = await response.json();
 
             if (data.success) {
-                alert('Trading resumed!');
+                toastSuccess('Trading resumed!');
                 loadStatus();
+            } else {
+                toastError('Failed to resume trading');
             }
         } catch (error) {
-            alert('Error: ' + error.message);
+            toastError('Error: ' + error.message);
         }
     }
 

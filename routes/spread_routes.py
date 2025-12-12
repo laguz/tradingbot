@@ -36,12 +36,38 @@ def submit_vertical_spread():
         # --- Auto-Submission Logic ---
         if form_data.get('auto_strikes'):
             try:
+                from services.tradier_service import get_historical_data, get_option_chain, get_current_price
+                
+                # Fetch necessary data for smart strike calculation
+                symbol = form_data['symbol']
+                expiration = form_data['expiration']
+                option_type = form_data['option_type']
+                
+                historical_data = get_historical_data(symbol, '6m')
+                option_chain = get_option_chain(symbol, expiration)
+                current_price = get_current_price(symbol)
+                
+                if not historical_data or not option_chain:
+                    flash('Could not fetch necessary market data for auto-selection', 'danger')
+                    return redirect(url_for('spreads.submit_vertical_spread'))
+                
+                if isinstance(current_price, dict):  # Error response
+                    current_price = historical_data['data'][-1]
+                
+                # Filter chain for correct option type
+                chain = [opt for opt in option_chain if opt['option_type'] == option_type]
+                available_strikes = sorted(list(set([opt['strike'] for opt in chain])))
+                
                 short_strike, long_strike, trigger_level = calculate_smart_strikes(
-                    form_data['symbol'],
-                    form_data['expiration'],
-                    form_data['spread_type'],
-                    form_data['option_type'],
-                    float(form_data['spread_width'])
+                    symbol=symbol,
+                    expiration=expiration,
+                    spread_type=form_data['spread_type'],
+                    option_type=option_type,
+                    width=float(form_data['spread_width']),
+                    current_price=current_price,
+                    support_levels=historical_data.get('support', []),
+                    resistance_levels=historical_data.get('resistance', []),
+                    available_strikes=available_strikes
                 )
                 form_data['short_strike'] = str(short_strike)
                 form_data['long_strike'] = str(long_strike)
@@ -138,12 +164,36 @@ def calculate_auto_order():
         # Pick the first one (soonest)
         best_expiration = valid_expirations[0]
         
+        # Fetch necessary data for smart strike calculation
+        from services.tradier_service import get_historical_data, get_option_chain, get_current_price
+        
+        historical_data = get_historical_data(symbol, '6m')
+        option_chain = get_option_chain(symbol, best_expiration)
+        current_price = get_current_price(symbol)
+        
+        if not historical_data or not option_chain:
+            return jsonify({'error': 'Could not fetch necessary market data'}), 500
+        
+        if isinstance(current_price, dict):  # Error response
+            current_price = historical_data['data'][-1]
+        
+        # Filter chain for correct option type
+        chain = [opt for opt in option_chain if opt['option_type'] == option_type]
+        available_strikes = sorted(list(set([opt['strike'] for opt in chain])))
+        
+        if not available_strikes:
+            return jsonify({'error': 'No available strikes found'}), 500
+        
         short_strike, long_strike, trigger_level = calculate_smart_strikes(
-            symbol,
-            best_expiration,
-            spread_type,
-            option_type,
-            width=5.0 # Fixed 5-wide spread
+            symbol=symbol,
+            expiration=best_expiration,
+            spread_type=spread_type,
+            option_type=option_type,
+            width=5.0,
+            current_price=current_price,
+            support_levels=historical_data.get('support', []),
+            resistance_levels=historical_data.get('resistance', []),
+            available_strikes=available_strikes
         )
         
         return jsonify({
@@ -246,14 +296,38 @@ def calculate_wheel():
             
         best_expiration = valid_expirations[0]
         
+        # Fetch necessary data for smart strike calculation
+        from services.tradier_service import get_historical_data, get_option_chain, get_current_price
+        
+        historical_data = get_historical_data(symbol, '6m')
+        option_chain = get_option_chain(symbol, best_expiration)
+        current_price = get_current_price(symbol)
+        
+        if not historical_data or not option_chain:
+            return jsonify({'error': 'Could not fetch necessary market data'}), 500
+        
+        if isinstance(current_price, dict):  # Error response
+            current_price = historical_data['data'][-1]
+        
+        # Filter chain for correct option type
+        chain = [opt for opt in option_chain if opt['option_type'] == option_type]
+        available_strikes = sorted(list(set([opt['strike'] for opt in chain])))
+        
+        if not available_strikes:
+            return jsonify({'error': 'No available strikes found'}), 500
+        
         # Reuse calculate_smart_strikes to get the short strike
         # We ignore long_strike since this is a single leg
         short_strike, _, trigger_level = calculate_smart_strikes(
-            symbol,
-            best_expiration,
-            spread_type,
-            option_type,
-            width=5.0 # Width doesn't matter for short strike calculation
+            symbol=symbol,
+            expiration=best_expiration,
+            spread_type=spread_type,
+            option_type=option_type,
+            width=5.0,
+            current_price=current_price,
+            support_levels=historical_data.get('support', []),
+            resistance_levels=historical_data.get('resistance', []),
+            available_strikes=available_strikes
         )
         
         return jsonify({

@@ -14,16 +14,16 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="ticker" class="form-label">Ticker Symbol</label>
-                            <input type="text" class="form-control" id="ticker" name="ticker" 
-                                   value="{{ ticker if ticker != 'All' else '' }}" placeholder="Leave empty for all">
+                            <input type="text" class="form-control" id="ticker" name="ticker"
+                                value="{{ ticker if ticker != 'All' else '' }}" placeholder="Leave empty for all">
                         </div>
                         <div class="col-md-4">
                             <label for="days" class="form-label">Time Period (days)</label>
                             <select class="form-select" id="days" name="days">
-                                <option value="7" {% if days == 7 %}selected{% endif %}>7 days</option>
-                                <option value="30" {% if days == 30 %}selected{% endif %}>30 days</option>
-                                <option value="60" {% if days == 60 %}selected{% endif %}>60 days</option>
-                                <option value="90" {% if days == 90 %}selected{% endif %}>90 days</option>
+                                <option value="7" {% if days==7 %}selected{% endif %}>7 days</option>
+                                <option value="30" {% if days==30 %}selected{% endif %}>30 days</option>
+                                <option value="60" {% if days==60 %}selected{% endif %}>60 days</option>
+                                <option value="90" {% if days==90 %}selected{% endif %}>90 days</option>
                             </select>
                         </div>
                         <div class="col-md-2 d-flex align-items-end">
@@ -39,14 +39,16 @@
             <div class="card-body">
                 <h6 class="card-title">Actions</h6>
                 <div class="d-flex gap-2">
-                    <button class="btn btn-secondary" onclick="backfillPrices()">
-                        <i class="fas fa-sync-alt"></i> Backfill Prices
+                    <button class="btn btn-secondary btn-ripple" onclick="backfillPrices()"
+                        aria-label="Backfill actual stock prices">
+                        <i class="fas fa-sync-alt" aria-hidden="true"></i> Backfill Prices
                     </button>
-                    <button class="btn btn-info" onclick="runValidation()">
-                        <i class="fas fa-chart-line"></i> Run Validation
+                    <button class="btn btn-info btn-ripple" onclick="runValidation()"
+                        aria-label="Run ML model validation">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i> Run Validation
                     </button>
                 </div>
-                <small id="action-status" class="text-muted"></small>
+                <small id="action-status" class="text-muted" role="status" aria-live="polite"></small>
             </div>
         </div>
     </div>
@@ -86,7 +88,8 @@
         <div class="card">
             <div class="card-body text-center">
                 <h6 class="text-muted">Directional Accuracy</h6>
-                <h3 class="fw-bold {% if performance.directional_accuracy >= 55 %}text-success{% else %}text-warning{% endif %}">
+                <h3
+                    class="fw-bold {% if performance.directional_accuracy >= 55 %}text-success{% else %}text-warning{% endif %}">
                     {{ "%.1f"|format(performance.directional_accuracy) }}%
                 </h3>
                 <small class="text-muted">Correct up/down calls</small>
@@ -103,7 +106,7 @@
                 <p class="mb-1"><strong>Ticker:</strong> {{ performance.ticker }}</p>
                 <p class="mb-1"><strong>Period:</strong> Last {{ performance.period_days }} days</p>
                 <p class="mb-1"><strong>Total Predictions:</strong> {{ performance.num_predictions }}</p>
-                <p class="mb-0"><strong>Average Confidence:</strong> 
+                <p class="mb-0"><strong>Average Confidence:</strong>
                     {{ "%0.2f"|format(performance.avg_confidence) if performance.avg_confidence else 'N/A' }}
                 </p>
             </div>
@@ -147,16 +150,16 @@
                                 <td>${{ "%.2f"|format(pred.predicted_price) }}</td>
                                 <td>
                                     {% if pred.actual_price %}
-                                        ${{ "%.2f"|format(pred.actual_price) }}
+                                    ${{ "%.2f"|format(pred.actual_price) }}
                                     {% else %}
-                                        <span class="text-muted">Pending</span>
+                                    <span class="text-muted">Pending</span>
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if pred.error %}
-                                        ${{ "%.2f"|format(pred.error) }}
+                                    ${{ "%.2f"|format(pred.error) }}
                                     {% else %}
-                                        <span class="text-muted">-</span>
+                                    <span class="text-muted">-</span>
                                     {% endif %}
                                 </td>
                                 <td><small class="badge bg-primary">{{ pred.model_version }}</small></td>
@@ -196,53 +199,56 @@
 
 <!-- JavaScript -->
 <script>
-function backfillPrices() {
-    document.getElementById('action-status').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Backfilling...';
-    
-    fetch('/api/ml/backfill', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'}
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById('action-status').innerHTML = 
-                '<i class="fas fa-check-circle text-success"></i> ' + data.message;
-            setTimeout(() => location.reload(), 2000);
-        } else {
-            document.getElementById('action-status').innerHTML = 
-                '<i class="fas fa-times-circle text-danger"></i> Error: ' + data.error;
-        }
-    })
-    .catch(error => {
-        document.getElementById('action-status').innerHTML = 
-            '<i class="fas fa-times-circle text-danger"></i> Request failed';
-    });
-}
+    function backfillPrices() {
+        document.getElementById('action-status').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Backfilling...';
 
-function runValidation() {
-    const ticker = '{{ ticker if ticker != "All" else "SPY" }}';
-    
-    document.getElementById('action-status').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running validation...';
-    
-    // Show modal
-    const modal = new bootstrap.Modal(document.getElementById('validationModal'));
-    modal.show();
-    
-    fetch(`/api/ml/validate/${ticker}`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            train_size: 252,
-            test_size: 21,
-            n_splits: 5
+        fetch('/api/ml/backfill', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Format results HTML
-            let html = `
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('action-status').innerHTML =
+                        '<i class="fas fa-check-circle text-success"></i> ' + data.message;
+                    toastSuccess('Backfill completed: ' + data.message);
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    document.getElementById('action-status').innerHTML =
+                        '<i class="fas fa-times-circle text-danger"></i> Error: ' + data.error;
+                    toastError('Backfill failed: ' + data.error);
+                }
+            })
+            .catch(error => {
+                document.getElementById('action-status').innerHTML =
+                    '<i class="fas fa-times-circle text-danger"></i> Request failed';
+                toastError('Request failed: ' + error.message);
+            });
+    }
+
+    function runValidation() {
+        const ticker = '{{ ticker if ticker != "All" else "SPY" }}';
+
+        document.getElementById('action-status').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running validation...';
+
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('validationModal'));
+        modal.show();
+
+        fetch(`/api/ml/validate/${ticker}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                train_size: 252,
+                test_size: 21,
+                n_splits: 5
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Format results HTML
+                    let html = `
                 <h5>${data.ticker} Validation Summary</h5>
                 <div class="row mb-3">
                     <div class="col-md-4">
@@ -276,9 +282,9 @@ function runValidation() {
                     </thead>
                     <tbody>
             `;
-            
-            data.results.forEach(r => {
-                html += `
+
+                    data.results.forEach(r => {
+                        html += `
                     <tr>
                         <td>${r.split}</td>
                         <td>${r.test_period}</td>
@@ -287,26 +293,26 @@ function runValidation() {
                         <td>${r.directional_accuracy}%</td>
                     </tr>
                 `;
+                    });
+
+                    html += '</tbody></table>';
+                    document.getElementById('validation-results').innerHTML = html;
+                    document.getElementById('action-status').innerHTML =
+                        '<i class="fas fa-check-circle text-success"></i> Validation complete';
+                } else {
+                    document.getElementById('validation-results').innerHTML =
+                        '<div class="alert alert-danger">Error: ' + data.error + '</div>';
+                    document.getElementById('action-status').innerHTML =
+                        '<i class="fas fa-times-circle text-danger"></i> Validation failed';
+                }
+            })
+            .catch(error => {
+                document.getElementById('validation-results').innerHTML =
+                    '<div class="alert alert-danger">Request failed</div>';
+                document.getElementById('action-status').innerHTML =
+                    '<i class="fas fa-times-circle text-danger"></i> Request failed';
             });
-            
-            html += '</tbody></table>';
-            document.getElementById('validation-results').innerHTML = html;
-            document.getElementById('action-status').innerHTML = 
-                '<i class="fas fa-check-circle text-success"></i> Validation complete';
-        } else {
-            document.getElementById('validation-results').innerHTML = 
-                '<div class="alert alert-danger">Error: ' + data.error + '</div>';
-            document.getElementById('action-status').innerHTML = 
-                '<i class="fas fa-times-circle text-danger"></i> Validation failed';
-        }
-    })
-    .catch(error => {
-        document.getElementById('validation-results').innerHTML = 
-            '<div class="alert alert-danger">Request failed</div>';
-        document.getElementById('action-status').innerHTML = 
-            '<i class="fas fa-times-circle text-danger"></i> Request failed';
-    });
-}
+    }
 </script>
 
 {% endblock %}

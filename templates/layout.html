@@ -21,6 +21,8 @@
 </head>
 
 <body>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark-glass">
     <div class="container-fluid">
@@ -60,9 +62,15 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
+          <!-- Theme Toggle Button -->
+          <li class="nav-item">
+            <button id="theme-toggle" class="btn btn-sm" aria-label="Toggle theme">
+              <i class="fas fa-sun"></i>
+            </button>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="{{ url_for('auth.profile') }}" id="userDropdown" role="button"
-              data-mdb-toggle="dropdown">
+              data-mdb-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-user-circle me-1"></i>
               {% if current_user.is_authenticated %}
               {{ current_user.get_display_name() }}
@@ -70,7 +78,7 @@
               Guest
               {% endif %}
             </a>
-            <ul class="dropdown-menu dropdown-menu-end">
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               {% if current_user.is_authenticated %}
               <li><a class="dropdown-item" href="{{ url_for('auth.profile') }}"><i
                     class="fas fa-user-cog me-2"></i>Profile</a></li>
@@ -89,11 +97,20 @@
       </div>
     </div>
   </nav>
-  <main class="container mt-4">
+
+  <main id="main-content" class="container mt-4" role="main">
     {% block content %}
     {% endblock %}
   </main>
+
+  <!-- Toast container for notifications -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Scripts -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/toast.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/animations.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename='js/custom.js') }}"></script>
   {% block scripts %}{% endblock %}
 </body>

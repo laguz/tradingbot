@@ -6966,3 +6966,813 @@ Feature names seen at fit time, yet now missing:
 2025-12-10 22:14:28 - tradingbot - INFO - tradier_service.py:748 - Starting auto-close position check
 2025-12-10 22:14:29 - tradingbot - DEBUG - tradier_service.py:777 - Current time in EST: 2025-12-10 22:14:29.582720-05:00, past noon: True
 2025-12-10 22:14:29 - tradingbot - INFO - tradier_service.py:861 - Auto-close check complete: 7 checked, 0 closed, 0 errors
+2025-12-10 23:02:31 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-10 23:02:32 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-10 23:02:41 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 5 resistances (Strong supports: 0)
+2025-12-10 23:39:55 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-10 23:39:55 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-10 23:40:13 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-10 23:40:13 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-10 23:40:13 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-10 23:40:13 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 0 days)
+2025-12-10 23:40:14 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-10 23:40:14 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $443.98 (last close: $449.00, -1.1%)
+2025-12-10 23:40:14 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-10 23:40:14 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-10 23:40:14 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [443.98]
+2025-12-11 08:44:24 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-11 08:44:24 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-11 08:44:26 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-11 08:44:26 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-11 08:44:26 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-11 08:44:26 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-11 08:44:29 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-11 08:44:29 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-11 08:44:31 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-11 08:44:31 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-11 08:44:31 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-11 08:44:31 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-11 08:44:46 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-11 08:44:49 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 08:44:49 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-11 08:44:49 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 0 days)
+2025-12-11 08:44:49 - tradingbot - INFO - stock_data_service.py:93 - Data for TSLA is stale (2 days old), updating
+2025-12-11 08:44:49 - tradingbot - INFO - stock_data_service.py:173 - Updating TSLA from 2025-12-10 to present
+2025-12-11 08:44:49 - tradingbot - DEBUG - mongodb_models.py:387 - Inserted 1 OHLCV records
+2025-12-11 08:44:49 - tradingbot - INFO - stock_data_service.py:46 - Saved 1 OHLCV records for TSLA
+2025-12-11 08:44:49 - tradingbot - INFO - stock_data_service.py:188 - Updated 1 new records for TSLA
+2025-12-11 08:44:50 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-11 08:44:50 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $445.76 (last close: $451.45, -1.3%)
+2025-12-11 08:44:50 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-11 08:44:50 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-11 08:44:50 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [445.76]
+2025-12-11 08:44:59 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-11 08:44:59 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 08:44:59 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-11 08:44:59 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 0 days)
+2025-12-11 08:44:59 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-11 08:45:00 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $445.76 (last close: $451.45, -1.3%)
+2025-12-11 08:45:00 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-11 08:45:00 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-11 08:45:00 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [445.76]
+2025-12-11 08:45:13 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-11 08:45:13 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 08:45:13 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-11 08:45:13 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 0 days)
+2025-12-11 08:45:14 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-11 08:45:14 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $445.76 (last close: $451.45, -1.3%)
+2025-12-11 08:45:14 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-11 08:45:14 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-11 08:45:14 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [445.76]
+2025-12-11 10:11:17 - tradingbot - INFO - ml_evaluation.py:263 - Found 4 predictions to backfill
+2025-12-11 10:11:18 - tradingbot - INFO - stock_data_service.py:93 - Data for RIOT is stale (2 days old), updating
+2025-12-11 10:11:18 - tradingbot - INFO - stock_data_service.py:173 - Updating RIOT from 2025-12-10 to present
+2025-12-11 10:11:18 - tradingbot - DEBUG - mongodb_models.py:387 - Inserted 2 OHLCV records
+2025-12-11 10:11:18 - tradingbot - INFO - stock_data_service.py:46 - Saved 2 OHLCV records for RIOT
+2025-12-11 10:11:18 - tradingbot - INFO - stock_data_service.py:188 - Updated 2 new records for RIOT
+2025-12-11 10:11:18 - tradingbot - INFO - stock_data_service.py:134 - Returning 63 records for RIOT from database
+2025-12-11 10:11:18 - tradingbot - DEBUG - ml_evaluation.py:379 - Matched RIOT on 2025-12-10: $15.57
+2025-12-11 10:11:19 - tradingbot - INFO - stock_data_service.py:134 - Returning 62 records for TSLA from database
+2025-12-11 10:11:19 - tradingbot - DEBUG - ml_evaluation.py:411 - Matched TSLA on 2025-12-11 (used 2025-12-10, 1 days backward): $451.45
+2025-12-11 10:11:19 - tradingbot - INFO - stock_data_service.py:93 - Data for SPY is stale (2 days old), updating
+2025-12-11 10:11:19 - tradingbot - INFO - stock_data_service.py:173 - Updating SPY from 2025-12-10 to present
+2025-12-11 10:11:20 - tradingbot - DEBUG - mongodb_models.py:387 - Inserted 2 OHLCV records
+2025-12-11 10:11:20 - tradingbot - INFO - stock_data_service.py:46 - Saved 2 OHLCV records for SPY
+2025-12-11 10:11:20 - tradingbot - INFO - stock_data_service.py:188 - Updated 2 new records for SPY
+2025-12-11 10:11:20 - tradingbot - INFO - stock_data_service.py:134 - Returning 63 records for SPY from database
+2025-12-11 10:11:20 - tradingbot - DEBUG - ml_evaluation.py:379 - Matched SPY on 2025-12-10: $687.57
+2025-12-11 10:11:20 - tradingbot - INFO - ml_evaluation.py:425 - Backfilled 4 predictions with actual prices
+2025-12-11 10:12:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:08 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:10 - tradingbot - INFO - automated_trader.py:28 - ============================================================
+2025-12-11 10:12:10 - tradingbot - INFO - automated_trader.py:29 - AUTOMATED TRADER STARTED
+2025-12-11 10:12:10 - tradingbot - INFO - automated_trader.py:30 - Time: 2025-12-11 10:12:10
+2025-12-11 10:12:10 - tradingbot - INFO - automated_trader.py:31 - Mode: DRY RUN
+2025-12-11 10:12:10 - tradingbot - INFO - automated_trader.py:32 - ============================================================
+2025-12-11 10:12:11 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:11 - tradingbot - INFO - automated_trader.py:42 - ✓ Risk checks passed - proceeding with trading
+2025-12-11 10:12:11 - tradingbot - INFO - automated_trader.py:45 - 
+--- Step 1: Analyzing Opportunities ---
+2025-12-11 10:12:11 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for SPY
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:311 - Starting prediction for SPY, days=1, version=2.3-weighted-top10
+2025-12-11 10:12:11 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 10:12:11 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/SPY_model_v2_lstm.pt
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:234 - Loaded models for SPY (age: 0 days)
+2025-12-11 10:12:11 - tradingbot - INFO - stock_data_service.py:134 - Returning 501 records for SPY from database
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $681.79 (last close: $682.75, -0.1%)
+2025-12-11 10:12:11 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-11 10:12:11 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for SPY to database
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:507 - Predictions complete for SPY: [681.79]
+2025-12-11 10:12:11 - tradingbot - INFO - trading_engine.py:86 - SPY: neutral (-0.14%), confidence: 0.01
+2025-12-11 10:12:11 - tradingbot - DEBUG - automated_trader.py:84 -   - SPY: No opportunity
+2025-12-11 10:12:11 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for QQQ
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:311 - Starting prediction for QQQ, days=1, version=2.3-weighted-top10
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:322 - Training new model for QQQ
+2025-12-11 10:12:11 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for QQQ from database
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:352 - Using top 10 features: ['Lag_1', 'Distance_SMA_200', 'BB_Lower', 'OBV', 'Lag_2', 'Lag_3', 'Lag_4', 'Lag_5', 'Signal_Line', 'BB_Upper']
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:113 - Training model on 300 samples with 10 features
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:128 - Sample weighting: 99 recent samples (4.0x weight), 201 older samples (1.0x weight)
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:45 - Creating ensemble model (RF + GBM + XGB)
+2025-12-11 10:12:11 - tradingbot - INFO - ml_service.py:79 - XGBoost included in ensemble
+2025-12-11 10:12:12 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 10:12:12 - tradingbot - INFO - ml_service.py:141 - Training LSTM model...
+2025-12-11 10:12:13 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [10/50], Loss: 298921.0625
+2025-12-11 10:12:13 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [20/50], Loss: 298284.9375
+2025-12-11 10:12:14 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:14 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [30/50], Loss: 296636.1875
+2025-12-11 10:12:14 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:15 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [40/50], Loss: 295000.0625
+2025-12-11 10:12:15 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [50/50], Loss: 293792.8750
+2025-12-11 10:12:15 - tradingbot - INFO - lstm_model.py:102 - LSTM training complete
+2025-12-11 10:12:15 - tradingbot - INFO - ml_service.py:147 - Model training complete
+2025-12-11 10:12:15 - tradingbot - INFO - lstm_model.py:125 - Saved LSTM model to models/QQQ_model_v2_lstm.pt
+2025-12-11 10:12:15 - tradingbot - INFO - ml_service.py:192 - Saved model v2.3-weighted-top10 for QQQ
+2025-12-11 10:12:15 - tradingbot - INFO - ml_service.py:380 - Top 10 features:
+            feature  importance
+7             Lag_5    0.886449
+0             Lag_1    0.058471
+4             Lag_2    0.030452
+5             Lag_3    0.006642
+8       Signal_Line    0.005709
+2          BB_Lower    0.004853
+9          BB_Upper    0.002565
+3               OBV    0.002564
+1  Distance_SMA_200    0.001379
+6             Lag_4    0.000915
+2025-12-11 10:12:15 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $622.49 (last close: $623.51, -0.2%)
+2025-12-11 10:12:15 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-11 10:12:15 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for QQQ to database
+2025-12-11 10:12:15 - tradingbot - INFO - ml_service.py:507 - Predictions complete for QQQ: [622.49]
+2025-12-11 10:12:15 - tradingbot - INFO - trading_engine.py:86 - QQQ: neutral (-0.16%), confidence: 0.02
+2025-12-11 10:12:15 - tradingbot - DEBUG - automated_trader.py:84 -   - QQQ: No opportunity
+2025-12-11 10:12:15 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for AAPL
+2025-12-11 10:12:15 - tradingbot - INFO - ml_service.py:311 - Starting prediction for AAPL, days=1, version=2.3-weighted-top10
+2025-12-11 10:12:15 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 10:12:15 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/AAPL_model_v2_lstm.pt
+2025-12-11 10:12:15 - tradingbot - INFO - ml_service.py:234 - Loaded models for AAPL (age: 0 days)
+2025-12-11 10:12:15 - tradingbot - INFO - stock_data_service.py:93 - Data for AAPL is stale (2 days old), updating
+2025-12-11 10:12:16 - tradingbot - INFO - stock_data_service.py:173 - Updating AAPL from 2025-12-10 to present
+2025-12-11 10:12:16 - tradingbot - DEBUG - mongodb_models.py:387 - Inserted 2 OHLCV records
+2025-12-11 10:12:16 - tradingbot - INFO - stock_data_service.py:46 - Saved 2 OHLCV records for AAPL
+2025-12-11 10:12:16 - tradingbot - INFO - stock_data_service.py:188 - Updated 2 new records for AAPL
+2025-12-11 10:12:16 - tradingbot - INFO - stock_data_service.py:134 - Returning 501 records for AAPL from database
+2025-12-11 10:12:16 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $273.42 (last close: $273.87, -0.2%)
+2025-12-11 10:12:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:17 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-11 10:12:17 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for AAPL to database
+2025-12-11 10:12:17 - tradingbot - INFO - ml_service.py:507 - Predictions complete for AAPL: [273.42]
+2025-12-11 10:12:17 - tradingbot - INFO - trading_engine.py:86 - AAPL: neutral (-0.16%), confidence: 0.02
+2025-12-11 10:12:17 - tradingbot - DEBUG - automated_trader.py:84 -   - AAPL: No opportunity
+2025-12-11 10:12:17 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for MSFT
+2025-12-11 10:12:17 - tradingbot - INFO - ml_service.py:311 - Starting prediction for MSFT, days=1, version=2.3-weighted-top10
+2025-12-11 10:12:17 - tradingbot - INFO - ml_service.py:322 - Training new model for MSFT
+2025-12-11 10:12:17 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for MSFT from database
+2025-12-11 10:12:17 - tradingbot - INFO - ml_service.py:352 - Using top 10 features: ['Lag_1', 'Distance_SMA_200', 'BB_Lower', 'OBV', 'Lag_2', 'Lag_3', 'Lag_4', 'Lag_5', 'Signal_Line', 'BB_Upper']
+2025-12-11 10:12:17 - tradingbot - INFO - ml_service.py:113 - Training model on 300 samples with 10 features
+2025-12-11 10:12:17 - tradingbot - INFO - ml_service.py:128 - Sample weighting: 99 recent samples (4.0x weight), 201 older samples (1.0x weight)
+2025-12-11 10:12:17 - tradingbot - INFO - ml_service.py:45 - Creating ensemble model (RF + GBM + XGB)
+2025-12-11 10:12:17 - tradingbot - INFO - ml_service.py:79 - XGBoost included in ensemble
+2025-12-11 10:12:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:18 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 10:12:18 - tradingbot - INFO - ml_service.py:141 - Training LSTM model...
+2025-12-11 10:12:18 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [10/50], Loss: 216644.9062
+2025-12-11 10:12:19 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [20/50], Loss: 216054.5156
+2025-12-11 10:12:19 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [30/50], Loss: 214546.7500
+2025-12-11 10:12:20 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [40/50], Loss: 213132.5781
+2025-12-11 10:12:20 - tradingbot - DEBUG - lstm_model.py:100 - Epoch [50/50], Loss: 212127.4375
+2025-12-11 10:12:20 - tradingbot - INFO - lstm_model.py:102 - LSTM training complete
+2025-12-11 10:12:20 - tradingbot - INFO - ml_service.py:147 - Model training complete
+2025-12-11 10:12:20 - tradingbot - INFO - lstm_model.py:125 - Saved LSTM model to models/MSFT_model_v2_lstm.pt
+2025-12-11 10:12:20 - tradingbot - INFO - ml_service.py:192 - Saved model v2.3-weighted-top10 for MSFT
+2025-12-11 10:12:20 - tradingbot - INFO - ml_service.py:380 - Top 10 features:
+            feature  importance
+5             Lag_3    0.846112
+0             Lag_1    0.068283
+1  Distance_SMA_200    0.042384
+3               OBV    0.035466
+8       Signal_Line    0.002715
+9          BB_Upper    0.001808
+4             Lag_2    0.001314
+2          BB_Lower    0.001171
+7             Lag_5    0.000460
+6             Lag_4    0.000285
+2025-12-11 10:12:20 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $485.86 (last close: $480.95, +1.0%)
+2025-12-11 10:12:20 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-11 10:12:20 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for MSFT to database
+2025-12-11 10:12:20 - tradingbot - INFO - ml_service.py:507 - Predictions complete for MSFT: [485.86]
+2025-12-11 10:12:20 - tradingbot - INFO - trading_engine.py:86 - MSFT: neutral (+1.02%), confidence: 0.10
+2025-12-11 10:12:20 - tradingbot - DEBUG - automated_trader.py:84 -   - MSFT: No opportunity
+2025-12-11 10:12:20 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for TSLA
+2025-12-11 10:12:20 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-11 10:12:20 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 10:12:20 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-11 10:12:20 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 0 days)
+2025-12-11 10:12:21 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-11 10:12:21 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $445.76 (last close: $451.45, -1.3%)
+2025-12-11 10:12:21 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-11 10:12:21 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-11 10:12:21 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [445.76]
+2025-12-11 10:12:21 - tradingbot - INFO - trading_engine.py:86 - TSLA: neutral (-1.26%), confidence: 0.13
+2025-12-11 10:12:21 - tradingbot - DEBUG - automated_trader.py:84 -   - TSLA: No opportunity
+2025-12-11 10:12:21 - tradingbot - INFO - automated_trader.py:49 - No trading opportunities found
+2025-12-11 10:12:21 - tradingbot - INFO - automated_trader.py:52 - 
+--- Step 2: Executing New Trades ---
+2025-12-11 10:12:21 - tradingbot - INFO - automated_trader.py:94 - No opportunities to execute
+2025-12-11 10:12:21 - tradingbot - INFO - automated_trader.py:56 - 
+--- Step 3: Managing Existing Positions ---
+2025-12-11 10:12:21 - tradingbot - INFO - automated_trader.py:125 - Checking for positions to close...
+2025-12-11 10:12:21 - tradingbot - INFO - tradier_service.py:748 - Starting auto-close position check
+2025-12-11 10:12:22 - tradingbot - DEBUG - tradier_service.py:777 - Current time in EST: 2025-12-11 10:12:22.094852-05:00, past noon: False
+2025-12-11 10:12:22 - tradingbot - INFO - tradier_service.py:861 - Auto-close check complete: 7 checked, 0 closed, 0 errors
+2025-12-11 10:12:22 - tradingbot - INFO - automated_trader.py:130 -   Closed 0 positions
+2025-12-11 10:12:22 - tradingbot - INFO - automated_trader.py:137 - Checking for positions to roll...
+2025-12-11 10:12:22 - tradingbot - INFO - automated_trader.py:142 -   Rolled 0 positions
+2025-12-11 10:12:22 - tradingbot - INFO - automated_trader.py:60 - 
+============================================================
+2025-12-11 10:12:22 - tradingbot - INFO - automated_trader.py:61 - AUTOMATED TRADER COMPLETE
+2025-12-11 10:12:22 - tradingbot - INFO - automated_trader.py:62 - New trades executed: 0
+2025-12-11 10:12:23 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:24 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:24 - tradingbot - INFO - automated_trader.py:156 - 
+--- Risk Status ---
+2025-12-11 10:12:24 - tradingbot - INFO - automated_trader.py:157 - Can Trade: True
+2025-12-11 10:12:24 - tradingbot - INFO - automated_trader.py:158 - Reason: OK
+2025-12-11 10:12:24 - tradingbot - INFO - automated_trader.py:159 - Daily P&L: $0.00
+2025-12-11 10:12:24 - tradingbot - INFO - automated_trader.py:160 - Daily Loss Limit: $500.00
+2025-12-11 10:12:24 - tradingbot - INFO - automated_trader.py:161 - Open Positions: 0/100
+2025-12-11 10:12:24 - tradingbot - INFO - automated_trader.py:162 - Emergency Stop: False
+2025-12-11 10:12:24 - tradingbot - INFO - automated_trader.py:163 - Dry Run Mode: True
+2025-12-11 10:12:24 - tradingbot - INFO - automated_trader.py:64 - ============================================================
+2025-12-11 10:12:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:48 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:12:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:18 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:13:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:14:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:18 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:15:58 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:38 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:16:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:17:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:18:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:19:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:48 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:20:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:21:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:50 - tradingbot - ERROR - tradier_service.py:181 - Could not fetch open positions. HTTPSConnectionPool(host='sandbox.tradier.com', port=443): Read timed out. (read timeout=None)
+2025-12-11 10:22:51 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:52 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:53 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:53 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:22:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:23:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:24:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:25:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:26:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:58 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:27:58 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:08 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:18 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:28 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:38 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:28:48 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:29:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:29:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:30:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:30:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:31:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:31:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:32:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:32:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:33:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:33:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:34:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:34:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:35:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:35:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:36:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:36:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:37:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:37:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:38:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:38:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:39:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:39:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:40:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:40:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:41:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:41:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:42:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:42:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:43:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:43:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:44:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:44:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:45:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:45:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:46:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:46:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:47:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:47:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:48:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:48:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:49:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:49:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:50:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:50:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:51:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:51:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:52:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:52:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:53:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:53:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:54:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:54:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:55:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:55:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:56:43 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:56:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:57:38 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:57:39 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:57:43 - tradingbot - INFO - ml_evaluation.py:263 - Found 2 predictions to backfill
+2025-12-11 10:57:44 - tradingbot - INFO - stock_data_service.py:134 - Returning 62 records for QQQ from database
+2025-12-11 10:57:44 - tradingbot - DEBUG - ml_evaluation.py:411 - Matched QQQ on 2025-12-11 (used 2025-12-10, 1 days backward): $623.51
+2025-12-11 10:57:44 - tradingbot - INFO - stock_data_service.py:134 - Returning 62 records for MSFT from database
+2025-12-11 10:57:44 - tradingbot - DEBUG - ml_evaluation.py:411 - Matched MSFT on 2025-12-11 (used 2025-12-10, 1 days backward): $480.95
+2025-12-11 10:57:44 - tradingbot - INFO - ml_evaluation.py:425 - Backfilled 2 predictions with actual prices
+2025-12-11 10:58:09 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:58:10 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:58:19 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:58:20 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:58:29 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 10:58:30 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 11:28:23 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-11 11:28:24 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-11 11:32:21 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 11:32:21 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 11:32:31 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 11:32:32 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-11 11:32:37 - tradingbot - INFO - ml_evaluation.py:263 - Found 0 predictions to backfill
+2025-12-11 11:32:37 - tradingbot - INFO - ml_evaluation.py:425 - Backfilled 0 predictions with actual prices
+2025-12-11 11:32:53 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-11 11:32:53 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 11:32:53 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-11 11:32:53 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 0 days)
+2025-12-11 11:32:53 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-11 11:32:53 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $445.76 (last close: $451.45, -1.3%)
+2025-12-11 11:32:54 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-11 11:32:54 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-11 11:32:54 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [445.76]
+2025-12-11 14:08:15 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-11 14:08:15 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-11 14:08:15 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-11 14:08:15 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 0 days)
+2025-12-11 14:08:16 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for TSLA from database
+2025-12-11 14:08:16 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $445.76 (last close: $451.45, -1.3%)
+2025-12-11 14:08:16 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-11 14:08:16 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-11 14:08:16 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [445.76]
+2025-12-11 14:31:58 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-11 14:31:58 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-11 14:32:03 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 5 resistances (Strong supports: 0)
+2025-12-11 19:29:50 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-11 19:29:50 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-11 19:29:52 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-11 19:29:52 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-11 19:29:52 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-11 19:29:52 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-11 19:29:54 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-11 19:29:54 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-11 19:29:56 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-11 19:29:56 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-11 19:29:56 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-11 19:29:56 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-11 19:30:02 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-11 19:30:03 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-12 10:33:54 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-12 10:33:54 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-12 10:33:55 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-12 10:33:55 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-12 10:33:55 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-12 10:33:55 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-12 10:33:57 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-12 10:33:58 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-12 10:33:59 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-12 10:33:59 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-12 10:33:59 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-12 10:33:59 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-12 10:34:10 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-12 10:34:11 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-12 10:34:22 - tradingbot - INFO - ml_evaluation.py:263 - Found 2 predictions to backfill
+2025-12-12 10:34:22 - tradingbot - INFO - stock_data_service.py:134 - Returning 63 records for SPY from database
+2025-12-12 10:34:22 - tradingbot - DEBUG - ml_evaluation.py:411 - Matched SPY on 2025-12-12 (used 2025-12-11, 1 days backward): $682.75
+2025-12-12 10:34:22 - tradingbot - INFO - stock_data_service.py:134 - Returning 63 records for AAPL from database
+2025-12-12 10:34:22 - tradingbot - DEBUG - ml_evaluation.py:411 - Matched AAPL on 2025-12-12 (used 2025-12-11, 1 days backward): $273.87
+2025-12-12 10:34:22 - tradingbot - INFO - ml_evaluation.py:425 - Backfilled 2 predictions with actual prices
+2025-12-12 10:35:01 - tradingbot - INFO - tradier_service.py:748 - Starting auto-close position check
+2025-12-12 10:35:02 - tradingbot - DEBUG - tradier_service.py:777 - Current time in EST: 2025-12-12 10:35:02.081118-05:00, past noon: False
+2025-12-12 10:35:02 - tradingbot - INFO - tradier_service.py:861 - Auto-close check complete: 7 checked, 0 closed, 0 errors
+2025-12-12 10:58:13 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:13 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:15 - tradingbot - INFO - automated_trader.py:28 - ============================================================
+2025-12-12 10:58:15 - tradingbot - INFO - automated_trader.py:29 - AUTOMATED TRADER STARTED
+2025-12-12 10:58:15 - tradingbot - INFO - automated_trader.py:30 - Time: 2025-12-12 10:58:15
+2025-12-12 10:58:15 - tradingbot - INFO - automated_trader.py:31 - Mode: DRY RUN
+2025-12-12 10:58:15 - tradingbot - INFO - automated_trader.py:32 - ============================================================
+2025-12-12 10:58:16 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:16 - tradingbot - INFO - automated_trader.py:42 - ✓ Risk checks passed - proceeding with trading
+2025-12-12 10:58:16 - tradingbot - INFO - automated_trader.py:45 - 
+--- Step 1: Analyzing Opportunities ---
+2025-12-12 10:58:16 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for SPY
+2025-12-12 10:58:16 - tradingbot - INFO - ml_service.py:311 - Starting prediction for SPY, days=1, version=2.3-weighted-top10
+2025-12-12 10:58:17 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-12 10:58:17 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/SPY_model_v2_lstm.pt
+2025-12-12 10:58:17 - tradingbot - INFO - ml_service.py:234 - Loaded models for SPY (age: 1 days)
+2025-12-12 10:58:17 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for SPY from database
+2025-12-12 10:58:17 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $681.85 (last close: $682.75, -0.1%)
+2025-12-12 10:58:17 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-12 10:58:17 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for SPY to database
+2025-12-12 10:58:17 - tradingbot - INFO - ml_service.py:507 - Predictions complete for SPY: [681.85]
+2025-12-12 10:58:17 - tradingbot - INFO - trading_engine.py:86 - SPY: neutral (-0.13%), confidence: 0.01
+2025-12-12 10:58:17 - tradingbot - DEBUG - automated_trader.py:84 -   - SPY: No opportunity
+2025-12-12 10:58:17 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for QQQ
+2025-12-12 10:58:17 - tradingbot - INFO - ml_service.py:311 - Starting prediction for QQQ, days=1, version=2.3-weighted-top10
+2025-12-12 10:58:17 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-12 10:58:17 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/QQQ_model_v2_lstm.pt
+2025-12-12 10:58:17 - tradingbot - INFO - ml_service.py:234 - Loaded models for QQQ (age: 1 days)
+2025-12-12 10:58:17 - tradingbot - INFO - stock_data_service.py:93 - Data for QQQ is stale (2 days old), updating
+2025-12-12 10:58:17 - tradingbot - INFO - stock_data_service.py:173 - Updating QQQ from 2025-12-11 to present
+2025-12-12 10:58:18 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:19 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:19 - tradingbot - DEBUG - mongodb_models.py:387 - Inserted 2 OHLCV records
+2025-12-12 10:58:19 - tradingbot - INFO - stock_data_service.py:46 - Saved 2 OHLCV records for QQQ
+2025-12-12 10:58:19 - tradingbot - INFO - stock_data_service.py:188 - Updated 2 new records for QQQ
+2025-12-12 10:58:19 - tradingbot - INFO - stock_data_service.py:134 - Returning 501 records for QQQ from database
+2025-12-12 10:58:20 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $620.84 (last close: $617.11, +0.6%)
+2025-12-12 10:58:20 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-12 10:58:20 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for QQQ to database
+2025-12-12 10:58:20 - tradingbot - INFO - ml_service.py:507 - Predictions complete for QQQ: [620.84]
+2025-12-12 10:58:20 - tradingbot - INFO - trading_engine.py:86 - QQQ: neutral (+0.60%), confidence: 0.06
+2025-12-12 10:58:20 - tradingbot - DEBUG - automated_trader.py:84 -   - QQQ: No opportunity
+2025-12-12 10:58:20 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for AAPL
+2025-12-12 10:58:20 - tradingbot - INFO - ml_service.py:311 - Starting prediction for AAPL, days=1, version=2.3-weighted-top10
+2025-12-12 10:58:20 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-12 10:58:20 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/AAPL_model_v2_lstm.pt
+2025-12-12 10:58:20 - tradingbot - INFO - ml_service.py:234 - Loaded models for AAPL (age: 1 days)
+2025-12-12 10:58:20 - tradingbot - INFO - stock_data_service.py:134 - Returning 500 records for AAPL from database
+2025-12-12 10:58:20 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $273.25 (last close: $273.87, -0.2%)
+2025-12-12 10:58:20 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-12 10:58:20 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for AAPL to database
+2025-12-12 10:58:20 - tradingbot - INFO - ml_service.py:507 - Predictions complete for AAPL: [273.25]
+2025-12-12 10:58:20 - tradingbot - INFO - trading_engine.py:86 - AAPL: neutral (-0.23%), confidence: 0.02
+2025-12-12 10:58:20 - tradingbot - DEBUG - automated_trader.py:84 -   - AAPL: No opportunity
+2025-12-12 10:58:20 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for MSFT
+2025-12-12 10:58:20 - tradingbot - INFO - ml_service.py:311 - Starting prediction for MSFT, days=1, version=2.3-weighted-top10
+2025-12-12 10:58:20 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-12 10:58:20 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/MSFT_model_v2_lstm.pt
+2025-12-12 10:58:20 - tradingbot - INFO - ml_service.py:234 - Loaded models for MSFT (age: 1 days)
+2025-12-12 10:58:20 - tradingbot - INFO - stock_data_service.py:93 - Data for MSFT is stale (2 days old), updating
+2025-12-12 10:58:20 - tradingbot - INFO - stock_data_service.py:173 - Updating MSFT from 2025-12-11 to present
+2025-12-12 10:58:22 - tradingbot - DEBUG - mongodb_models.py:387 - Inserted 2 OHLCV records
+2025-12-12 10:58:22 - tradingbot - INFO - stock_data_service.py:46 - Saved 2 OHLCV records for MSFT
+2025-12-12 10:58:22 - tradingbot - INFO - stock_data_service.py:188 - Updated 2 new records for MSFT
+2025-12-12 10:58:22 - tradingbot - INFO - stock_data_service.py:134 - Returning 501 records for MSFT from database
+2025-12-12 10:58:22 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $487.06 (last close: $480.05, +1.5%)
+2025-12-12 10:58:22 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-12 10:58:22 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for MSFT to database
+2025-12-12 10:58:22 - tradingbot - INFO - ml_service.py:507 - Predictions complete for MSFT: [487.06]
+2025-12-12 10:58:22 - tradingbot - INFO - trading_engine.py:86 - MSFT: neutral (+1.46%), confidence: 0.15
+2025-12-12 10:58:22 - tradingbot - DEBUG - automated_trader.py:84 -   - MSFT: No opportunity
+2025-12-12 10:58:22 - tradingbot - INFO - trading_engine.py:44 - Analyzing ML opportunity for TSLA
+2025-12-12 10:58:22 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-12 10:58:22 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-12 10:58:22 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-12 10:58:22 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 1 days)
+2025-12-12 10:58:22 - tradingbot - INFO - stock_data_service.py:93 - Data for TSLA is stale (2 days old), updating
+2025-12-12 10:58:22 - tradingbot - INFO - stock_data_service.py:173 - Updating TSLA from 2025-12-11 to present
+2025-12-12 10:58:24 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:24 - tradingbot - DEBUG - mongodb_models.py:387 - Inserted 2 OHLCV records
+2025-12-12 10:58:24 - tradingbot - INFO - stock_data_service.py:46 - Saved 2 OHLCV records for TSLA
+2025-12-12 10:58:24 - tradingbot - INFO - stock_data_service.py:188 - Updated 2 new records for TSLA
+2025-12-12 10:58:24 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:24 - tradingbot - INFO - stock_data_service.py:134 - Returning 501 records for TSLA from database
+2025-12-12 10:58:25 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $446.76 (last close: $449.21, -0.5%)
+2025-12-12 10:58:25 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 1 inserts, 0 updates
+2025-12-12 10:58:25 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-12 10:58:25 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [446.76]
+2025-12-12 10:58:25 - tradingbot - INFO - trading_engine.py:86 - TSLA: neutral (-0.55%), confidence: 0.05
+2025-12-12 10:58:25 - tradingbot - DEBUG - automated_trader.py:84 -   - TSLA: No opportunity
+2025-12-12 10:58:25 - tradingbot - INFO - automated_trader.py:49 - No trading opportunities found
+2025-12-12 10:58:25 - tradingbot - INFO - automated_trader.py:52 - 
+--- Step 2: Executing New Trades ---
+2025-12-12 10:58:25 - tradingbot - INFO - automated_trader.py:94 - No opportunities to execute
+2025-12-12 10:58:25 - tradingbot - INFO - automated_trader.py:56 - 
+--- Step 3: Managing Existing Positions ---
+2025-12-12 10:58:25 - tradingbot - INFO - automated_trader.py:125 - Checking for positions to close...
+2025-12-12 10:58:25 - tradingbot - INFO - tradier_service.py:748 - Starting auto-close position check
+2025-12-12 10:58:25 - tradingbot - DEBUG - tradier_service.py:777 - Current time in EST: 2025-12-12 10:58:25.857219-05:00, past noon: False
+2025-12-12 10:58:25 - tradingbot - INFO - tradier_service.py:861 - Auto-close check complete: 7 checked, 0 closed, 0 errors
+2025-12-12 10:58:25 - tradingbot - INFO - automated_trader.py:130 -   Closed 0 positions
+2025-12-12 10:58:25 - tradingbot - INFO - automated_trader.py:137 - Checking for positions to roll...
+2025-12-12 10:58:26 - tradingbot - INFO - automated_trader.py:142 -   Rolled 0 positions
+2025-12-12 10:58:26 - tradingbot - INFO - automated_trader.py:60 - 
+============================================================
+2025-12-12 10:58:26 - tradingbot - INFO - automated_trader.py:61 - AUTOMATED TRADER COMPLETE
+2025-12-12 10:58:26 - tradingbot - INFO - automated_trader.py:62 - New trades executed: 0
+2025-12-12 10:58:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:27 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:27 - tradingbot - INFO - automated_trader.py:156 - 
+--- Risk Status ---
+2025-12-12 10:58:27 - tradingbot - INFO - automated_trader.py:157 - Can Trade: True
+2025-12-12 10:58:27 - tradingbot - INFO - automated_trader.py:158 - Reason: OK
+2025-12-12 10:58:27 - tradingbot - INFO - automated_trader.py:159 - Daily P&L: $0.00
+2025-12-12 10:58:27 - tradingbot - INFO - automated_trader.py:160 - Daily Loss Limit: $500.00
+2025-12-12 10:58:27 - tradingbot - INFO - automated_trader.py:161 - Open Positions: 0/100
+2025-12-12 10:58:27 - tradingbot - INFO - automated_trader.py:162 - Emergency Stop: False
+2025-12-12 10:58:27 - tradingbot - INFO - automated_trader.py:163 - Dry Run Mode: True
+2025-12-12 10:58:27 - tradingbot - INFO - automated_trader.py:64 - ============================================================
+2025-12-12 10:58:33 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:33 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:44 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:45 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:54 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:58:55 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:59:04 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:59:05 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:59:14 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:59:15 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:59:24 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:59:24 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:59:34 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 10:59:35 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:00:25 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:00:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:23 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:23 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:36 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:36 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:46 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:46 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:56 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:01:56 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:06 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:16 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:16 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:36 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:36 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:46 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:46 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:56 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:02:56 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:06 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:06 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:16 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:16 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:36 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:37 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:46 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:46 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:56 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:03:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:06 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:07 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:16 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:17 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:36 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:36 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:46 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:56 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:04:57 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:06 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:06 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:16 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:16 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:26 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:36 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:36 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:46 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:05:47 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 11:06:04 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-12 11:06:04 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-12 11:06:34 - tradingbot - INFO - tradier_service.py:748 - Starting auto-close position check
+2025-12-12 11:06:35 - tradingbot - DEBUG - tradier_service.py:777 - Current time in EST: 2025-12-12 11:06:35.124254-05:00, past noon: False
+2025-12-12 11:06:35 - tradingbot - INFO - tradier_service.py:861 - Auto-close check complete: 7 checked, 0 closed, 0 errors
+2025-12-12 11:08:00 - tradingbot - INFO - app.py:25 - Starting Trading Bot in development mode
+2025-12-12 11:08:00 - tradingbot - INFO - database.py:42 - MongoDB connected successfully to database: tradingbot
+2025-12-12 11:08:01 - tradingbot - INFO - database.py:91 - MongoDB indexes created successfully
+2025-12-12 11:08:01 - tradingbot - INFO - app.py:30 - Database initialized successfully
+2025-12-12 11:08:01 - tradingbot - INFO - app.py:36 - Flask-Login initialized with Nostr authentication
+2025-12-12 11:08:01 - tradingbot - INFO - app.py:45 - All blueprints registered including ML self-correction and auto trader
+2025-12-12 11:09:20 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
+2025-12-12 11:15:02 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-12 11:15:03 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-12 11:15:03 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-12 11:15:03 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 1 days)
+2025-12-12 11:15:03 - tradingbot - INFO - stock_data_service.py:134 - Returning 501 records for TSLA from database
+2025-12-12 11:15:03 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $446.76 (last close: $449.21, -0.5%)
+2025-12-12 11:15:04 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-12 11:15:04 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-12 11:15:04 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [446.76]
+2025-12-12 11:53:49 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-12 11:53:49 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-12 11:53:49 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-12 11:53:49 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 1 days)
+2025-12-12 11:53:49 - tradingbot - INFO - stock_data_service.py:134 - Returning 501 records for TSLA from database
+2025-12-12 11:53:49 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $446.76 (last close: $449.21, -0.5%)
+2025-12-12 11:53:49 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-12 11:53:49 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-12 11:53:49 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [446.76]
+2025-12-12 14:53:15 - tradingbot - INFO - ml_service.py:311 - Starting prediction for TSLA, days=1, version=2.3-weighted-top10
+2025-12-12 14:53:15 - tradingbot - INFO - lstm_model.py:50 - Initialized LSTM Model on cpu
+2025-12-12 14:53:15 - tradingbot - INFO - lstm_model.py:131 - Loaded LSTM model from models/TSLA_model_v2_lstm.pt
+2025-12-12 14:53:15 - tradingbot - INFO - ml_service.py:234 - Loaded models for TSLA (age: 1 days)
+2025-12-12 14:53:15 - tradingbot - INFO - stock_data_service.py:134 - Returning 501 records for TSLA from database
+2025-12-12 14:53:15 - tradingbot - INFO - ml_service.py:459 - Prediction validated: $446.76 (last close: $449.21, -0.5%)
+2025-12-12 14:53:15 - tradingbot - DEBUG - mongodb_models.py:103 - Upserted 1 predictions: 0 inserts, 1 updates
+2025-12-12 14:53:15 - tradingbot - INFO - ml_evaluation.py:228 - Saved (upserted) 1 predictions for TSLA to database
+2025-12-12 14:53:15 - tradingbot - INFO - ml_service.py:507 - Predictions complete for TSLA: [446.76]
+2025-12-12 14:53:40 - tradingbot - INFO - ml_evaluation.py:263 - Found 0 predictions to backfill
+2025-12-12 14:53:40 - tradingbot - INFO - ml_evaluation.py:425 - Backfilled 0 predictions with actual prices
+2025-12-12 15:14:13 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 15:14:14 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 15:14:23 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 15:14:24 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 15:14:33 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 15:14:34 - tradingbot - DEBUG - risk_manager.py:81 - Dry run filter: 23 total -> 0 tracked
+2025-12-12 15:15:57 - tradingbot - DEBUG - market_analysis_enhanced.py:207 - Enhanced S/R: 5 supports, 4 resistances (Strong supports: 0)
